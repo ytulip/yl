@@ -544,6 +544,37 @@ class ActivityController extends Controller
     }
 
 
+    private function commonInfo2()
+    {
+
+        if(!env('OPENID_TEST')) {
+            $requestUrl = 'https://api.weixin.qq.com/sns/jscode2session?appid='.\SmallWechatCallback::getAppId().'&secret='.\SmallWechatCallback::getAppSecret().'&js_code=' . Request::input('code'). '&grant_type=authorization_code';
+            Logger::info('code请求:' . $requestUrl,'xcx');
+            $response = file_get_contents($requestUrl);
+            Logger::info($response,'xcx');
+
+            $response = json_decode($response);
+            if( !isset($response->openid) )
+            {
+                echo $this->jsonReturn(0);
+                exit;
+            }
+        } else {
+            $response = (Object)['openid'=>env('OPENID_TEST')];
+        }
+
+        $data = [];
+        $data['openid'] = $response->openid;
+        $data['user'] = \App\Model\User::where('openid',$response->openid)->first();
+
+        if( $data['user'] )
+        {
+            $data['order'] = Order::where('user_id',$data['user']->id)->where('buy_type',Order::BUY_TYPE_ACTIVITY)->first();
+        }
+        return $this->jsonReturn(1,$data);
+    }
+
+
     private function commonInfoNew()
     {
 
