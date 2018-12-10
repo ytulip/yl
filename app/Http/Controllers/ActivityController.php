@@ -544,7 +544,7 @@ class ActivityController extends Controller
     }
 
 
-    private function commonInfo2()
+    private function anyCommonInfo2()
     {
 
         if(!env('OPENID_TEST')) {
