@@ -44,6 +44,14 @@ class IndexController extends Controller
         return view('admin.master');
     }
 
+
+    /*为小程序提供无差别接口服务*/
+    public function anyHomeMain()
+    {
+        return $this->jsonReturn(1,['banners'=>["url"=>"http://graphis.zhuyan.me/1.jpg"],["url"=>"http://graphis.zhuyan.me/2.jpg"]]);
+    }
+    /*end of block*/
+
     /**
      * 概況
      */
