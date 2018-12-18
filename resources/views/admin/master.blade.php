@@ -143,7 +143,7 @@
 
                     <ul id="menu-academico-sub" >
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐订单</a></li>
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁订单</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-bill">保洁订单</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员订单</a></li>
                     </ul>
                     <div class="sub-menu">

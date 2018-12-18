@@ -108,161 +108,63 @@
     @stop
 @section('container')
     {{--@include('segments.header',['headerTile'=>'购买/邀请新会员'])--}}
-    <div class="cus-row p-l-r-14">
-        <div class="cus-row-col-4"><a href="/user/good-detail?product_id=1"><i class="back-icon"></i></a></div>
-        <div class="cus-row-col-4 t-al-c"><span class="fs-17-fc-212229" style="line-height: 68px;">购买</span></div>
-        <div class="cus-row-col-4 t-al-r"><a href="tel:{{$product->consumer_service_phone}}"><span class="fs-16-fc-212229">客服</span></a></div>
+    <div class="padding-container">
+        <div><i class="back-icon"></i><span class="fs-26-fc-black">填写订单</span></div>
+
+        <div class="white-bg-card">
+            <div class="cus-row">
+                <div class="cus-row-col-6">
+                    <div class="in-bl-v-m"><i class="agree-icon"></i></div>
+                    <div class="in-bl-v-m fs-16-fc-030303">订购服务</div>
+                </div>
+            </div>
+
+            <div class="cus-row">
+                <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
+                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求"/></div>
+            </div>
+        </div>
+
+
+        <div class="white-bg-card">
+            <div class="cus-row">
+                <div class="cus-row-col-6">
+                    <div class="in-bl-v-m"><i class="agree-icon"></i></div>
+                    <div class="in-bl-v-m fs-16-fc-030303">服务地址</div>
+                </div>
+                <div class="cus-row-col-6 fs-16-fc-030303">
+                    修改
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="white-bg-card">
+            <div class="cus-row">
+                <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
+                <div class="cus-row-col-8 fs-16-fc-030303"><input placeholder="请选择服务时间"/></div>
+                <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
+            </div>
+        </div>
+
     </div>
 
-    <form id="form_data">
-        <div style="border-top:1px solid #EBEAEA;background-color: #ffffff">
-            <div class="cus-row cus-row-bborder" style="padding-left: 16px;">
-                <div class="cus-row-col-3"><span class="fs-14-fc-212229" style="line-height: 46px;">购买方式</span></div>
-                <div class="cus-row-col-8" style="vertical-align: top;">
-                    {{--<input class="fs-14-fc-909094" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" readonly value="" placeholder="请选择购买数量"/>--}}
-                    {{--{!! \App\Model\SyncModel::productAttr('product_attr_id',false,\Illuminate\Support\Facades\Request::input('product_id'))!!}--}}
-                    {{--<select class="cus-select" style="margin: 0;display: inline-block;padding: 10px 15px;height: 46px;">--}}
-                        {{--<option value="">请选择购买数量</option>--}}
-                    {{--</select>--}}
-                    <input class="fs-14-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" name="product_id" readonly value="" onfocus='this.blur();' placeholder="请选择购买数量"/>
 
-                </div>
-                <div class="cus-row-col-1" style="line-height: 44px;">
-                    <span><i class="next-icon"></i></span>
-                </div>
+
+    <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+        <div class="cus-row cus-row-v-m">
+            <div class="cus-row-col-6">
+                <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label">00.00</span>
             </div>
-
-
-            <div class="cus-row cus-row-bborder" id="quantity_line" style="padding-left: 16px;display: none;">
-                <div class="cus-row-col-3"><span class="fs-14-fc-212229" style="line-height: 46px;">数量(盒)</span></div>
-                <div class="cus-row-col-9" style="vertical-align: top;">
-                    {{--<input class="fs-14-fc-909094" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" readonly value="" placeholder="请选择购买数量"/>--}}
-                    {{--{!! \App\Model\SyncModel::productAttr('product_attr_id',false,\Illuminate\Support\Facades\Request::input('product_id'))!!}--}}
-                    {{--<select class="cus-select" style="margin: 0;display: inline-block;padding: 10px 15px;height: 46px;">--}}
-                    {{--<option value="">请选择购买数量</option>--}}
-                    {{--</select>--}}
-                    <input class="fs-14-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" name="quantity" value="" placeholder="10的整数倍，30起购"/>
-
-                </div>
+            <div class="cus-row-col-6">
+                <a class="btn-block1 m-t-20" href="javascript:void(0)" id="next_step" style="margin-top: 0;">立即付款</a>
             </div>
-
-            <div class="cus-row cus-row-bborder" style="padding-left: 16px;" id="immediate_line">
-                <div class="cus-row-col-3"><span class="fs-14-fc-212229" style="line-height: 46px;">直接开发者</span></div>
-                <div class="cus-row-col-9"><input class="fs-14-fc-212229" type="text" style="margin-bottom: 0;border: none;height: 46px;" value="{{$user->phone}}" placeholder="请填写直接开发者手机号" name="immediate_phone"/></div>
-            </div>
-
-            <div class="cus-row cus-row-bborder" style="padding-left: 16px;">
-                <div class="cus-row-col-3"><span class="fs-14-fc-212229" style="line-height: 46px;">收货方式</span></div>
-                <div class="cus-row-col-8" style="vertical-align: top;">
-                    <input class="fs-14-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" name="deliver_type" readonly value="" onfocus='this.blur();' placeholder="请选择收货方式"/>
-                    {{--<select class="cus-select" style="margin: 0;display: inline-block;padding: 10px 15px;height: 46px;">--}}
-                        {{--<option value="">请选择收货方式</option>--}}
-                        {{--<option value="1">自提</option>--}}
-                        {{--<option value="2">送货上门</option>--}}
-                    {{--</select>--}}
-                </div>
-                <div class="cus-row-col-1" style="line-height: 44px;">
-                    <span><i class="next-icon"></i></span>
-                </div>
-            </div>
-
-            <div class="cus-row cus-row-bborder" style="padding-left: 16px;">
-                <div class="cus-row-col-3"><span class="fs-14-fc-212229" style="line-height: 46px;">收货地址</span></div>
-                <div class="cus-row-col-8"><input class="fs-14-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;text-overflow: ellipsis;" readonly value="" onfocus='this.blur();' placeholder="请选择收货地址" name="address-show" onclick="chooseAddress()"/></div>
-                <div class="cus-row-col-1" style="line-height: 44px;">
-                    <span><i class="next-icon"></i></span>
-                </div>
-            </div>
-
-
-            {{--<div class="cus-row" style="padding-left: 16px;">--}}
-                {{--<div class="cus-row-col-3 t-al-c"><span class="fs-16-fc-212229" style="line-height: 46px;">验证</span></div>--}}
-                {{--<div class="cus-row-col-6"><input name="withdraw_sms_code" class="fs-16-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;"/></div>--}}
-                {{--<div class="cus-row-col-3"><a class="get-code-btn" href="javascript:void(0)"><span style="display: inline-block;line-height: 44px;color:#2966E2;">获取验证码</span></a></div>--}}
-            {{--</div>--}}
-            {{--<div class="cus-input-row fs-16-fc-212229"><label>姓名</label><input/></div>--}}
-            {{--<div class="cus-input-row fs-16-fc-212229"><label>手机</label><input/></div>--}}
-            {{--<div class="cus-input-row"><label>姓名</label><input/></div>--}}
-            {{--<div style="border-top:1px solid #EBEAEA;padding: 24px 28px;">--}}
-                {{--<a class="btn-block1" href="javascript:void(0);" id="next_step">提交申请</a>--}}
-            {{--</div>--}}
         </div>
-        {{--<ul class="mui-table-view">--}}
-            {{--<li class="mui-table-view-cell">--}}
-                {{--<div class="mui-row">--}}
-                    {{--<div class="mui-col-sm-2 mui-col-xs-2"></div>--}}
-                    {{--<div class="mui-col-sm-10 mui-col-xs-10">购买数量</div>--}}
-                {{--</div>--}}
-                {{--{!! \App\Model\SyncModel::productAttr('product_attr_id',false,\Illuminate\Support\Facades\Request::input('product_id'))!!}--}}
-            {{--</li>--}}
-            {{--<li class="mui-table-view-cell">--}}
-                {{--<div class="mui-row">--}}
-                    {{--<div class="mui-col-sm-2 mui-col-xs-2"></div>--}}
-                    {{--<div class="mui-col-sm-10 mui-col-xs-10">直接开发者</div>--}}
-                {{--</div>--}}
-                {{--<input type="number" name="immediate_phone"/>--}}
-            {{--</li>--}}
-            {{--<li class="mui-table-view-cell">--}}
-                {{--<div class="mui-row">--}}
-                    {{--<div class="mui-col-sm-2 mui-col-xs-2"></div>--}}
-                    {{--<div class="mui-col-sm-10 mui-col-xs-10">收货方式</div>--}}
-                {{--</div>--}}
-    {{--{!!\App\Model\SyncModel::deliverType('deliver_type')!!}--}}
-{{--</li>--}}
-{{--<li class="mui-table-view-cell">--}}
-    {{--<div class="mui-row">--}}
-        {{--<div class="mui-col-sm-2 mui-col-xs-2"></div>--}}
-        {{--<div class="mui-col-sm-10 mui-col-xs-10">收货地址</div>--}}
-    {{--</div>--}}
-    {{--{!! \App\Model\SyncModel::selfGetAddress('self_get_deliver_address')!!}--}}
-    {{--{!! \App\Model\SyncModel::mineAddress('mine_deliver_address',false,\Illuminate\Support\Facades\Auth::id())!!}--}}
-{{--</li>--}}
-{{--</ul>--}}
-</form>
+    </footer>
 
-<footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-    <div class="cus-row cus-row-v-m">
-        <div class="cus-row-col-6">
-            <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label">00.00</span>
-        </div>
-        <div class="cus-row-col-6">
-            <a class="btn-block1 m-t-20" href="javascript:void(0)" id="next_step" style="margin-top: 0;">立即付款</a>
-        </div>
-    </div>
-{{--<div class="in-bl-line">--}}
-    {{--<div class="in-bl-line-item info-item remove-radius" style="width: 60%;"><a class="btn-block1 remove-radius btn-bg-d1" id="total_price">合计￥00.00</a></div>--}}
-    {{--<div class="in-bl-line-item remove-radius" id="next_step" style="width: 40%"><a class="btn-block1 remove-radius btn-bg-9b">立即下单</a></div>--}}
-{{--</div>--}}
-</footer>
 
-<div class="address-list-vue vue-none" v-if="showFlag">
-    <div class="address-list-wrap" style="position: fixed;top:0;right: 0;bottom: 0;left:0;background-color: #f8f8f8;">
-        <div class="cus-row p-l-r-14">
-            <div class="cus-row-col-3"><a href="javascript:void(0)" v-on:click="showFlag = false"><i class="back-icon"></i></a></div>
-            <div class="cus-row-col-6 t-al-c"><span class="fs-17-fc-212229" style="line-height: 68px;">选择收货地址</span></div>
-            <div class="cus-row-col-3 t-al-r"><a href="/user/addresses"><span class="fs-16-fc-212229">管理</span></a></div>
-        </div>
 
-        <div class="address-list" v-if="currentValue == 2">
-            @foreach(\App\Model\UserAddress::mineAddressList($user->id) as $item)
-            <div class="address-item" style="padding:14px 16px;background-color: #ffffff;margin-bottom: 17px;border-top: 1px solid #ebeaea;border-bottom: 1px solid #ebeaea" v-on:click="bingo" data-address="{{$item->pct_code_name}}{{$item->address}}" data-id="{{$item->address_id}}">
-                <p><span class="fs-14-fc-212229">{{$item->address_name}} {{$item->mobile}}</span></p>
-                <p><span class="fs-14-fc-212229">{{$item->pct_code_name}}{{$item->address}}</span></p>
-            </div>
-                @endforeach
-        </div>
-
-        <div class="address-list" v-if="currentValue == 1">
-            @foreach(\App\Model\UserAddress::selfGetAddressList() as $item)
-                <div class="address-item" style="padding:14px 16px;background-color: #ffffff;margin-bottom: 17px;border-top: 1px solid #ebeaea;border-bottom: 1px solid #ebeaea;" v-on:click="bingo" data-address="{{$item->pct_code_name}}{{$item->address}}" data-id="{{$item->address_id}}">
-                    <p><span class="fs-14-fc-212229">{{$item->address_name}} {{$item->mobile}}</span></p>
-                    <p><span class="fs-14-fc-212229">{{$item->pct_code_name}}{{$item->address}}</span></p>
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-</div>
 @stop
 
 @section('script')
@@ -276,31 +178,16 @@
     }
 
     var pageConfig = {
-        attr1_price:'{{number_format($attr1->price,2)}}',
-        attr2_price:'{{number_format($attr2->price,2)}}',
-        productIds:{!! \App\Model\Product::getProductAttrsConfigJson() !!},
-        buyType:[{"value":1,"name":"邀请新会员(120盒)","price":"{{\App\Model\ProductAttr::find(2)->price}}"},{"value":2,"name":"复购(30盒起购)","price":"{{\App\Model\ProductAttr::find(2)->rebuy_price}}"}]
+
     }
 
     new CusSelect({
-        itemArr:[{value:1,name:'自提'},{value:2,name:'送货上门'}],
-        triggerEl:'input[name="deliver_type"]',
-        idSpecial:1,
-        callback:function(id){
-            //清除地址选项
-            addressVue.currentValue = id;
-            $('input[name="address-show"]').val('');
-            $('input[name="address-show"]').attr('cus-select-value','');
 
-        }
     });
 
 
     $('input[name="quantity"]').bind('input propertychange', function() {
-        // console.log($(this).val());
-//        changeUserList($(this).val());
-        price = pageConfig.buyType[1]['price'] * parseInt($('input[name="quantity"]').val());
-        $('#price_label').html(price);
+
     })
 
     new CusSelect({
