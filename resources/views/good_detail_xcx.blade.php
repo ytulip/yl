@@ -210,7 +210,7 @@
         function buy(){
             wx.miniProgram.navigateTo(
                 {
-                    url: "pages/fillbill/main?product_id=1"
+                    url: "/pages/fillbill/main?product_id=1"
                 });
         }
 
