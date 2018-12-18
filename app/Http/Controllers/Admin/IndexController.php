@@ -7,6 +7,7 @@ use App\Log\Facades\Logger;
 use App\Model\Admin;
 use App\Model\CashStream;
 use App\Model\Essay;
+use App\Model\FinanceUser;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\MonthGetGood;
@@ -1552,5 +1553,33 @@ class IndexController extends Controller
         echo '用户' . $user->real_name . '的上级调整为' . User::tryGetRealName($user->parent_id,'???') . '上上级调整为' . User::tryGetRealName($user->indirect_id,'????');
         exit;
     }
+
+
+    /* this is start */
+
+
+
+    public function anyCleanBill()
+    {
+        $query = FinanceUser::orderBy('finance_user.id','desc')->leftJoin('users','users.id','=','finance_user.user_id')->selectRaw('finance_user.*,users.phone,users.real_name');
+
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+
+        return view('admin.clean_bill')->with('paginate', $paginate);
+    }
+
+
+    /**
+     * 参见金融服务的用户列表
+     */
+    public function anyFinanceUser()
+    {
+        $query = FinanceUser::orderBy('finance_user.id','desc')->leftJoin('users','users.id','=','finance_user.user_id')->selectRaw('finance_user.*,users.phone,users.real_name');
+
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+
+        return view('admin.finance_user')->with('paginate', $paginate);
+    }
+    /* this is end*/
 
 }
