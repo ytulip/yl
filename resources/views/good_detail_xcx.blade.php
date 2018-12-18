@@ -130,6 +130,11 @@
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
     <script type="text/javascript">
+
+        var pageConfig = {
+            product_id: {{\Illuminate\Support\Facades\Request::input('product_id',1)}}
+        }
+
         function reinitIframe(){
             var iframe = document.getElementById("test");
             try{
@@ -205,7 +210,7 @@
         function buy(){
             wx.miniProgram.navigateTo(
                 {
-                    url:{!!  \Illuminate\Support\Facades\Request::input('rebuy')?'"/pages/rereport/pay"':'"/pages/report/pay"' !!}
+                    url: "pages/fillbill/main?product_id=1"
                 });
         }
 
