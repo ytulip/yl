@@ -19,6 +19,13 @@ class IndexController extends Controller
     {
         return $this->jsonReturn(1,['banners'=>[["url"=>"http://graphis.zhuyan.me/1.jpg"],["url"=>"http://graphis.zhuyan.me/2.jpg"]]]);
     }
+
+
+    public function anyDetail()
+    {
+        $type = Request::input('type',1);
+        return view('type');
+    }
     /*end of block*/
 
 

@@ -669,7 +669,8 @@ class UserController extends Controller
 
     public function getGoodDetailXcx()
     {
-        return view('good_detail_xcx')->with('product',Product::getDefaultProduct());
+
+        return view('good_detail_xcx')->with('product',Product::find(Request::input('product_id')));
     }
 
     public  function getEssay()

@@ -49,25 +49,7 @@ class IndexController extends Controller
      */
     public function getTotal()
     {
-        $totalStatical = new TotalStatical();
-        $totalStatical->init();
-
-        //提现申请
-        $withdraw = CashStream::where('cash_type', CashStream::CASH_TYPE_WITHDRAW)->leftJoin('users', 'users.id', '=', 'user_id')->where('withdraw_deal_status', 0)->orderBy('cash_stream.id', 'desc')->limit(3)->get();
-        $withdrawCount = CashStream::where('cash_type', CashStream::CASH_TYPE_WITHDRAW)->leftJoin('users', 'users.id', '=', 'user_id')->where('withdraw_deal_status', 0)->orderBy('cash_stream.id', 'desc')->count();
-        if (!$withdraw) {
-            $withdraw = [];
-        }
-
-        //deliver,待发货
-        $deliver = Order::where('order_status', Order::ORDER_STATUS_WAIT_DELIVER)->leftJoin('users', 'users.id', '=', 'user_id')->leftJoin('product_attrs', 'product_attrs.id', '=', 'product_attr_id')->orderBy('orders.id', 'desc')->limit(3)->get();
-        $deliverCount = Order::where('order_status', Order::ORDER_STATUS_WAIT_DELIVER)->leftJoin('users', 'users.id', '=', 'user_id')->leftJoin('product_attrs', 'product_attrs.id', '=', 'product_attr_id')->orderBy('orders.id', 'desc')->count();
-        if (!$deliver) {
-            $deliver = [];
-        }
-
-
-        return view('admin.total')->with('totalStatical', $totalStatical)->with('withdraw', $withdraw)->with('deliver', $deliver)->with('withdrawCount', $withdrawCount)->with('deliverCount', $deliverCount);
+        return view('admin.total');
     }
 
     public function getTotalFinance()

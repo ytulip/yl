@@ -32,20 +32,72 @@
         .btn3{background-image: linear-gradient(-137deg, #B9E77D 0%, #78CD09 50%);  box-shadow: 0 8px 16px 0 rgba(139,217,75,0.46);border-radius: 44px;line-height: 44px;font-size: 16px;color:#ffffff;font-weight: 800;text-align: center;}
 
         .btn3:hover{color:#ffffff;}
+
+        .swiper-container{width: 100%;}
+        .swiper-slide img{width: 100%;}
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
 @section('container')
     {{--@include('segments.header',['headerTile'=>'辣木膳购买系统'])--}}
-    <div class="info-vue" style="margin-top: 16px;">
-        <div class="cus-row">
-            <div class="cus-row-col-4 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">详细介绍</span></div>
-            <div class="cus-row-col-4 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 2) }" v-on:click="setTab(2)">配送方式</span></div>
-            <div class="cus-row-col-4 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 3) }" v-on:click="setTab(3)">售后说明</span></div>
+
+
+
+    <!--轮播-->
+    <div class="padding-container">
+
+        <div><span class="fs-26-fc-black">日常保洁</span></div>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="http://graphis.zhuyan.me/1.jpg"/>
+                </div>
+                <div class="swiper-slide">
+                    <img src="http://graphis.zhuyan.me/2.jpg"/></div>
+                <div class="swiper-slide">
+                    <img src="http://graphis.zhuyan.me/2.jpg"/>
+                </div>
+            </div>
+            <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        {{--<div class="swiper-button-prev"></div>--}}
+        {{--<div class="swiper-button-next"></div>--}}
+
+        <!-- 如果需要滚动条 -->
+            {{--<div class="swiper-scrollbar"></div>--}}
         </div>
+    </div>
+
+
+    <div class="info-vue" style="margin-top: 16px;">
 
         <div style="border-bottom:solid 1px #e9e9e9;margin-top: 10px;"></div>
 
         <div class="padding-container">
+
+
+
+            <div class="">
+                <div class="cus-row"></div>
+                <div>
+
+                </div>
+            </div>
+
+
+            <div>
+                <div class="cus-row">
+                    <div class="cus-row-col-6">
+                        <div class="in-bl-v-m"><i class="agree-icon"></i></div>
+                        <div class="in-bl-v-m fs-16-fc-030303">服务价格</div>
+                    </div>
+                    <div class="cus-row-col-6 t-al-r fs-16-fc-f89a03">按照平方计算</div>
+                </div>
+            </div>
+
             {{--<div class="product-list">--}}
             {{--<div class="product-item">--}}
             {{--<div class="item-info">--}}
@@ -56,13 +108,9 @@
             {{--</div>--}}
 
             {{--<div style="padding: 0 10px;"><div class="pro-essay-barr"></div></div>--}}
+            <div>服务介绍</div>
 
             <iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
-
-            <iframe src="/passport/good-detail?product_id={{$product->id}}&index=1" frameborder="0" scrolling="no" id="test1" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 2) }"></iframe>
-
-
-            <iframe src="/passport/good-detail?product_id={{$product->id}}&index=2" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
 
             <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
 
@@ -80,6 +128,7 @@
 @section('script')
     <script src="/js/vue.js"></script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
     <script type="text/javascript">
         function reinitIframe(){
             var iframe = document.getElementById("test");
@@ -115,6 +164,32 @@
         window.setInterval("reinitIframe()", 200);
     </script>
     <script>
+
+
+
+        var mySwiper = new Swiper ('.swiper-container', {
+//            direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+//            // 如果需要前进后退按钮
+//            navigation: {
+//                nextEl: '.swiper-button-next',
+//                prevEl: '.swiper-button-prev',
+//            },
+//
+//            // 如果需要滚动条
+//            scrollbar: {
+//                el: '.swiper-scrollbar',
+//            },
+        })
+
+
+
         $(function () {
             new SubmitButton({
                 selectorStr:"#next_step",

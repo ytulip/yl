@@ -122,35 +122,79 @@
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu" >
-                <li @if(!\App\Util\AdminAuth::hasPower(1)) class="dpn" @endif><a href="/admin/index/total"><i class="fa fa-tachometer menu-fa"></i> <span>概况</span><div class="clearfix"></div></a></li>
+                <li @if(!\App\Util\AdminAuth::hasPower(1)) class="dpn" @endif><a href="/admin/index/total"><i class="fa fa-tachometer menu-fa"></i> <span>首页</span><div class="clearfix"></div></a></li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a href="/admin/index/good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>商品管理</span><div class="clearfix"></div></a></li>
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(3)) class="dpn" @endif><a href="/admin/index/activity-good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>活动商品管理</span><div class="clearfix"></div></a></li>
-
-                <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="/admin/index/essays"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>内容管理</span><div class="clearfix"></div></a></li>
-
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(5)) class="dpn" @endif><a href="/admin/index/members"><i class="fa fa-bar-chart menu-fa"></i><span>会员管理</span><div class="clearfix"></div></a></li>
-
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(10)) class="dpn" @endif><a href="/admin/index/angle-members"><i class="fa fa-bar-chart menu-fa"></i><span>天使会员管理</span><div class="clearfix"></div></a></li>
-
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(6)) class="dpn" @endif><a href="/admin/index/activity-members"><i class="fa fa-bar-chart menu-fa"></i><span>活动会员管理</span><div class="clearfix"></div></a></li>
-
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(7)) class="dpn" @endif><a href="/admin/index/sign-list"><i class="fa fa-bar-chart menu-fa"></i><span>打卡记录</span><div class="clearfix"></div></a></li>
-
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(8)) class="dpn" @endif><a href="#"><i class="fa fa-list-ul menu-fa" aria-hidden="true"></i><span> 资产管理</span> <div class="clearfix"></div></a>
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a href="/admin/index/good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
                     <ul id="menu-academico-sub" >
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">资产概括</a></li>
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">购买管理</a></li>
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">提现管理</a></li>
+                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">购餐服务</a></li>
+                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁服务</a></li>
+                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">金融服务</a></li>
+                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">体检服务</a></li>
                     </ul>
                     <div class="sub-menu">
-                        <a href="/admin/index/total-finance">资产概括</a>
-                        <a href="/admin/index/orders">购买管理</a>
-                        <a href="/admin/index/get-good">提货记录</a>
-                        <a href="/admin/index/withdraw">提现管理</a>
-                        <a href="/admin/index/activity-trunback">活动退款</a>
+                    <a href="/admin/index/total-finance">购餐服务</a>
+                    <a href="/admin/index/orders">保洁服务</a>
+                    <a href="/admin/index/get-good">金融服务</a>
+                    <a href="/admin/index/withdraw">体检服务</a>
                     </div>
+
                 </li>
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(3)) class="dpn" @endif><a href="/admin/index/activity-good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>订单管理</span><div class="clearfix"></div></a>
+
+                    <ul id="menu-academico-sub" >
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐订单</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁订单</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员订单</a></li>
+                    </ul>
+                    <div class="sub-menu">
+                        <a href="/admin/index/total-finance">助餐订单</a>
+                        <a href="/admin/index/orders">保洁订单</a>
+                        <a href="/admin/index/get-good">会员订单</a>
+                    </div>
+
+                </li>
+
+                <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="/admin/index/essays"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
+
+                    <ul id="menu-academico-sub" >
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">社区服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">服务人员管理</a></li>
+                    </ul>
+                    <div class="sub-menu">
+                        <a href="/admin/index/total-finance">助餐订单</a>
+                        <a href="/admin/index/orders">保洁服务</a>
+                        <a href="/admin/index/get-good">会员服务</a>
+                        <a href="/admin/index/get-good">社区服务</a>
+                        <a href="/admin/index/get-good">服务人员管理</a>
+                    </div>
+
+                </li>
+
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(5)) class="dpn" @endif><a href="/admin/index/members"><i class="fa fa-bar-chart menu-fa"></i><span>金融讲堂</span><div class="clearfix"></div></a></li>
+
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(10)) class="dpn" @endif><a href="/admin/index/angle-members"><i class="fa fa-bar-chart menu-fa"></i><span>内容管理</span><div class="clearfix"></div></a></li>
+
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(6)) class="dpn" @endif><a href="/admin/index/activity-members"><i class="fa fa-bar-chart menu-fa"></i><span>数据统计</span><div class="clearfix"></div></a></li>
+
+                {{--<li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(7)) class="dpn" @endif><a href="/admin/index/sign-list"><i class="fa fa-bar-chart menu-fa"></i><span>打卡记录</span><div class="clearfix"></div></a></li>--}}
+
+                {{--<li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(8)) class="dpn" @endif><a href="#"><i class="fa fa-list-ul menu-fa" aria-hidden="true"></i><span> 资产管理</span> <div class="clearfix"></div></a>--}}
+                    {{--<ul id="menu-academico-sub" >--}}
+                        {{--<li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">资产概括</a></li>--}}
+                        {{--<li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">购买管理</a></li>--}}
+                        {{--<li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">提现管理</a></li>--}}
+                    {{--</ul>--}}
+                    {{--<div class="sub-menu">--}}
+                        {{--<a href="/admin/index/total-finance">资产概括</a>--}}
+                        {{--<a href="/admin/index/orders">购买管理</a>--}}
+                        {{--<a href="/admin/index/get-good">提货记录</a>--}}
+                        {{--<a href="/admin/index/withdraw">提现管理</a>--}}
+                        {{--<a href="/admin/index/activity-trunback">活动退款</a>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
                 <li @if(!\App\Util\AdminAuth::hasPower(9)) class="dpn" @endif><a href="/admin/index/power"><i class="fa fa-tachometer menu-fa"></i> <span>管理员列表</span><div class="clearfix"></div></a></li>
             </ul>
         </div>
