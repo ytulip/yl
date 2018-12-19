@@ -26,33 +26,6 @@ use Illuminate\Support\Facades\Session;
 
 class PassportController extends Controller
 {
-    /*输入邀请码*/
-    public function getInvitedCode()
-    {
-        return view('invited_code');
-    }
-
-    /**验证邀请码是否有效*/
-    public function postInvitedCode()
-    {
-        $this->validate(Request::all(),[
-            'invited_code'=>"required"
-        ]);
-
-
-
-        $invitedCode = Request::input('invited_code');
-        $invitedCodeModel = InvitedCodes::tryCurrentInstance($invitedCode);
-        if ( !$invitedCodeModel )
-        {
-            return $this->jsonReturn(0,'该邀请码不存在或者已被使用！');
-        }
-
-        //验证码存session
-        Session::put('input_invited_code',$invitedCode);
-
-        return $this->jsonReturn(1);
-    }
 
     public function getRegister()
     {
@@ -570,19 +543,6 @@ class PassportController extends Controller
         file_put_contents(public_path('xcx/1.jpg'),$response);
     }
 
-    /**
-     * 获得打卡页面页面信息
-     */
-    public function getDkInfo()
-    {
-
-    }
-
-    public function SendDeliverMsg()
-    {
-        $smsTemplate = new SmsTemplate(SmsTemplate::DELIVER_SMS);
-        $smsTemplate->sendSms(18681332356,['company'=>'顺丰快递','billno'=>'11876552332232']);
-    }
 
 
     public function getXcxBind()
@@ -590,29 +550,6 @@ class PassportController extends Controller
         return view('xcx_bind');
     }
 
-
-    public function anyCnTest()
-    {
-        var_dump(Request::all());
-        exit;
-    }
-
-    public function anyActivityMessage()
-    {
-        $userList = explode(',','4397,8773,8738,4395,8721,8760,4207,8741,8754,8739,8733,8658,8208,8582,8471,4556,4391,4392,4389,4417,4416,8731,4415,8765,8757,8723,8727,8207,8484,8748,4426,4552,8752,4379,8725,4438,8712,8788');
-//
-////        var_dump($userList);
-////        exit;
-//
-        foreach ( $userList as $key=>$item)
-        {
-            DB::insert('INSERT INTO `message` (`user_id`, `to_uid`, `to_aid`, `to_cid`, `to_fid`, `title`, `content`, `refer_id`, `refer_info`, `msg_status`, `view_status`, `deal_result`, `created_at`, `updated_at`, `msg_type`) VALUES (\'0\', \''.$item.'\', \'-1\', NULL, NULL, \'退款提醒\', \'您好！由于前期小程序系统故障，您的退款申请将根据退款规则打卡完成30日内办理，请知悉！如有疑问，请咨询客服4000200333！\', NULL, NULL, \'0\', \'1\', \'0\', \'2018-07-03 00:29:23\', \'2018-07-03 00:29:23\', \'12\')');
-        }
-
-        dd('OK');
-
-        //DB::query('INSERT INTO `lms_test`.`message` (`user_id`, `to_uid`, `to_aid`, `to_cid`, `to_fid`, `title`, `content`, `refer_id`, `refer_info`, `msg_status`, `view_status`, `deal_result`, `created_at`, `updated_at`, `msg_type`) VALUES (\'0\', \'8774\', \'-1\', NULL, NULL, \'退款提醒\', \'您好！由于前期小程序系统故障，您的退款申请将根据退款规则打卡完成30日内办理，请知悉！如有疑问，请咨询客服4000200333！\', NULL, NULL, \'0\', \'1\', \'0\', \'2018-07-03 00:29:23\', \'2018-07-03 00:29:23\', \'12\');');
-    }
 
     /**
      * 身份证号码转换性别
@@ -626,66 +563,11 @@ class PassportController extends Controller
         return $id_card[16]%2 == 1?'男':'女';
     }
 
-    /**
-     * 制造数据
-     */
-    public function getMakeData()
+
+    public function anyVipGuide()
     {
-        set_time_limit(0);
-        $list = DB::table('users')->get();
-//        var_dump($list->count());
-        $colArr = ['会员编号','会员等级','会员姓名','会员性别','会员手机号码','会员身份证号码','会员头像地址','注册时间','上级会员编号','上级推荐人姓名','上级推荐人手机号码','上级推荐人身份证号码','库存箱数','可提现金额','累计奖金金额','提货备注','备注'];
-        $dataList = [];
-        foreach ($list as $key=>$val)
-        {
-            var_dump($val->created_at);
-            exit;
-            //找推荐人
-
-//            if( $key > 10)
-//                break;
-
-            $order = $val->getActivityPayedOrder();
-            $recommandUserId = '';
-            $recommandRealName = '';
-            $recommandPhone = '';
-            $recommandIdcard = '';
-            if( $order instanceof  Order)
-            {
-                $commandUser = User::find($order->immediate_user_id);
-                if( $commandUser instanceof  User)
-                {
-                    $recommandUserId = $commandUser->id;
-                    $recommandRealName = $commandUser->real_name;
-                    $recommandPhone = $commandUser->phone;
-                    $recommandIdcard = $commandUser->id_card;
-                }
-            }
-
-
-            //算获利奖金总金额
-            $getSum = CashStream::whereIn('cash_type',[CashStream::CASH_TYPE_BENEFIT_DIRECT,CashStream::CASH_TYPE_BENEFIT_INDIRECT,CashStream::CASH_TYPE_BENEFIT_UP,CashStream::CASH_TYPE_BENEFIT_SUPER])->where('user_id',$val->id)->sum('price');
-
-
-            $arr = [$val->id,\App\Model\User::levelText($val->vip_level),$val->real_name,$this->getIdToSex($val->id_card),$val->phone,$val->id_card,'https://lamushan.com' . $val->header_img,$val->created_at->toDateTimeString(),$val->parent_id,$recommandRealName,$recommandPhone,$recommandIdcard,($val->get_good + $val->re_get_good + $val->activity_get_good + $val->angle_get_good),$val->charge,$getSum,$val->get_remark,$val->do_mark];
-            $dataList[] = $arr;
-
-        }
-
-//        var_dump(count($colArr));
-//        var_dump($dataList)
-
-//        var_dump($dataList);
-//        exit;
-
-
-        $data = array(
-            'title' => $colArr,
-            'data' => $dataList,
-            'name' => 'tixian',
-//            'format_text_array' => [0, 0, 0, 1, 1, 0]
-        );
-        DownloadExcel::publicDownloadExcel($data);
-        return;
+        return view('vip_guide');
     }
+
+
 }

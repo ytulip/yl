@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\CashStream;
 use App\Model\Deliver;
 use App\Model\Essay;
+use App\Model\FinanceClass;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\Order;
@@ -69,9 +70,12 @@ class UserController extends Controller
 
         $order = new Order();
         $order->product_id = $product->id;
+        $order->product_name = $product->product_name;
         $order->quantity = Request::input('size');
         $order->need_pay = $order->quantity * $product->price;
         $order->user_id = $user->id;
+        $order->remark = Request::input('remark');
+        $order->service_time = Request::input('service_time');
         $order->save();
 
         return $this->jsonReturn(1,'下单成功');
@@ -801,5 +805,20 @@ class UserController extends Controller
     public function anySubUserList()
     {
         return view('sub_user_list')->with('list',$this->user->subList());
+    }
+
+
+    /**
+     * 我的服务
+     */
+    public function anyMyServices()
+    {
+        return view('my_service')->with('financeClass',FinanceClass::getDefaultTakePart());
+    }
+
+
+    public function anyBookFinance()
+    {
+        return view('book_finance');
     }
 }

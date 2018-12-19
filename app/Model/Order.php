@@ -27,7 +27,7 @@ class Order extends Model
 
     const BUY_TYPE_ACTIVITY = 3;
     const BUY_TYPE_REREPORT = 2;
-    const BUY_TYPE_REPORT = 1;
+    const BUY_TYPE_CLEAN = 1;
     const BUY_TYPE_NEW_REPORT = 4;
 
     public function needPay()

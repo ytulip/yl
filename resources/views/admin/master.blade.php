@@ -51,6 +51,10 @@
         }
 
         #admin_user_wrap:hover #admin_user_panel{display: block;}
+
+        .active-iframe{
+            display: block !important;
+        }
     </style>
     @section('style')
         @show
@@ -148,7 +152,7 @@
                     </ul>
                     <div class="sub-menu">
                         <a href="/admin/index/total-finance">助餐订单</a>
-                        <a href="/admin/index/orders">保洁订单</a>
+                        <a href="/admin/index/clean-bill">保洁订单</a>
                         <a href="/admin/index/get-good">会员订单</a>
                     </div>
 

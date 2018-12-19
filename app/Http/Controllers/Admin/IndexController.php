@@ -1561,7 +1561,10 @@ class IndexController extends Controller
 
     public function anyCleanBill()
     {
-        $query = FinanceUser::orderBy('finance_user.id','desc')->leftJoin('users','users.id','=','finance_user.user_id')->selectRaw('finance_user.*,users.phone,users.real_name');
+        $query = Order::orderBy('orders.id','desc')->where([
+            'pay_status'=>1,
+            'buy_type'=>Order::BUY_TYPE_CLEAN
+        ])->leftJoin('users','users.id','=','orders.user_id')->selectRaw('orders.*,users.phone,users.real_name');
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
 
@@ -1585,6 +1588,31 @@ class IndexController extends Controller
     public function anyCleanManager()
     {
         return view('admin.clean_manager');
+    }
+
+
+    public function anyHealthTask(){
+        return view('admin.segment.health_task');
+    }
+
+
+    public function anyCleanTask(){
+        $query = Order::orderBy('orders.id','desc')->where([
+            'pay_status'=>1,
+            'buy_type'=>Order::BUY_TYPE_CLEAN
+        ])->leftJoin('users','users.id','=','orders.user_id')->selectRaw('orders.*,users.phone,users.real_name');
+
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+
+        return view('admin.segment.clean_task')->with('paginate', $paginate);
+    }
+
+    public function anyFinanceTask(){
+        return view('admin.segment.finance_task');
+    }
+
+    public function anyFoodTask(){
+        return view('admin.segment.food_task');
     }
     /* this is end*/
 
