@@ -158,14 +158,14 @@
 
                     <ul id="menu-academico-sub" >
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐服务</a></li>
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-manager">保洁服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">社区服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">服务人员管理</a></li>
                     </ul>
                     <div class="sub-menu">
                         <a href="/admin/index/total-finance">助餐订单</a>
-                        <a href="/admin/index/orders">保洁服务</a>
+                        <a href="/admin/index/clean-manager">保洁服务</a>
                         <a href="/admin/index/get-good">会员服务</a>
                         <a href="/admin/index/get-good">社区服务</a>
                         <a href="/admin/index/get-good">服务人员管理</a>

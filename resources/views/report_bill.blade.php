@@ -121,7 +121,7 @@
 
             <div class="cus-row">
                 <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
-                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求"/></div>
+                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求" id="remark"/></div>
             </div>
         </div>
 
@@ -140,10 +140,27 @@
 
 
 
-        <div class="white-bg-card">
+        <div class="white-bg-card" id="service_time">
+
+
             <div class="cus-row">
-                <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
-                <div class="cus-row-col-8 fs-16-fc-030303"><input placeholder="请选择服务时间"/></div>
+                <div class="cus-row-col-3 fs-16-fc-030303">服务面积</div>
+                <div class="cus-row-col-8 fs-16-fc-030303">
+                    {{--<input placeholder="请选择服务时间"/>--}}
+                    <input v-model="size"/>
+                </div>
+                <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
+            </div>
+
+
+            <div class="cus-row">
+                <div class="cus-row-col-3 fs-16-fc-030303">服务时间</div>
+                <div class="cus-row-col-8 fs-16-fc-030303">
+                    {{--<input placeholder="请选择服务时间"/>--}}
+                    <select id="clean_service_time">
+                        <option v-for="item in serviceTime" v-bind:value="item"> @{{item}} </option>
+                    </select>
+                </div>
                 <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
             </div>
         </div>
@@ -154,8 +171,8 @@
 
     <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
         <div class="cus-row cus-row-v-m">
-            <div class="cus-row-col-6">
-                <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label">00.00</span>
+            <div class="cus-row-col-6" id="total_price">
+                <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label">@{{totalPrice}}</span>
             </div>
             <div class="cus-row-col-6">
                 <a class="btn-block1 m-t-20" href="javascript:void(0)" id="next_step" style="margin-top: 0;">立即付款</a>
@@ -171,15 +188,50 @@
 <script src="/js/vue.js"></script>
 <script src="/js/plugin/mobile-select/mobileSelect.js"></script>
 <script src="/js/cus-select.js"></script>
+<script src="/js/utils/isMP.js"></script>
 <script>
+
+    var pageConfig = {
+        service_time:{!!  \App\Model\YlConfig::value('clean_service_time') !!},
+        productPrice:{{$product->price}},
+        productId:{{$product->id}},
+        openid:'{{\Illuminate\Support\Facades\Request::input('openid')}}'
+    }
+
+
+    var serviceTimeVue = new Vue({
+            el: '#service_time',
+            data:{
+                serviceTime:pageConfig.service_time,
+                size:'7'
+            },
+            watch: {
+                size: function (val) {
+//                    console.log(val);
+                    totalPriceVue.size = val;
+                }
+            }
+        }
+    );
+
+    var totalPriceVue = new Vue(
+        {
+            el:'#total_price',
+            data:{size:0},
+            computed: {
+                // 计算属性的 getter
+                totalPrice: function () {
+                    // `this` 指向 vm 实例
+                    return this.size * pageConfig.productPrice
+                }
+            }
+        }
+    );
 
     function chooseAddress(){
         addressVue.show();
     }
 
-    var pageConfig = {
-
-    }
 
     new CusSelect({
 
@@ -189,6 +241,11 @@
     $('input[name="quantity"]').bind('input propertychange', function() {
 
     })
+
+    isWeChatApplet().then(function (res) {
+        console.log(res);
+    });
+//    console.log();
 
     new CusSelect({
         itemArr:pageConfig.buyType,
@@ -242,21 +299,6 @@
 
 
 
-
-
-//    var mobileSelect1 = new MobileSelect({
-//        trigger: '.next-icon-quantity',
-//        title: '单项选择',
-//        wheels: [
-//            {data:['周日','周一','周二','周三','周四','周五','周六']}
-//        ],
-//        position:[2], //Initialize positioning,
-//        triggerDisplayData:false,
-//        callback:function(indexArr, data){
-//            console.log(data); //Returns the selected json data
-//        }
-//    });
-
 $(function(){
 
 /*配送方式改变*/
@@ -302,37 +344,37 @@ new SubmitButton({
     url:"/user/report-bill",
     prepositionJudge:function()
     {
-        if(!$('input[name="product_id"]').attr('cus-select-value')){
-            mAlert('请选择购买方式');
-            return false;
-        }
+//        if(!$('input[name="product_id"]').attr('cus-select-value')){
+//            mAlert('请选择购买方式');
+//            return false;
+//        }
 
 
-        if( $('input[name="product_id"]').attr('cus-select-value') == 2)
-        {
-            var quantity = $('input[name="quantity"]').val();
-            if((quantity % 10 != 0) || (quantity/10 < 3) )
-            {
-                mAlert('购买数量必须为10的整数倍，30起购');
-                return false;
-            }
-        }
+//        if( $('input[name="product_id"]').attr('cus-select-value') == 2)
+//        {
+//            var quantity = $('input[name="quantity"]').val();
+//            if((quantity % 10 != 0) || (quantity/10 < 3) )
+//            {
+//                mAlert('购买数量必须为10的整数倍，30起购');
+//                return false;
+//            }
+//        }
 
-        if(!$('input[name="immediate_phone"]').val()){
-            mAlert('请输入直接开发者');
-            return false;
-        }
-
-        if(!$('input[name="deliver_type"]').attr('cus-select-value')){
-            mAlert('请选择收货方式');
-            return false;
-        }
-
-
-        if(!$('input[name="address-show"]').attr('cus-select-value')){
-            mAlert('请选择收货地址');
-            return false;
-        }
+//        if(!$('input[name="immediate_phone"]').val()){
+//            mAlert('请输入直接开发者');
+//            return false;
+//        }
+//
+//        if(!$('input[name="deliver_type"]').attr('cus-select-value')){
+//            mAlert('请选择收货方式');
+//            return false;
+//        }
+//
+//
+//        if(!$('input[name="address-show"]').attr('cus-select-value')){
+//            mAlert('请选择收货地址');
+//            return false;
+//        }
 
         return true;
     },
@@ -345,39 +387,28 @@ new SubmitButton({
     },
     data:function()
     {
-        var product_attr_id = $('input[name="product_id"]').attr('cus-select-value');
-        var immediate_phone = $('input[name="immediate_phone"]').val();
-        var quantity = $('input[name="quantity"]').val();
-        var deliver_type = $('input[name="deliver_type"]').attr('cus-select-value');
-        var data = {buy_type:product_attr_id,immediate_phone:immediate_phone,deliver_type:deliver_type,quantity:quantity};
-        if(deliver_type == 1){
-            data = $.extend(data,{self_get_deliver_address:$('input[name="address-show"]').attr('cus-select-value')});
-        } else {
-            data = $.extend(data,{mine_deliver_address:$('input[name="address-show"]').attr('cus-select-value')});
-        }
-        return data;
-        //return $("#form_data").serialize();
+        return {product_id:pageConfig.productId,size:serviceTimeVue.size,remark:$('#remark').val(),openid:pageConfig.openid,service_time:$('#clean_service_time').val()};
     }
 });
 
-var addressVue = new Vue({
-    el:'.address-list-vue',
-    data:{showFlag:0,currentValue:0},
-    created:function(){
-        $('.vue-none').removeClass('vue-none');
-    },
-    methods:{
-        bingo:function(event){
-            $dataAddress = $(event.currentTarget).attr('data-address');
-            $('input[name="address-show"]').val($dataAddress);
-            $('input[name="address-show"]').attr('cus-select-value',$(event.currentTarget).attr('data-id'));
-            this.showFlag = 0;
-        },
-        show:function(){
-            this.showFlag = 1;
-        }
-    }
-});
+//var addressVue = new Vue({
+//    el:'.address-list-vue',
+//    data:{showFlag:0,currentValue:0},
+//    created:function(){
+//        $('.vue-none').removeClass('vue-none');
+//    },
+//    methods:{
+//        bingo:function(event){
+//            $dataAddress = $(event.currentTarget).attr('data-address');
+//            $('input[name="address-show"]').val($dataAddress);
+//            $('input[name="address-show"]').attr('cus-select-value',$(event.currentTarget).attr('data-id'));
+//            this.showFlag = 0;
+//        },
+//        show:function(){
+//            this.showFlag = 1;
+//        }
+//    }
+//});
 
 </script>
 @stop

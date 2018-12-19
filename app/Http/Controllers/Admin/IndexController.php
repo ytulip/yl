@@ -1580,6 +1580,12 @@ class IndexController extends Controller
 
         return view('admin.finance_user')->with('paginate', $paginate);
     }
+
+
+    public function anyCleanManager()
+    {
+        return view('admin.clean_manager');
+    }
     /* this is end*/
 
 }
