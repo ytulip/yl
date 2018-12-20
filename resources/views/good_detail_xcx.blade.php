@@ -168,8 +168,7 @@
             }catch (ex){}
         }
         window.setInterval("reinitIframe()", 200);
-    </script>
-    <script>
+   
 
 
 
