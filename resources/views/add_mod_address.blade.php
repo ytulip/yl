@@ -133,6 +133,7 @@
     <form id="form_data">
         <input name="address_id" value="{{\App\Util\Kit::issetThenReturn($address,'address_id')}}" style="display: none;"/>
         <input name="is_default" value=@if(!\App\Util\Kit::issetThenReturn($address,'is_default')) 0 @else 1 @endif style="display: none;"/>
+        <input name="openid" value="{{\Illuminate\Support\Facades\Request::input('openid')}}" style="display: none;"/>
     <div>
 
         {{--<div class="mui-input-row">--}}
@@ -185,9 +186,7 @@
                         <span class="fs-14-fc-212229">所在地区</span>
                     </div>
                     <div class="cus-row-col-8">
-                        <div id="city">
-                        <j-city cname="city_code" cvalue="{{\App\Util\Kit::issetThenReturn($address,'pct_code')}}"></j-city>
-                        </div>
+                        {!! \App\Model\SyncModel::neighborhoods('neighborhood') !!}
                     </div>
                     <div class="cus-row-col-1 t-al-r"><span class="next-icon"></span></div>
                 </div>

@@ -8,6 +8,7 @@ use App\Model\Essay;
 use App\Model\FinanceClass;
 use App\Model\InvitedCodes;
 use App\Model\Message;
+use App\Model\Neighborhood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
@@ -394,7 +395,7 @@ class UserController extends Controller
             'address_id'=>'exists:user_address,address_id',
             'real_name'=>'required',
             'phone'=>'required',
-            'city_code'=>'required',
+            'neighborhood'=>'required',
             'address'=>'required'
         ]);
 
@@ -408,8 +409,8 @@ class UserController extends Controller
 
             $address->address_name = Request::input('real_name');
             $address->mobile = Request::input('phone');
-            $address->pct_code = Request::input('city_code');
-            $address->pct_code_name = '';
+            $address->pct_code = Request::input('neighborhood');
+            $address->pct_code_name = Neighborhood::getColumnValueById('neighborhood_name',$address->pct_code);;
             $address->address = Request::input('address');
             $address->is_default = Request::input('is_default');
             $address->save();
@@ -419,8 +420,8 @@ class UserController extends Controller
             $address->user_id = Auth::id();
             $address->address_name = Request::input('real_name');
             $address->mobile = Request::input('phone');
-            $address->pct_code = Request::input('city_code');
-            $address->pct_code_name = SyncModel::pctnameByCode($address->pct_code);
+            $address->pct_code = Request::input('neighborhood');
+            $address->pct_code_name = Neighborhood::getColumnValueById('neighborhood_name',$address->pct_code);
             $address->address = Request::input('address');
             $address->is_default = Request::input('is_default');
             $address->save();

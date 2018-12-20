@@ -23,6 +23,19 @@ class Neighborhood extends Model{
         }
     }
 
+
+    static public function getColumnValueById($column,$id)
+    {
+        $obj = self::find($id);
+        if( isset($obj->$column))
+        {
+            return $obj->$column;
+        } else
+        {
+            return '';
+        }
+    }
+
     /*
      * 添加config
      */
