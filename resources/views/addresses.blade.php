@@ -32,7 +32,7 @@
         @if(count($addressList))
         @foreach( $addressList as $address )
         <div class="address-item" style="margin-bottom: 20px;">
-            <div class="item-header">
+            <div class="item-header" onclick="chooseAddress()">
                 <div><span>{{$address->address_name}}</span>&nbsp;&nbsp;<span>{{\App\Util\Kit::phoneHide($address->mobile)}}</span></div>
                 <p><span>{{$address->pct_code_name}}</span>&nbsp;&nbsp;<span>{{$address->address}}</span></p>
             </div>
@@ -59,7 +59,18 @@
 @stop
 
 @section('script')
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script>
+        
+        function chooseAddress() {
+            wx.miniProgram.navigateBack(
+                {
+                    delta:1
+                }
+            );
+        }
+        
+        
         function deleteAddress(addressId)
         {
             $.post('/user/delete-address',{address_id:addressId},function(data){
