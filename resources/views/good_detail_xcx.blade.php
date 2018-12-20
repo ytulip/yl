@@ -133,7 +133,7 @@
 
         var pageConfig = {
             product_id: {{\Illuminate\Support\Facades\Request::input('product_id',1)}},
-            openid:{{\Illuminate\Support\Facades\Request::input('openid')}}
+            openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}"
         }
 
         function reinitIframe(){
@@ -168,9 +168,15 @@
             }catch (ex){}
         }
         window.setInterval("reinitIframe()", 200);
-   
 
 
+
+        function buy(){
+            wx.miniProgram.navigateTo(
+                {
+                    url: "/pages/fillbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid
+                });
+        }
 
         var mySwiper = new Swiper ('.swiper-container', {
 //            direction: 'vertical', // 垂直切换选项
@@ -207,12 +213,6 @@
             });
         });
 
-        function buy(){
-            wx.miniProgram.navigateTo(
-                {
-                    url: "/pages/fillbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid
-                });
-        }
 
 
 
