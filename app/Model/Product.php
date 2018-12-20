@@ -24,4 +24,16 @@ class Product extends Model
     {
         return Product::find(1);
     }
+
+
+    public function getAttrs($filters = [])
+    {
+        $query = ProductAttr::where('product_id',$this->id);
+        if( $filters )
+        {
+            $query->where($filters);
+        }
+
+        return $query->get();
+    }
 }

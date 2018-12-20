@@ -14,7 +14,7 @@
             </div>
 
             @foreach($paginate as $key=>$val)
-                <div class="row paginate-list-row" onclick="goHref('/admin/index/clean-detail?id={{$val->id}}')">
+                <div class="row paginate-list-row">
                     <div class="col-md-2 col-lg-2">{{$val->id}}</div>
                     <div class="col-md-1 col-lg-1">{{$val->product_name}}</div>
                 </div>

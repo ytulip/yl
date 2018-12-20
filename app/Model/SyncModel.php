@@ -80,100 +80,23 @@ class SyncModel{
     }
 
 
+
+    /**
+     * @param $name
+     * @param bool $value
+     * @return string
+     */
+    static public function neighborhoods($name,$value = false){
+        return self::selectedCallBack($name,$value,function(){
+            return Neighborhood::neighborhoodConfig();
+        });
+    }
+
+
     static public function pctnameByCode($code)
     {
         $res = DB::table('code_library')->where('ITEMNO',$code)->first();
         return Kit::issetThenReturn($res,'ITEMNAME');
     }
 
-
-//    static public function areaCodeToCity(){
-//        $res = SyncCodeLibraryModel::areaCodeToCity();
-//
-//        $firstLevel = array();
-//        $secondeLevel = array();
-//        foreach($res as $item){
-//            if(($item->ITEMNO%10000) == 0){
-//                //array_push($firstLevel,array('name'=>$item->ITEMNAME,'value'=>$item->ITEMNO,'data'=>array()));
-//                array_push($firstLevel,array('name'=>$item->ITEMNAME,'id'=>$item->ITEMNO,'child'=>array()));
-//            }
-//        }
-//
-//        foreach($res as $item){
-//            if(($item->ITEMNO%10000) == 0){
-//                continue;
-//            }
-//            $parentValue = intval($item->ITEMNO/10000) * 10000;
-//            foreach($firstLevel as $key=>$val){
-//                /*
-//                if($val['value'] == $parentValue){
-//                    array_push($firstLevel[$key]['data'],array('name'=>str_replace($val['name'],'',$item->ITEMNAME),'val'=>$item->ITEMNO));
-//                    break;
-//                }
-//                */
-//                if($val['id'] == $parentValue){
-//                    array_push($firstLevel[$key]['child'],array('name'=>str_replace($val['name'],'',$item->ITEMNAME),'id'=>$item->ITEMNO));
-//                    break;
-//                }
-//            }
-//        }
-//
-//        //return $firstLevel;
-//        return array("data"=>$firstLevel);
-//    }
-//
-//
-//    static public function areaCodeToTown(){
-//        $res = SyncCodeLibraryModel::areaCodeToTown();
-//
-//        $firstLevel = array();
-//        foreach($res as $item){
-//            if(($item->ITEMNO%10000) == 0){
-//                //省放进去
-//                array_push($firstLevel,array('name'=>$item->ITEMNAME,'id'=>$item->ITEMNO,'child'=>array()));
-//            }
-//        }
-//
-//        foreach($res as $item){
-//            if(($item->ITEMNO%10000) == 0){
-//                continue;
-//            }
-//
-//            if(($item->ITEMNO%100) != 0){
-//                continue;
-//            }
-//            $parentValue = intval($item->ITEMNO/10000) * 10000;
-//            foreach($firstLevel as $key=>$val){
-//                if($val['id'] == $parentValue){
-//                    //市
-//                    array_push($firstLevel[$key]['child'],array('name'=>str_replace($val['name'],'',$item->ITEMNAME),'id'=>$item->ITEMNO));
-//                    break;
-//                }
-//            }
-//        }
-//
-//        foreach($res as $item){
-//            if(($item->ITEMNO%10000) == 0){
-//                continue;
-//            }
-//            if(($item->ITEMNO%100) == 0){
-//                continue;
-//            }
-//            $parentValue = intval($item->ITEMNO/100) * 100;
-//
-//            foreach($firstLevel as $key=>$val){
-//                if(count($val['child'])>0){
-//                    foreach($val['child'] as $keycity=>$city){
-//                        if($parentValue == $city['id']){
-//                            //县
-//                            $firstLevel[$key]['child'][$keycity]['child'][] = array('name'=>$item->ITEMNAME,
-//                                'id'=>$item->ITEMNO);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return array("data"=>$firstLevel);
-//    }
 }

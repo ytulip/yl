@@ -11,6 +11,7 @@ use App\Model\FinanceUser;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\MonthGetGood;
+use App\Model\Neighborhood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
@@ -1587,7 +1588,17 @@ class IndexController extends Controller
 
     public function anyCleanManager()
     {
-        return view('admin.clean_manager');
+
+        $query = Product::where('type',1);
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.clean_manager')->with('paginate', $paginate);
+    }
+
+    public function anyFoodManager()
+    {
+        $query = Product::where('type',2);
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.food_manager')->with('paginate', $paginate);
     }
 
 
@@ -1613,6 +1624,40 @@ class IndexController extends Controller
 
     public function anyFoodTask(){
         return view('admin.segment.food_task');
+    }
+
+
+    public function anyCleanDetail()
+    {
+        $product = Product::find(Request::input('id'));
+        return view('admin.clean_detail')->with('product',$product);
+    }
+
+    public function anyAddOrModifyProductAttr()
+    {
+        if( $id = Request::input('id') )
+        {
+            $productAttr = ProductAttr::find($id);
+        } else
+        {
+            $productAttr = new ProductAttr();
+        }
+
+        $productAttr->size = Request::input('size');
+        $productAttr->price = Request::input('price');
+        $productAttr->product_id = Request::input('product_id');
+
+
+        if( $neighborhood = Neighborhood::find(Request::input('neighborhood_name',0)) )
+        {
+            $productAttr->neighborhood_id = $neighborhood->id;
+            $productAttr->neighborhood_name = $neighborhood->neighborhood_name;
+        }
+//        $productAttr->neighborhood_name = Request::input('');
+
+        $productAttr->save();
+
+        return $this->jsonReturn(1);
     }
     /* this is end*/
 

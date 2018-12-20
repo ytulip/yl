@@ -168,14 +168,14 @@
                 <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="/admin/index/essays"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
 
                     <ul id="menu-academico-sub" >
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐服务</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-manager">助餐服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-manager">保洁服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">社区服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/power">服务人员管理</a></li>
                     </ul>
                     <div class="sub-menu">
-                        <a href="/admin/index/total-finance">助餐订单</a>
+                        <a href="/admin/index/food-manager">助餐订单</a>
                         <a href="/admin/index/clean-manager">保洁服务</a>
                         <a href="/admin/index/get-good">会员服务</a>
                         <a href="/admin/index/get-good">社区服务</a>
