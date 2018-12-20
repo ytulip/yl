@@ -63,9 +63,14 @@
     <script>
         
         function chooseAddress() {
+            wx.miniProgram.postMessage({ data: 'foo' });
             wx.miniProgram.navigateBack(
                 {
-                    delta:1
+                    delta:1,
+                    success:function()
+                    {
+                        console.log();
+                    }
                 }
             );
         }
