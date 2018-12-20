@@ -69,7 +69,7 @@
                     delta:1,
                     success:function()
                     {
-                        console.log();
+                        console.log('999888');
                     }
                 }
             );
