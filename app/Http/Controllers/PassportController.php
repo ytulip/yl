@@ -9,6 +9,7 @@ use App\Model\InvitedCodes;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\UserAddress;
+use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
 use App\Util\DownloadExcel;
@@ -574,6 +575,13 @@ class PassportController extends Controller
     {
         $products = Product::where('type',Request::input('type'))->selectRaw('id,cover_image,product_name,sub_desc')->get();
         return $this->jsonReturn(1,$products->toJson());
+    }
+
+
+    public function anyConfigDetail()
+    {
+        $val = json_decode(YlConfig::value(Request::input('config_name')));
+        return view('show_product_detail')->with('content',isset($val->content)?$val->content:'');
     }
 
 
