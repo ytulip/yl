@@ -31,7 +31,6 @@
     </style>
 @stop
 @section('container')
-    {{--@include('segments.header',['headerTile'=>'辣木膳购买系统'])--}}
 
 
     <div class="info-vue">
@@ -56,14 +55,14 @@
 
             {{--<div style="padding: 0 10px;"><div class="pro-essay-barr"></div></div>--}}
 
-            <iframe src="/passport/good-detail?product_id=&index=0" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
+            <iframe src="/passport/config-detail?config_name=vip_food" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
 
-            <iframe src="/passport/good-detail?product_id=&index=1" frameborder="0" scrolling="no" id="test1" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 2) }"></iframe>
+            <iframe src="/passport/config-detail?config_name=vip_clean" frameborder="0" scrolling="no" id="test1" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 2) }"></iframe>
 
 
-            <iframe src="/passport/good-detail?product_id=&index=2" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
+            <iframe src="/passport/config-detail?config_name=vip_finance" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
 
-            <iframe src="/passport/good-detail?product_id=&index=3" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
+            <iframe src="/passport/config-detail?config_name=vip_helath" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
 
             <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
 
