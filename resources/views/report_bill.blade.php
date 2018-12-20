@@ -196,7 +196,7 @@
     function modifyAddress() {
         wx.miniProgram.navigateTo(
             {
-                url: "/pages/address/main"
+                url: "/pages/address/main?openid=" + pageConfig.openid
             });
     }
 

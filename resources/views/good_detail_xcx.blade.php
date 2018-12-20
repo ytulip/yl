@@ -132,7 +132,8 @@
     <script type="text/javascript">
 
         var pageConfig = {
-            product_id: {{\Illuminate\Support\Facades\Request::input('product_id',1)}}
+            product_id: {{\Illuminate\Support\Facades\Request::input('product_id',1)}},
+            openid:{{\Illuminate\Support\Facades\Request::input('openid')}}
         }
 
         function reinitIframe(){
@@ -210,7 +211,7 @@
         function buy(){
             wx.miniProgram.navigateTo(
                 {
-                    url: "/pages/fillbill/main?product_id=1"
+                    url: "/pages/fillbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid
                 });
         }
 
