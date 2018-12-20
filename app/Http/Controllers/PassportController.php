@@ -570,4 +570,11 @@ class PassportController extends Controller
     }
 
 
+    public function anyProductList()
+    {
+        $products = Product::where('type',Request::input('type'))->selectRaw('id,cover_image,product_name,sub_desc')->get();
+        return $this->jsonReturn(1,$products->toJson());
+    }
+
+
 }
