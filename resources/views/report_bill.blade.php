@@ -132,7 +132,7 @@
                     <div class="in-bl-v-m"><i class="agree-icon"></i></div>
                     <div class="in-bl-v-m fs-16-fc-030303">服务地址</div>
                 </div>
-                <div class="cus-row-col-6 fs-16-fc-030303">
+                <div class="cus-row-col-6 fs-16-fc-030303" onclick="modifyAddress()">
                     修改
                 </div>
             </div>
@@ -186,10 +186,19 @@
 
 @section('script')
 <script src="/js/vue.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 <script src="/js/plugin/mobile-select/mobileSelect.js"></script>
 <script src="/js/cus-select.js"></script>
 <script src="/js/utils/isMP.js"></script>
 <script>
+
+
+    function modifyAddress() {
+        wx.miniProgram.navigateTo(
+            {
+                url: "/pages/address/main"
+            });
+    }
 
     var pageConfig = {
         service_time:{!!  \App\Model\YlConfig::value('clean_service_time') !!},
