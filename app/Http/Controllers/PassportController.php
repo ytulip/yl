@@ -573,7 +573,7 @@ class PassportController extends Controller
 
     public function anyProductList()
     {
-        $products = Product::where('type',Request::input('type'))->selectRaw('id,cover_image,product_name,sub_desc')->where('status',1)->get();
+        $products = Product::where('type',Request::input('type'))->selectRaw('id, concat("'.env('IMAGE_HOST').'",cover_image) as cover_image,product_name,sub_desc')->where('status',1)->get();
         return $this->jsonReturn(1,$products->toJson());
     }
 

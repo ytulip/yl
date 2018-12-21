@@ -22,7 +22,8 @@
                     <div class="col-md-3 col-lg-3">{{$item->neighborhood_name}}</div>
                     <div class="col-md-3 col-lg-3">{{$item->size}}</div>
                     <div class="col-md-3 col-lg-3">{{$item->price}}</div>
-                    <div class="col-md-3 col-lg-3"></div>
+                    <div class="col-md-3 col-lg-3">
+                    </div>
                 </div>
             @endforeach
 

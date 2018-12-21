@@ -1589,7 +1589,7 @@ class IndexController extends Controller
     public function anyCleanManager()
     {
 
-        $query = Product::where('type',1);
+        $query = Product::where('type',1)->whereIn('status',[0,1,2]);
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.clean_manager')->with('paginate', $paginate);
     }
@@ -1660,6 +1660,18 @@ class IndexController extends Controller
         return $this->jsonReturn(1);
     }
 
+
+    /**
+     * 设置状态
+     */
+    public function anySetStatus()
+    {
+        $product = Product::find(Request::input('id'));
+        $product->status = Request::input('status');
+        $product->save();
+
+        return $this->jsonReturn(1);
+    }
 
     /**
      *
