@@ -32,7 +32,7 @@
         @if(count($addressList))
         @foreach( $addressList as $address )
         <div class="address-item" style="margin-bottom: 20px;">
-            <div class="item-header" onclick="chooseAddress({{$address->address_id}},'{{$address->address_name}}','{{$address->mobile}}','{{$address->pct}}','{{$address->pct_code_name}}','{{$address->address}}')">
+            <div class="item-header" onclick="chooseAddress({{$address->address_id}},'{{$address->address_name}}','{{$address->mobile}}','{{$address->pct_code}}','{{$address->pct_code_name}}','{{$address->address}}')">
                 <div><span>{{$address->address_name}}</span>&nbsp;&nbsp;<span>{{\App\Util\Kit::phoneHide($address->mobile)}}</span></div>
                 <p><span>{{$address->pct_code_name}}</span>&nbsp;&nbsp;<span>{{$address->address}}</span></p>
             </div>
