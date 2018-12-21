@@ -23,7 +23,7 @@
     <div class="cus-row p-l-r-14">
         <div class="cus-row-col-4"><a href="/user/center"><i class="back-icon"></i></a></div>
         <div class="cus-row-col-4 t-al-c"><span class="fs-17-fc-212229" style="line-height: 68px;">收货地址管理</span></div>
-        <div class="cus-row-col-4 t-al-r"><a href="/user/add-mod-address"><span class="fs-16-fc-212229">新增</span></a></div>
+        <div class="cus-row-col-4 t-al-r" onclick="goAddMode()"><a href="javascript:void(0);"><span class="fs-16-fc-212229">新增</span></a></div>
     </div>
 
 
@@ -71,6 +71,15 @@
                     {
                         console.log('999888');
                     }
+                }
+            );
+        }
+
+
+        function  goAddMode() {
+            wx.miniProgram.navigateTo(
+                {
+                    url:'/pages/editaddress/main'
                 }
             );
         }
