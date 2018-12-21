@@ -63,7 +63,8 @@
     <script>
         
         function chooseAddress(id,name,phone,pct,address) {
-            wx.miniProgram.postMessage({ id: id, name:name,phone: phone,pct:pct,address:address});
+            var jsonData = JSON.stringify({ id: id, name:name,phone: phone,pct:pct,address:address});
+            wx.miniProgram.postMessage({ data: jsonData});
             wx.miniProgram.navigateBack(
                 {
                     delta:1,
