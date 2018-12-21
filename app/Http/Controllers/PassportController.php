@@ -585,4 +585,30 @@ class PassportController extends Controller
     }
 
 
+    public function anyProductInfo()
+    {
+        $product = Product::find(Request::input('id'));
+        $attrs = $product->getAttrs();
+
+
+        $arr = [];
+        foreach ( $attrs as $key=>$item )
+        {
+            $kv = ['size'=>$item->size,'price'=>$item->price];
+//            var_dump($kv);
+            $ids = array_pluck($arr,'neighborhood_id');
+            $ind = array_search($item->neighborhood_id,$ids);
+            if( $ind === false )
+            {
+                //没有新增
+                $arr[] = ["neighborhood_id"=>$item->neighborhood_id,"kv"=>[]];
+                $ind = count($arr) - 1;
+            }
+            $arr[$ind]['kv'][] = $kv;
+        }
+
+        return $this->jsonReturn(1,['arr'=>$arr]);
+    }
+
+
 }
