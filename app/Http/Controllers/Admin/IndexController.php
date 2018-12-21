@@ -1659,6 +1659,20 @@ class IndexController extends Controller
 
         return $this->jsonReturn(1);
     }
+
+
+    /**
+     *
+     *
+     */
+    public function  anyAddProduct()
+    {
+        $product = new Product();
+        $product->type = 1;
+        $product->save();
+
+        return $this->jsonReturn(1,$product->id);
+    }
     /* this is end*/
 
 }

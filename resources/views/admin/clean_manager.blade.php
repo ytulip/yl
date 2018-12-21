@@ -23,10 +23,26 @@
 
         <div class="fl-r"><?php echo $paginate->render(); ?></div>
     </form>
+
+    <div style="position: fixed;right: 60px;bottom: 60px;">
+        <div style="width: 56px;height:56px;border-radius:96px;background-color:#697b8c; "><a style="width: 100%;display: block;line-height: 56px;text-align: center;font-size: 40px;color:#ffffff;" href="javascript:openAddMember()"><i class="fa fa-plus"></i></a></div>
+    </div>
 @stop
 
 @section('script')
     <script>
-
+        /**
+         * 添加用户
+         */
+        function openAddMember()
+        {
+            new SubmitButton(
+                {
+                    url:'/admin/index/add-product',
+                    callback:function(el,res){
+                        location.href = '/admin/index/clean-detail?id=' + res.data;
+                    }
+                })
+        }
     </script>
 @stop
