@@ -69,14 +69,31 @@ class UserController extends Controller
         $user = User::getCurrentUser();
 
 
+        //取价格和取面积
+        $productAttr = ProductAttr::find(Request::input('attr_id'));
+
+
         $order = new Order();
         $order->product_id = $product->id;
         $order->product_name = $product->product_name;
-        $order->quantity = Request::input('size');
-        $order->need_pay = $order->quantity * $product->price;
+        $order->quantity = 1;
+        $order->product_attr_id = $productAttr->id;
+        $order->need_pay = $productAttr->price;
+        $order->size = $productAttr->size;
         $order->user_id = $user->id;
         $order->remark = Request::input('remark');
-        $order->service_time = Request::input('service_time');
+        $order->service_time = Request::input('clean_service_time');
+
+
+        //模拟支付
+        if(env('MOCK_PAY'))
+        {
+            $order->pay_status = 1;
+            $order->pay_time = date('Y-m-d H:i:s');
+            $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+        }
+
+
         $order->save();
 
         return $this->jsonReturn(1,'下单成功');

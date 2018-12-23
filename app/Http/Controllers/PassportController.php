@@ -594,7 +594,7 @@ class PassportController extends Controller
         $arr = [];
         foreach ( $attrs as $key=>$item )
         {
-            $kv = ['size'=>$item->size,'price'=>$item->price];
+            $kv = ['size'=>$item->size,'price'=>$item->price,'attr_id'=>$item->id];
 //            var_dump($kv);
             $ids = array_pluck($arr,'neighborhood_id');
             $ind = array_search($item->neighborhood_id,$ids);
