@@ -78,14 +78,14 @@
 
             {{--<div style="padding: 0 10px;"><div class="pro-essay-barr"></div></div>--}}
 
-            <iframe src="/passport/good-detail?product_id=&index=0" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
+            <iframe src="/user/service-segment?type=food&openid={{\Illuminate\Support\Facades\Request::input('openid')}}" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
 
-            <iframe src="/passport/good-detail?product_id=&index=1" frameborder="0" scrolling="no" id="test1" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 2) }"></iframe>
+            <iframe src="/user/service-segment?type=clean&openid={{\Illuminate\Support\Facades\Request::input('openid')}}" frameborder="0" scrolling="no" id="test1" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 2) }"></iframe>
 
 
-            <iframe src="/passport/good-detail?product_id=&index=2" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
+            <iframe src="/user/service-segment?type=finance&openid={{\Illuminate\Support\Facades\Request::input('openid')}}" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
 
-            <iframe src="/passport/good-detail?product_id=&index=3" frameborder="0" scrolling="no" id="test2" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 3) }"></iframe>
+            <iframe src="/user/service-segment?type=health&openid={{\Illuminate\Support\Facades\Request::input('openid')}}" frameborder="0" scrolling="no" id="test3" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;"  v-bind:class="{ 'active-iframe': (tabIndex == 4) }"></iframe>
 
             <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
 
@@ -113,34 +113,34 @@
 //                console.log(height);
             }catch (ex){}
 
-            var iframe = document.getElementById("test1");
+            var iframe1 = document.getElementById("test1");
             try{
 //                var bHeight = iframe.contentWindow.document.body.scrollHeight;
 //                console.log(iframe.contentWindow.document.body.clientHeight);
 //                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
 //                console.log(bHeight,dHeight);
 //                var height = Math.max(bHeight, dHeight);
-                iframe.height = iframe.contentWindow.document.body.clientHeight;
-//                console.log(height);
+                iframe1.height = iframe1.contentWindow.document.body.clientHeight;
+                // console.log(iframe1.height);
             }catch (ex){}
 
 
-            var iframe = document.getElementById("test2");
+            var iframe2 = document.getElementById("test2");
             try{
 //                var bHeight = iframe.contentWindow.document.body.scrollHeight;
 //                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
 //                var height = Math.max(bHeight, dHeight);
-                iframe.height = iframe.contentWindow.document.body.clientHeight;
+                iframe2.height = iframe2.contentWindow.document.body.clientHeight;
 //                console.log(height);
             }catch (ex){}
 
 
-            var iframe = document.getElementById("test3");
+            var iframe3 = document.getElementById("test3");
             try{
 //                var bHeight = iframe.contentWindow.document.body.scrollHeight;
 //                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
 //                var height = Math.max(bHeight, dHeight);
-                iframe.height = iframe.contentWindow.document.body.clientHeight;
+                iframe3.height = iframe3.contentWindow.document.body.clientHeight;
 //                console.log(height);
             }catch (ex){}
         }

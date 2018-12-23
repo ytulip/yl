@@ -839,4 +839,10 @@ class UserController extends Controller
     {
         return view('book_finance');
     }
+
+    public function anyServiceSegment()
+    {
+        $list = Order::where('user_id',Auth::id())->where('order_status','>',0)->get();
+        return view('segments.clean_segment')->with('list',$list);
+    }
 }
