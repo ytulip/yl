@@ -587,7 +587,7 @@ class IndexController extends Controller
 
     public function postGood()
     {
-        $product = Product::find(1);
+        $product = Product::find(Re);
         $product->consumer_service_phone = Request::input('consumer_service_phone');
         $product->cover_image = Request::input('cover_image');
         $product->product_name = Request::input('title');
