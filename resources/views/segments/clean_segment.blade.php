@@ -21,8 +21,15 @@
                 @foreach($list as $key=>$item)
                     <li style="padding: 22px;margin-bottom: 14px;background-color: #ffffff;border-top: 1px solid #ebeaea;border-bottom:1px solid #ebeaea;" data-id="{{$item->id}}">
                         <div class="cus-row cus-row-v-m">
-                            <div class="cus-row-col-6"><span class="fs-14-fc-212229" style="margin-top: 4px;display: inline-block;">{{$item->real_name}}</span></div>
+                            <div class="cus-row-col-6"><span class="fs-14-fc-212229" style="margin-top: 4px;display: inline-block;">保洁服务</span></div>
                             <div class="cus-row-col-6 t-al-r"><a href="tel:{{$item->phone}}" class="fs-14-fc-98CC3D">{{$item->phone}}</a></div>
+                        </div>
+                        <div class="cus-row cus-row-v-m">
+                            <div class="cus-row-col-6"><span class="fs-14-fc-212229" style="margin-top: 4px;display: inline-block;">清洁类型:{{$item->product_name}}</span></div>
+                        </div>
+
+                        <div class="cus-row cus-row-v-m">
+                            <div class="cus-row-col-6"><span class="fs-14-fc-212229" style="margin-top: 4px;display: inline-block;">服务时间:{{$item->service_time}}</span></div>
                         </div>
                     </li>
                     {{--<li class="mui-table-view-cell">--}}

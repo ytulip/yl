@@ -842,7 +842,23 @@ class UserController extends Controller
 
     public function anyServiceSegment()
     {
-        $list = Order::where('user_id',Auth::id())->where('order_status','>',0)->get();
-        return view('segments.clean_segment')->with('list',$list);
+        $type = Request::input('type');
+
+        if ( $type == 'clean') {
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',1)->get();
+            return view('segments.clean_segment')->with('list', $list);
+        } else if ($type == 'food')
+        {
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',2)->get();
+            return view('segments.clean_segment')->with('list', $list);
+        } else if ( $type == 'finance' )
+        {
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
+            return view('segments.clean_segment')->with('list', $list);
+        } else if ( $type == 'health')
+        {
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
+            return view('segments.clean_segment')->with('list', $list);
+        }
     }
 }

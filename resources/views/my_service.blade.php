@@ -28,6 +28,8 @@
         .active-iframe{
             display: block !important;
         }
+
+        iframe{min-height: 400px;}
     </style>
 @stop
 @section('container')
