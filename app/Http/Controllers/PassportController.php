@@ -607,7 +607,9 @@ class PassportController extends Controller
             $arr[$ind]['kv'][] = $kv;
         }
 
-        return $this->jsonReturn(1,['arr'=>$arr]);
+        $timeArray = json_decode(YlConfig::value('clean_service_time'));
+
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray]);
     }
 
 
