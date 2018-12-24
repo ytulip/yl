@@ -53,7 +53,7 @@
         {
             pageConfig.tmp_id = id;
             pageConfig.tmp_status = status;
-            // $('#setStatus').trigger('click');
+            $('#setStatus').trigger('click');
         }
 
 
@@ -77,6 +77,7 @@
                 selectorStr:'#add_user',
                 url:'/admin/index/add-product',
                 callback:function(el,res){
+                    location.reload();
                     //location.href = '/admin/index/clean-detail?id=' + res.data;
                 }
             })
