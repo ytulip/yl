@@ -84,7 +84,10 @@
             data:function(){
                 return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src')};
             },
-            redirectTo:'/admin/index/good'
+            callback:function (el,val)
+            {
+                location.reload();
+            }
         });
 
 

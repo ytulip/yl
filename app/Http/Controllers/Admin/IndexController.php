@@ -587,13 +587,13 @@ class IndexController extends Controller
 
     public function postGood()
     {
-        $product = Product::find(Re);
-        $product->consumer_service_phone = Request::input('consumer_service_phone');
+        $product = Product::find(Request::input('id'));
+//        $product->consumer_service_phone = Request::input('consumer_service_phone');
         $product->cover_image = Request::input('cover_image');
-        $product->product_name = Request::input('title');
-        $product->context = Request::input('content');
-        $product->context_deliver = Request::input('content_deliver');
-        $product->context_server = Request::input('content_server');
+//        $product->product_name = Request::input('title');
+//        $product->context = Request::input('content');
+//        $product->context_deliver = Request::input('content_deliver');
+//        $product->context_server = Request::input('content_server');
 
         $product->save();
         return $this->jsonReturn(1);
