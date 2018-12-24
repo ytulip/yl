@@ -174,7 +174,7 @@
         function buy(){
             wx.miniProgram.navigateTo(
                 {
-                    url: "/pages/fillbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid
+                    url: "/pages/fillfoodbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid
                 });
         }
 
