@@ -693,8 +693,14 @@ class UserController extends Controller
 
     public function getGoodDetailXcx()
     {
-
-        return view('good_detail_xcx')->with('product',Product::find(Request::input('product_id')));
+        $product = Product::find(Request::input('product_id'));
+        if($product->buy_type == 1)
+        {
+            return view('good_detail_xcx')->with('product',$product);
+        } else
+        {
+            return view('good_detail_food')->with('product',$product);
+        }
     }
 
     public  function getEssay()

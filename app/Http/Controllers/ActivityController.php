@@ -570,6 +570,12 @@ class ActivityController extends Controller
         if( $data['user'] )
         {
             $data['order'] = Order::where('user_id',$data['user']->id)->where('buy_type',Order::BUY_TYPE_ACTIVITY)->first();
+        } else {
+            //如果用户不存在则创建用户哟
+            $user = new User();
+            $user->openid = $response->openid;
+            $user->save();
+            $data['user'] = $user;
         }
         return $this->jsonReturn(1,$data);
     }
