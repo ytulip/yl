@@ -6,6 +6,7 @@ use App\Model\CashStream;
 use App\Model\Deliver;
 use App\Model\Essay;
 use App\Model\FinanceClass;
+use App\Model\FinanceUser;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\Neighborhood;
@@ -859,12 +860,60 @@ class UserController extends Controller
             return view('segments.clean_segment')->with('list', $list);
         } else if ( $type == 'finance' )
         {
-            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
-            return view('segments.clean_segment')->with('list', $list);
+//            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
+            $list = FinanceUser::where('user_id',Auth::id())->leftJoin('finance_class','finance_user.finance_id','=','finance_class.id')->get();
+            return view('segments.finance_segment')->with('list', $list);
         } else if ( $type == 'health')
         {
             $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
             return view('segments.clean_segment')->with('list', $list);
         }
+    }
+
+
+    /**
+     *购买VIP
+     */
+    public function anyBuyVip()
+    {
+        $user = User::getCurrentUser();
+        if( $expireDay = $user->vipExpireDay() )
+        {
+//            $expireDay = ;
+            $expireDay = strtotime("+5 days",strtotime($expireDay));
+        } else
+        {
+//            $expireDay = ;
+            $expireDay = strtotime("+5 days",time());
+
+        }
+        $user->expire_time= date('Y-m-d',$expireDay);
+
+        $user->save();
+        return $this->jsonReturn(1);
+    }
+
+
+    /**
+     * 报名参加讲座
+     */
+    public function anyTakePartInFinance()
+    {
+        $finance = FinanceClass::find(Request::input('finance_id'));
+        $user = User::getCurrentUser();
+
+        //判断是否重复预约
+        if( FinanceUser::where('user_id',$user->id)->where('finance_id',$finance->id)->count() )
+        {
+            return $this->jsonReturn(0,'请勿重复报名');
+        }
+
+
+        $financeUser = new FinanceUser();
+        $financeUser->finance_id = $finance->id;
+        $financeUser->user_id = $user->id;
+        $financeUser->save();
+
+        return $this->jsonReturn(1);
     }
 }

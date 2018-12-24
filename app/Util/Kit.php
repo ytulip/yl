@@ -39,6 +39,11 @@ class Kit
         return date('m月d日 H:i',strtotime($dateStr));
     }
 
+    public static function dateFormatDay($dateStr)
+    {
+        return date('Y-m-d',strtotime($dateStr));
+    }
+
     /**
      * @desc 相等查询
      * @param $query

@@ -184,7 +184,7 @@
 
                 </li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(5)) class="dpn" @endif><a href="/admin/index/members"><i class="fa fa-bar-chart menu-fa"></i><span>金融讲堂</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(5)) class="dpn" @endif><a href="/admin/index/finance-class"><i class="fa fa-bar-chart menu-fa"></i><span>金融讲堂</span><div class="clearfix"></div></a></li>
 
                 <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(10)) class="dpn" @endif><a href="/admin/index/angle-members"><i class="fa fa-bar-chart menu-fa"></i><span>内容管理</span><div class="clearfix"></div></a></li>
 

@@ -35,7 +35,11 @@
 @section('container')
     {{--@include('segments.header',['headerTile'=>'辣木膳购买系统'])--}}
 
+    @if($financeClass)
     <div>
+
+        <input type="hidden" name="finance_id" value="{{$financeClass->id}}"/>
+
         <div class="cus-row">
             <div class="cus-row-col-6">
                 <div class="in-bl-v-m"><i class="agree-icon"></i></div>
@@ -48,17 +52,22 @@
 
             </div>
             <div class="cus-row-col-8">
-                <div class="fs-16-fc-030303">讲课标题</div>
-                <div class="fs-16-fc-030303">主讲人:</div>
-                <div class="fs-16-fc-030303">讲课时间:</div>
+                <div class="fs-16-fc-030303">{{$financeClass->title}}</div>
+                <div class="fs-16-fc-030303">主讲人:{{$financeClass->owner_name}}</div>
+                <div class="fs-16-fc-030303">讲课时间:{{date('Y-m-d',strtotime($financeClass->open_time))}}</div>
             </div>
         </div>
+
+        <div>
+            <p class="t-al-c fs-16-fc-030303" id="take_part">免费预约，立即报名</p>
+        </div>
     </div>
+    @endif
 
 
 
 
-    <div class="info-vue">
+    <div class="info-vue m-t-20">
         <div class="cus-row">
             <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">助餐服务</span></div>
             <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 2) }" v-on:click="setTab(2)">保洁服务</span></div>
@@ -159,6 +168,21 @@
                 },
                 redirectTo:'/index'
             });
+        });
+
+
+
+
+        new SubmitButton({
+            selectorStr:"#take_part",
+            url:'/user/take-part-in-finance',
+            data:function()
+            {
+                return {finance_id:$('input[name="finance_id"]').val()}
+            },
+            callback:function(el,val){
+
+            }
         });
 
 

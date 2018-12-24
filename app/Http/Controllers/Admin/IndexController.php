@@ -7,6 +7,7 @@ use App\Log\Facades\Logger;
 use App\Model\Admin;
 use App\Model\CashStream;
 use App\Model\Essay;
+use App\Model\FinanceClass;
 use App\Model\FinanceUser;
 use App\Model\InvitedCodes;
 use App\Model\Message;
@@ -1658,6 +1659,14 @@ class IndexController extends Controller
         $productAttr->save();
 
         return $this->jsonReturn(1);
+    }
+
+
+    public function anyFinanceClass()
+    {
+        $query = FinanceClass::where('status','>',0);
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.finance_class')->with('paginate', $paginate);
     }
 
 
