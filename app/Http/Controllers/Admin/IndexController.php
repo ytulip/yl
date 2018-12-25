@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Log\Facades\Logger;
 use App\Model\Admin;
+use App\Model\Banner;
 use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\FinanceClass;
@@ -1693,6 +1694,45 @@ class IndexController extends Controller
         $product->save();
 
         return $this->jsonReturn(1,$product->id);
+    }
+
+
+    public function anyDataManager()
+    {
+        $list = Banner::getBannerList();
+        return view('admin.data_manager')->with('list',$list);
+    }
+
+    /**
+     * 编辑
+     */
+    public function anyEditDataManager()
+    {
+        $banner = Banner::find(Request::input('id'));
+        $banner->cover_image = Request::input('cover_image');
+        if( Request::input('status') )
+        {
+            $banner->status = Request::input('status');
+        }
+        $banner->save();
+        return $this->jsonReturn(1);
+    }
+
+    public function anyAddBanner()
+    {
+        $banner = new Banner();
+        $banner->title = '破鞋';
+        $banner->type = 1;
+        $banner->status = 0;
+        $banner->save();
+        return $this->jsonReturn(1);
+    }
+
+
+    public function anyBannerDetail()
+    {
+        $banner = Banner::find(Request::input('id'));
+        return view('admin.banner_detail')->with('banner',$banner);
     }
     /* this is end*/
 

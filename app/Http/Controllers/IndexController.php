@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Banner;
 use App\Model\Product;
 use App\Model\RandomPool;
 use App\Model\SmsManager;
@@ -17,7 +18,12 @@ class IndexController extends Controller
     /*为小程序提供无差别接口服务*/
     public function anyHomeMain()
     {
-        return $this->jsonReturn(1,['banners'=>[["url"=>"http://graphis.zhuyan.me/1.jpg"],["url"=>"http://graphis.zhuyan.me/2.jpg"]]]);
+        $banner = Banner::getBannerList([1]);
+        foreach( $banner as $key=>$item)
+        {
+            $banner[$key]->url = env('IMAGE_HOST') . $item->cover_image;
+        }
+        return $this->jsonReturn(1,['banners'=>$banner]);
     }
 
 
