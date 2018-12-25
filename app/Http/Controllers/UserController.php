@@ -67,6 +67,13 @@ class UserController extends Controller
     public function postReportBill()
     {
         $product = Product::find(Request::input('product_id'));
+
+
+        if($product->type != 1)
+        {
+            //购买食物
+        }
+
         $user = User::getCurrentUser();
 
 
