@@ -132,7 +132,7 @@
     <script type="text/javascript">
 
         var pageConfig = {
-            product_id: {{\Illuminate\Support\Facades\Request::input('product_id',1)}},
+            product_id: {{$product->id}},
             openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}"
         }
 
