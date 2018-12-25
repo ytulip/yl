@@ -610,7 +610,7 @@ class PassportController extends Controller
 
         $timeArray = json_decode(YlConfig::value('clean_service_time'));
 
-        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray]);
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time'))]);
     }
 
 
