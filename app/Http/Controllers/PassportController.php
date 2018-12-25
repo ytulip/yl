@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Log\Facades\Logger;
+use App\Model\Banner;
 use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
@@ -440,7 +441,7 @@ class PassportController extends Controller
 
     public function anyShowEssay()
     {
-        return view('show_essay')->with('essay',Essay::find(Request::input('id')));
+        return view('show_essay')->with('essay',Banner::find(Request::input('id')));
     }
 
     public function anyGoodDetail()
@@ -610,6 +611,17 @@ class PassportController extends Controller
         $timeArray = json_decode(YlConfig::value('clean_service_time'));
 
         return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray]);
+    }
+
+
+    public  function getBannerDetail()
+    {
+        $banner = Banner::find(Request::input('id'));
+        if( !$banner )
+        {
+            dd('文章不存在');
+        }
+        return view('essay')->with('essay',$banner);
     }
 
 
