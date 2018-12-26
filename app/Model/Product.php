@@ -36,4 +36,9 @@ class Product extends Model
 
         return $query->get();
     }
+
+    public function isCleanProduct()
+    {
+        return ($this->type == 1)?true:false;
+    }
 }

@@ -8,6 +8,7 @@ use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
 use App\Model\Order;
+use App\Model\Period;
 use App\Model\Product;
 use App\Model\UserAddress;
 use App\Model\YlConfig;
@@ -615,6 +616,15 @@ class PassportController extends Controller
         $timeArray = json_decode(YlConfig::value('clean_service_time'));
         $foodTime = new FoodTime();
 
+
+        //
+        $periodPrice = [];
+        if( !$product->isCleanProduct() ) {
+            foreach ($attrs as $key => $item) {
+                $periodPrice[] = ["attr_id"=>$item->id,"period_id"=>$item->period_id,"period_name"=>Period::periodName($item->period_id),"price"=>$item->price];
+            }
+        }
+
         return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList()]);
     }
 
@@ -628,6 +638,8 @@ class PassportController extends Controller
         }
         return view('essay')->with('essay',$banner);
     }
+
+
 
 
 }

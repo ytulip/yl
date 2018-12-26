@@ -93,6 +93,13 @@ class SyncModel{
     }
 
 
+    static public function period($name,$value = false){
+        return self::selectedCallBack($name,$value,function(){
+            return Period::periodConfig();
+        });
+    }
+
+
     static public function pctnameByCode($code)
     {
         $res = DB::table('code_library')->where('ITEMNO',$code)->first();
