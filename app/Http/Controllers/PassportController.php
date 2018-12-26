@@ -14,6 +14,7 @@ use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
 use App\Util\DownloadExcel;
+use App\Util\FoodTime;
 use App\Util\SmsTemplate;
 use App\User;
 use App\Util\DealString;
@@ -206,7 +207,10 @@ class PassportController extends Controller
 
     public function getTest()
     {
-        echo date('Y-m-d H:i:s',strtotime('+30 days',strtotime(date('Y-m-d'))));
+//        echo Carbon::parse('next Friday')->toDateTimeString();
+//        echo date('Y-m-d H:i:s',strtotime('+30 days',strtotime(date('Y-m-d'))));
+        $foodTime = new FoodTime();
+        var_dump($foodTime->startTimeList());
     }
 
     public function anyInitActivityUser()
@@ -609,8 +613,9 @@ class PassportController extends Controller
         }
 
         $timeArray = json_decode(YlConfig::value('clean_service_time'));
+        $foodTime = new FoodTime();
 
-        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time'))]);
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime]);
     }
 
 
