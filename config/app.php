@@ -146,6 +146,7 @@ return [
         App\Providers\LoggerServiceProvider::class,
         App\Providers\WechatServiceProvider::class,
         App\Providers\SmallWechatServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 

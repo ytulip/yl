@@ -12,6 +12,7 @@ class FoodTime
     public $currentTime;
     public $nextMonday;
     public $weekDates = [];
+    public $lastWeekDates = [];
 
     public function __construct()
     {
@@ -27,20 +28,22 @@ class FoodTime
     }
 
 
-    public function menuTimeList()
+    public function menuTimeList($type = 3)
     {
         $cWeek = [];
         $lWeek = [];
-        foreach ($this->weekDates as $key=>$item)
-        {
 
-            $cWeek[] =  $item->format('Y-m-d');
+        if($type == 3 || $type == 1) {
+            foreach ($this->weekDates as $key => $item) {
+
+                $cWeek[] = $item->format('Y-m-d');
+            }
         }
 
-
-        foreach ($this->lastWeekDates as $key=>$item)
-        {
-            $lWeek[] =  $item->format('Y-m-d');
+        if($type == 3 || $type == 2) {
+            foreach ($this->lastWeekDates as $key => $item) {
+                $lWeek[] = $item->format('Y-m-d');
+            }
         }
 
         return array_merge($cWeek,$lWeek);

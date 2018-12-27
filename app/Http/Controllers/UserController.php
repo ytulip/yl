@@ -7,6 +7,7 @@ use App\Model\Deliver;
 use App\Model\Essay;
 use App\Model\FinanceClass;
 use App\Model\FinanceUser;
+use App\Model\FoodMenu;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\Neighborhood;
@@ -17,6 +18,7 @@ use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
 use App\Util\DealString;
+use App\Util\FoodTime;
 use App\Util\Kit;
 use App\Util\SmsTemplate;
 use Faker\Provider\Address;
@@ -881,8 +883,8 @@ class UserController extends Controller
             return view('segments.clean_segment')->with('list', $list);
         } else if ($type == 'food')
         {
-            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',2)->get();
-            return view('segments.clean_segment')->with('list', $list);
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',100)->get();
+            return view('segments.food_segment')->with('list', $list);
         } else if ( $type == 'finance' )
         {
 //            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
@@ -940,5 +942,21 @@ class UserController extends Controller
         $financeUser->save();
 
         return $this->jsonReturn(1);
+    }
+
+    public function anyCleanOrFoodOrderDetail()
+    {
+        $order = Order::find(Request::input('id'));
+        $product = Product::find($order->product_id);
+        if ( $product->isCleanProduct() )
+        {
+            return view('clean_detail')->with('product',$product)->with('order',$order);
+        } else
+        {
+            $foodTime = new FoodTime();
+            $cWeek = FoodMenu::where('product_id',$product->id)->whereIn('date',$foodTime->menuTimeList(1))->get();
+            $lWeek = FoodMenu::where('product_id',$product->id)->whereIn('date',$foodTime->menuTimeList(2))->get();;
+            return view('food_detail')->with('product',$product)->with('order',$order)->with('cWeek',$cWeek)->with('lWeek',$lWeek);
+        }
     }
 }

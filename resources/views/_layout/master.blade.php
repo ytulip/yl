@@ -20,6 +20,18 @@
 <script src="/js/plugin/layer_mobile/layer.js?v={{env('VERSION')}}"></script>
 <script src="/js/common.js?v={{env('VERSION')}}"></script>
 <script>
+
+    function goHref2(href)
+    {
+        if( self != top ){
+            parent.goHref(href);
+        } else {
+            goHref(href);
+        }
+
+    }
+
+
     function goHref(href)
     {
         location.href = href;
