@@ -82,15 +82,33 @@ class UserController extends Controller
 
 
         $order = new Order();
-        $order->product_id = $product->id;
-        $order->product_name = $product->product_name;
-        $order->quantity = 1;
-        $order->product_attr_id = $productAttr->id;
-        $order->need_pay = $productAttr->price;
-        $order->size = $productAttr->size;
-        $order->user_id = $user->id;
-        $order->remark = Request::input('remark');
-        $order->service_time = Request::input('clean_service_time');
+        if( $product->isCleanProduct() )
+        {
+            $order->product_id = $product->id;
+            $order->product_name = $product->product_name;
+            $order->quantity = 1;
+            $order->product_attr_id = $productAttr->id;
+            $order->need_pay = $productAttr->price;
+            $order->size = $productAttr->size;
+            $order->user_id = $user->id;
+            $order->remark = Request::input('remark');
+            $order->service_time = Request::input('clean_service_time');
+        } else
+        {
+            //可以提取公共
+            $order->product_id = $product->id;
+            $order->product_name = $product->product_name;
+            $order->quantity = 1;
+            $order->product_attr_id = $productAttr->id;
+            $order->need_pay = $productAttr->price;
+            $order->user_id = $user->id;
+            $order->remark = Request::input('remark');
+            $order->buy_type = 100;
+
+            $order->lunch_service_time = Request::input('lunch_service');
+            $order->dinner_service_time = Request::input('dinner_service');
+            $order->service_start_time = Request::input('service_start_time');
+        }
 
 
         //模拟支付

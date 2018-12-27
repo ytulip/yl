@@ -10,6 +10,7 @@ use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\FinanceClass;
 use App\Model\FinanceUser;
+use App\Model\FoodMenu;
 use App\Model\InvitedCodes;
 use App\Model\Message;
 use App\Model\MonthGetGood;
@@ -1637,8 +1638,27 @@ class IndexController extends Controller
         if( $product->type == 1) {
             return view('admin.clean_detail')->with('product', $product);
         } else {
-            return view('admin.food_detail')->with('product',$product);
+            return view('admin.food_detail')->with('product',$product)->with('clWeekMenu',$product->clWeekMenu());
         }
+    }
+
+    /**
+     * 编辑食物订单
+     */
+    public function anyEditFoodMenu()
+    {
+        $id = Request::input('id');
+        if( !( $foodMenu = FoodMenu::find($id) ) )
+        {
+            $foodMenu = new FoodMenu();
+        }
+
+        $foodMenu->product_id = Request::input('product_id');
+        $foodMenu->date = Request::input('date');
+        $foodMenu->type = Request::input('type');
+        $foodMenu->foods = Request::input('foods');
+        $foodMenu->save();
+        return $this->jsonReturn(1);
     }
 
     public function anyAddOrModifyProductAttr()

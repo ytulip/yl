@@ -27,6 +27,26 @@ class FoodTime
     }
 
 
+    public function menuTimeList()
+    {
+        $cWeek = [];
+        $lWeek = [];
+        foreach ($this->weekDates as $key=>$item)
+        {
+
+            $cWeek[] =  $item->format('Y-m-d');
+        }
+
+
+        foreach ($this->lastWeekDates as $key=>$item)
+        {
+            $lWeek[] =  $item->format('Y-m-d');
+        }
+
+        return array_merge($cWeek,$lWeek);
+    }
+
+
     public function startTimeList()
     {
         $list = [];

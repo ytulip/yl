@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Util\FoodTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -40,5 +41,12 @@ class Product extends Model
     public function isCleanProduct()
     {
         return ($this->type == 1)?true:false;
+    }
+
+    public function clWeekMenu()
+    {
+        $foodTime = new FoodTime();
+        $list = FoodMenu::where('product_id',$this->id)->whereIn('date',$foodTime->menuTimeList())->get();
+        return $list;
     }
 }

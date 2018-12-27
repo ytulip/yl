@@ -56,6 +56,41 @@
                 <div class="col-md-3 col-lg-3"><div class="btn btn-dark" id="add_attr">新增</div></div>
             </div>
         </div>
+
+
+        <div class="block-card mt-32">
+            <h3 class="">菜单编辑</h3>
+
+            <div class="row">
+                <div class="col-md-3 col-lg-3">日期</div>
+                <div class="col-md-3 col-lg-3">菜单</div>
+            </div>
+
+
+            @foreach($clWeekMenu as $item)
+                <div class="row">
+                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}" name="date"></div>
+                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}" name="remark"></div>
+                    <div class="col-md-3 col-lg-3"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
+                </div>
+            @endforeach
+
+
+            <div class="row edit-row">
+                <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="date"></div>
+                <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="foods"></div>
+                <div class="col-md-3 col-lg-3">
+                    <select name="type">
+                        <option value="1">午餐</option>
+                        <option value="2">晚餐</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-lg-3"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil edit-tmp-menu" aria-hidden="true"></i></a></div>
+            </div>
+
+            <input type="hidden" id="edit_food_menu"/>
+        </div>
+
     </div>
 @stop
 
@@ -63,13 +98,44 @@
     <script>
 
         var pageConfig = {
-            product_id:{{$product->id}}
+            product_id:{{$product->id}},
+            foodMenuTempData:{}
         }
 
 
         function uploadCover(){
             $('input[name="images[]"]').click();
         }
+
+
+        $('.edit-tmp-menu').click(function(){
+            var editRow = $(this).parents('.edit-row');
+
+
+            pageConfig.foodMenuTempData.product_id = pageConfig.product_id;
+            pageConfig.foodMenuTempData.type = $(editRow).find('select[name="type"]').val();
+            pageConfig.foodMenuTempData.foods = $(editRow).find('input[name="foods"]').val();
+            pageConfig.foodMenuTempData.date = $(editRow).find('input[name="date"]').val();
+            pageConfig.foodMenuTempData.id = $(editRow).find('input[name="id"]').val();
+
+            $('#edit_food_menu').trigger('click');
+        });
+
+
+        new SubmitButton({
+            selectorStr:"#edit_food_menu",
+            url:'/admin/index/edit-food-menu',
+            prepositionJudge:function(){
+                return true;
+            },
+            data:function(){
+                return pageConfig.foodMenuTempData;
+            },
+            callback:function (el,val)
+            {
+                location.reload();
+            }
+        });
 
 
         new SubmitButton({
