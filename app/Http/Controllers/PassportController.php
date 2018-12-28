@@ -593,6 +593,11 @@ class PassportController extends Controller
 
     public function anyProductInfo()
     {
+
+        //获得用户默认地址哟
+        $user = \App\Model\User::getUserByOpenid(Request::input('openid'));
+        $userAddress = UserAddress::mineAddressList($user->id);
+
         $product = Product::find(Request::input('id'));
         $attrs = $product->getAttrs();
 
@@ -625,7 +630,7 @@ class PassportController extends Controller
             }
         }
 
-        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice]);
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice,'userAddress'=>$userAddress]);
     }
 
 

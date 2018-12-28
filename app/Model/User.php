@@ -287,6 +287,11 @@ class User extends Model
         return Order::where('buy_type',Order::BUY_TYPE_ACTIVITY)->where('user_id',$this->id)->where('pay_status',1)->first();
     }
 
+    public static function getUserByOpenid($openid)
+    {
+        return self::where('openid',$openid)->first();
+    }
+
     /**
      * 是否需要去退款
      */
