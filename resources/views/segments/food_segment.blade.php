@@ -19,7 +19,7 @@
         <ul class="mui-table-view income-list">
             @if(count($list))
                 @foreach($list as $key=>$item)
-                    <li style="padding: 22px;margin-bottom: 14px;background-color: #ffffff;border-top: 1px solid #ebeaea;border-bottom:1px solid #ebeaea;" data-id="{{$item->id}}" onclick="goHref2('/user/clean-or-food-order-detail?openid={{\Illuminate\Support\Facades\Request::input('openid')}}&id={{$item->id}}')">
+                    <li style="padding: 22px;margin-bottom: 14px;background-color: #ffffff;border-top: 1px solid #ebeaea;border-bottom:1px solid #ebeaea;" data-id="{{$item->id}}" onclick="goBillDetail('/pages/billdetail/main?id={{$item->id}}')">
                         <div class="cus-row cus-row-v-m">
                             <div class="cus-row-col-6"><span class="fs-14-fc-212229" style="margin-top: 4px;display: inline-block;">助餐服务</span></div>
                             <div class="cus-row-col-6 t-al-r"><a href="tel:{{$item->phone}}" class="fs-14-fc-98CC3D">{{$item->phone}}</a></div>
@@ -51,4 +51,14 @@
 @stop
 
 @section('script')
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script>
+    function goBillDetail(url)
+    {
+        wx.miniProgram.navigateTo(
+        {
+            url: url
+        });
+    }
+</script>
 @stop
