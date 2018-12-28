@@ -55,10 +55,11 @@
 <script>
     function goBillDetail(url)
     {
-        wx.miniProgram.navigateTo(
-        {
-            url: url
-        });
+        parent.goBillDetail(url);
+        // wx.miniProgram.navigateTo(
+        // {
+        //     url: url
+        // });
     }
 </script>
 @stop

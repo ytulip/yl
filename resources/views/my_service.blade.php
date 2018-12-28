@@ -113,7 +113,20 @@
 
 @section('script')
     <script src="/js/vue.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script type="text/javascript">
+
+
+        function goBillDetail(url)
+        {
+            alert(3);
+            alert(url);
+            wx.miniProgram.navigateTo(
+            {
+                url: url
+            });
+        }
+
         function reinitIframe(){
             var iframe = document.getElementById("test");
             try{
