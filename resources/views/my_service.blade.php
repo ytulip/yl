@@ -119,8 +119,6 @@
 
         function goBillDetail(url)
         {
-            alert(3);
-            alert(url);
             wx.miniProgram.navigateTo(
             {
                 url: url
