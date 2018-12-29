@@ -112,6 +112,11 @@ class UserController extends Controller
             $order->service_start_time = Request::input('service_start_time');
         }
 
+        //保存地址哟
+        $order->address = Request::input('pct_code_name') . Request::input('address');
+        $order->address_name = Request::input('name');
+        $order->address_phone = Request::input('phone');
+
 
         //模拟支付
         if(env('MOCK_PAY'))
