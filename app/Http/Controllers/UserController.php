@@ -884,20 +884,20 @@ class UserController extends Controller
         $type = Request::input('type');
 
         if ( $type == 'clean') {
-            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',1)->get();
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',1)->orderBy('id','desc')->get();
             return view('segments.clean_segment')->with('list', $list);
         } else if ($type == 'food')
         {
-            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',100)->get();
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->where('buy_type',100)->orderBy('id','desc')->get();
             return view('segments.food_segment')->with('list', $list);
         } else if ( $type == 'finance' )
         {
 //            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
-            $list = FinanceUser::where('user_id',Auth::id())->leftJoin('finance_class','finance_user.finance_id','=','finance_class.id')->get();
+            $list = FinanceUser::where('user_id',Auth::id())->leftJoin('finance_class','finance_user.finance_id','=','finance_class.id')->orderBy('orders.id','desc')->get();
             return view('segments.finance_segment')->with('list', $list);
         } else if ( $type == 'health')
         {
-            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
+            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->orderBy('id','desc')->get();
             return view('segments.clean_segment')->with('list', $list);
         }
     }
