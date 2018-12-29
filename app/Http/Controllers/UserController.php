@@ -727,7 +727,7 @@ class UserController extends Controller
     public function getGoodDetailXcx()
     {
         $product = Product::find(Request::input('product_id'));
-        if($product->buy_type == 1)
+        if($product->isCleanProduct())
         {
             return view('good_detail_xcx')->with('product',$product);
         } else
