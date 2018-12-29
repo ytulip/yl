@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div style="padding: 0 42px;margin-top: 42px;"><a href="/user/index" style="border: 1px solid #98CC3D;
+    <div style="padding: 0 42px;margin-top: 42px;"><a href="javascript:goHome()" style="border: 1px solid #98CC3D;
 border-radius: 100px;line-height: 40px;text-align: center;display: inline-block;width: 100%;"><span style="font-size: 17px;
 color: #98CC3D;">返回主页</span></a></div>
     {{--@include('segments.header',['headerTile'=>'提现申请'])--}}
@@ -37,4 +37,13 @@ color: #98CC3D;">返回主页</span></a></div>
 @stop
 
 @section('script')
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script>
+    function goHome()
+    {
+        wx.miniProgram.switchTab({
+            url: '/pages/index/main'
+        });
+    }
+</script>
 @stop
