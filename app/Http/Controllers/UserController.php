@@ -893,7 +893,7 @@ class UserController extends Controller
         } else if ( $type == 'finance' )
         {
 //            $list = Order::where('user_id', Auth::id())->where('order_status', '>', 0)->get();
-            $list = FinanceUser::where('user_id',Auth::id())->leftJoin('finance_class','finance_user.finance_id','=','finance_class.id')->orderBy('orders.id','desc')->get();
+            $list = FinanceUser::where('user_id',Auth::id())->leftJoin('finance_class','finance_user.finance_id','=','finance_class.id')->orderBy('finance_user.id','desc')->get();
             return view('segments.finance_segment')->with('list', $list);
         } else if ( $type == 'health')
         {
