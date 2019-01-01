@@ -30,6 +30,13 @@
                             <a class="btn btn-info" href="javascript:commonDownload()">下载</a>
                         </div>
                     </div>
+
+
+                    <div class="form-group v-a-b">
+                        <div class="input-group">
+                            <a class="btn btn-info" href="javascript:reSort()">保存排序</a>
+                        </div>
+                    </div>
                 </form>
             </div>
             {{--<div class="col-md-2 col-lg-2">--}}
@@ -43,19 +50,24 @@
                 <div class="col-md-2 col-lg-2">文字描述</div>
                 <div class="col-md-1 col-lg-1">操作</div>
             </div>
+
+            <div>
             @foreach($list as $item)
-                <div class="row paginate-list-row">
-                    <div class="col-md-1 col-lg-1">{{$item->id}}</div>
+                <div class="row paginate-list-row up-down-item">
+                    <div class="col-md-1 col-lg-1 item-ind">{{$item->id}}</div>
                     <div class="col-md-3 col-lg-3">
                         <img style="width: 240px;height: 140px;border: solid #c2c2c2 1px;" src="{{$item->cover_image}}" onclick="uploadCover({{$item->id}})" data-id="{{$item->id}}" class="cover-img"/>
                     </div>
-                    <div class="col-md-1 col-lg-1">{{$item->title}}</div>
-                    <div class="col-md-1 col-lg-1">
-                        <a class="btn btn-primary" href="/admin/index/banner-detail?id={{$item->id}}">编辑</a>
+                    <div class="col-md-2 col-lg-2">{{$item->title}}</div>
+                    <div class="col-md-6 col-lg-6">
+                        <a class="btn btn-primary up-item" href="javascript:void(0);">上移</a>
+                        <a class="btn btn-primary down-item" href="javascript:void(0)">下移</a>
+                        <a class="btn btn-primary" href="/admin/index/edit-essay?id={{$item->id}}">编辑</a>
                         <a class="btn btn-primary save-edit" href="javascript:void(0)">保存</a>
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
 
     </div>
@@ -411,6 +423,37 @@
             $('#up_member_panel').show();
         }
 
+        $('body').on('click','.up-item',function(){
+           var currentItem = $(this).parents('.up-down-item');
+           console.log(currentItem);
+           var upItem = $(currentItem).prev();
+
+           if(!upItem.length)
+           {
+               return;
+           }
+
+           var tmpHtml = upItem.html();
+           upItem.html(currentItem.html());
+           currentItem.html(tmpHtml);
+        });
+
+
+        $('body').on('click','.down-item',function(){
+            var currentItem = $(this).parents('.up-down-item');
+            console.log(currentItem);
+            var upItem = $(currentItem).next();
+
+            if(!upItem.length)
+            {
+                return;
+            }
+
+            var tmpHtml = upItem.html();
+            upItem.html(currentItem.html());
+            currentItem.html(tmpHtml);
+        });
+
 
 
         function doMark()
@@ -443,6 +486,22 @@
                     mAlert('网络异常');
                 }
             });
+        }
+
+
+        function reSort()
+        {
+            //排序
+            var ids = [];
+            $('.item-ind').each(function(ind,obj){
+                //console.log(ind);
+                ids.push($(obj).text());
+            });
+
+            $.get('/admin/index/sort-data-manager',{ids:ids},function(){
+                location.reload();
+            },'json');
+            // console.log(ids);
         }
 
 

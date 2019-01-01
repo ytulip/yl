@@ -89,7 +89,7 @@
 <script type="text/javascript">
     var pageConfig = {
         essay_id:'{{isset($essay->id)?$essay->id:''}}',
-        content:'{!! isset($essay->context)?$essay->context:''!!}'
+        content:'{!! isset($essay->content)?$essay->content:''!!}'
     }
 
     var ue = UE.getEditor('container');
@@ -137,7 +137,9 @@
         data:function(){
             return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src'),sub_title:$('input[name="sub_title"]').val()};
         },
-        redirectTo:'/admin/index/essays'
+        callback:function(el,val){
+            location.reload();
+        }
     });
 
     function uploadCover(){

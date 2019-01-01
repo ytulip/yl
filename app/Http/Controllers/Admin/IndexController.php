@@ -482,7 +482,7 @@ class IndexController extends Controller
 
     public function getEditEssay()
     {
-        $essay = Essay::find(Request::input('id'));
+        $essay = Banner::find(Request::input('id'));
         if (Request::input('id') && !$essay) {
             dd('不存在');
         }
@@ -491,15 +491,15 @@ class IndexController extends Controller
 
     public function postEditEssay()
     {
-        $essay = Essay::find(Request::input('id'));
+        $essay = Banner::find(Request::input('id'));
         if (!$essay) {
-            $essay = new Essay();
+            $essay = new Banner();
             $essay->sort = DB::table('essays')->max('sort') + 1;
         }
 
         $essay->cover_image = Request::input('cover_image');
         $essay->title = Request::input('title');
-        $essay->context = Request::input('content');
+        $essay->content = Request::input('content');
         $essay->sub_title = Request::input('sub_title');
 
         $essay->save();
@@ -509,11 +509,11 @@ class IndexController extends Controller
     public function postModifySortEssay()
     {
         $type = Request::input('direction', 'increase');
-        $essay = Essay::find(Request::input('id'));
+        $essay = Banner::find(Request::input('id'));
         if ($type == 'increase') {
-            $compareEssay = Essay::where('sort', '>', $essay->sort)->orderBy('sort', 'asc')->first();
+            $compareEssay = Banner::where('sort', '>', $essay->sort)->orderBy('sort', 'asc')->first();
         } else {
-            $compareEssay = Essay::where('sort', '<', $essay->sort)->orderBy('sort', 'desc')->first();
+            $compareEssay = Banner::where('sort', '<', $essay->sort)->orderBy('sort', 'desc')->first();
         }
 
         if ($compareEssay) {
@@ -1735,6 +1735,27 @@ class IndexController extends Controller
     {
         $list = Banner::getBannerList();
         return view('admin.data_manager')->with('list',$list);
+    }
+
+    /**
+     * 对banner图进行排序哟
+     */
+    public function anySortDataManager()
+    {
+        $ids = Request::input('ids');
+        //这个要么一条语句一条语句的，要么批量更新，我更喜欢批量更新
+        $banner = new Banner();
+        $newData = [];
+        foreach ($ids as $key=>$val)
+        {
+            $newData[] = ['id'=>$val,'sort'=>count($ids) - $key];
+        }
+
+        $banner->updateBatch(
+            $newData
+        );
+
+        return $this->jsonReturn(1);
     }
 
     /**
