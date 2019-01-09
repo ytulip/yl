@@ -931,7 +931,12 @@ class UserController extends Controller
      */
     public function vipPageInfo()
     {
+        $user = User::getCurrentUser();
+        $expireDay = $user->vipExpireDay();
+        $data['isVip'] = $expireDay?true:false;
+        $data['expireDay'] = $expireDay;
 
+        return $this->jsonReturn(1,$data);
     }
 
 
