@@ -929,7 +929,7 @@ class UserController extends Controller
     /**
      * 会员详情页面信息
      */
-    public function vipPageInfo()
+    public function anyVipPageInfo()
     {
         $user = User::getCurrentUser();
         $expireDay = $user->vipExpireDay();
