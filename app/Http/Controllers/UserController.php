@@ -933,6 +933,7 @@ class UserController extends Controller
     {
         $user = User::getCurrentUser();
         $expireDay = $user->vipExpireDay();
+        $data['user'] = $user->toArray();
         $data['isVip'] = $expireDay?true:false;
         $data['expireDay'] = $expireDay;
 
