@@ -927,6 +927,15 @@ class UserController extends Controller
 
 
     /**
+     * 会员详情页面信息
+     */
+    public function vipPageInfo()
+    {
+
+    }
+
+
+    /**
      * 报名参加讲座
      */
     public function anyTakePartInFinance()
