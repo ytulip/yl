@@ -17,10 +17,12 @@ use App\Model\ProductAttr;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
+use App\Model\YlConfig;
 use App\Util\DealString;
 use App\Util\FoodTime;
 use App\Util\Kit;
 use App\Util\SmsTemplate;
+use Carbon\Carbon;
 use Faker\Provider\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -909,17 +911,32 @@ class UserController extends Controller
     public function anyBuyVip()
     {
         $user = User::getCurrentUser();
+        $month = (Request::input('type') == 1)?6:12;
+
         if( $expireDay = $user->vipExpireDay() )
         {
-//            $expireDay = ;
-            $expireDay = strtotime("+5 days",strtotime($expireDay));
+            $expireMonth = Carbon::parse(Carbon::parse($expireDay)->format('Y-m'));
+            //增加月份
+            $expireMonth->addMonths($month);
+            //把日期算上去？
+            $expireMonth->addDays( ($user->pay_day < $expireMonth->daysInMonth)?($user->pay_day - 1):($expireMonth->daysInMonth - 1));
+
         } else
         {
-//            $expireDay = ;
-            $expireDay = strtotime("+5 days",time());
+            $expireMonth = Carbon::parse(Carbon::now()->format('Y-m'));
+            $expireMonth->addMonths($month);
+            if( $expireMonth->daysInMonth < date('d') )
+            {
+                //到期日子没有今天的日子，那到期日就是他了
+                $expireMonth->addDays($expireMonth->daysInMonth - 1);
+            } else {
+                //到期日要减一天
+                $expireMonth->addDays(date('d'))->subDay()->subDay();
+            }
+            $user->pay_day = (date('d') == 1)?31:(date('d') - 1);
 
         }
-        $user->expire_time= date('Y-m-d',$expireDay);
+        $user->expire_time= $expireMonth->format('Y-m-d');
 
         $user->save();
         return $this->jsonReturn(1);
@@ -936,6 +953,12 @@ class UserController extends Controller
         $data['user'] = $user->toArray();
         $data['isVip'] = $expireDay?true:false;
         $data['expireDay'] = $expireDay;
+        $data['serviceInfo'] = [
+            "vip_food"=>YlConfig::value('vip_food'),
+            "vip_clean"=>YlConfig::value('vip_clean'),
+            "vip_finance"=>YlConfig::value('vip_finance'),
+            "vip_health"=>YlConfig::value('vip_health')
+            ];
 
         return $this->jsonReturn(1,$data);
     }

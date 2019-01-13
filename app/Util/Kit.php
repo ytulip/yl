@@ -2,6 +2,8 @@
 
 namespace  App\Util;
 
+use Carbon\Carbon;
+
 class Kit
 {
     public static function phoneHide($phone)
@@ -89,6 +91,14 @@ class Kit
         }
 
         return false;
+    }
+
+    public function vipMonthPeriod($expireDay)
+    {
+        $expireDay = Carbon::parse($expireDay);
+        //取日期
+        $expireDay->format('d');
+
     }
 
     static public function signType($type)

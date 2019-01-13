@@ -318,4 +318,13 @@ class User extends Model
         $user = User::find($userId);
         return isset($user->real_name)?$user->real_name:$default;
     }
+
+    public function monthCleanTimes()
+    {
+        //每个月多少次是个变量
+        $totalCount = 2;
+        $used = 0;
+
+        return ['total'=>$totalCount,'used'=>$used,'available'=>$totalCount - $used];
+    }
 }
