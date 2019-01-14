@@ -132,52 +132,6 @@ class UserController extends Controller
         $order->save();
 
         return $this->jsonReturn(1,'下单成功');
-
-//        $this->validate(Request::all(),[
-//            'buy_type'=>'required',
-////            'immediate_phone'=>'required|exists:users,phone',
-//            'size'=>'required',
-//            'self_get_deliver_address'=>'exists:user_address,address_id',
-//            'mine_deliver_address'=>'exists:user_address,address_id'
-//        ]);
-//        $this->validate(Request::all(),[
-//            'buy_type'=>'required',
-////            'immediate_phone'=>'required|exists:users,phone',
-//            'deliver_type'=>'required',
-//            'self_get_deliver_address'=>'exists:user_address,address_id',
-//            'mine_deliver_address'=>'exists:user_address,address_id'
-//        ]);
-//
-//
-//        if( Deliver::DELIVER_HOME == Request::input('deliver_type') ) {
-//            $address = UserAddress::find(Request::input('mine_deliver_address'));
-//        } else {
-//            $address = UserAddress::find(Request::input('self_get_deliver_address'));
-//        }
-//
-//        //生产订单
-//        $order = new Order();
-//        $order->user_id = $indirectUser->id;
-//        $order->immediate_user_id = $immediateUser?$immediateUser->id:null;
-//        $order->product_id = $productAttr->product_id;
-//        $order->product_attr_id = $productAttr->id;
-//        $order->buy_type = Request::input('buy_type');
-//
-//        if(Request::input('buy_type') == 1) {
-//            $order->need_pay = $productAttr->price;
-//        } else {
-////            $order->need_pay = $productAttr->rebuy_price;
-//            $order->quantity = intval(Request::input('quantity'));
-//            $order->need_pay = $order->quantity * $productAttr->rebuy_price;
-//        }
-//        $order->address = $address->pct_code_name . $address->address;
-//        $order->address_name = $address->address_name;
-//        $order->address_phone = $address->mobile;
-//        $order->deliver_type = Request::input('deliver_type');
-//
-//        $order->save();
-//
-//        return $this->jsonReturn(1,$order->id);
     }
 
     /*支付订单页面*/
