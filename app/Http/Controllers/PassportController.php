@@ -71,43 +71,19 @@ class PassportController extends Controller
     {
         $this->validate(Request::all(),[
             'phone'=>'required|unique:users,phone',
-            'password'=>'required',
+//            'password'=>'required',
             'register_sms_code'=>'required'
         ]);
 
 
-        if ( Session::get('register_sms_code') !=  (Request::input('phone') . '_' . Request::input('register_sms_code')) )
+        if ( Cache::get('register_sms_code' . Request::input('phone'))  !=  (Request::input('phone') . '_' . Request::input('register_sms_code')) )
         {
             return $this->jsonReturn(0,'验证码错误');
         }
 
-        $invitedCode = Session::get('input_invited_code');
-        $invitedCode = InvitedCodes::tryCurrentInstanceValid($invitedCode);
-        if(!$invitedCode)
-        {
-            return $this->jsonReturn(0,'邀请已失效');
-        }
-
-
-        $order = Order::getOrderByInvitedCode($invitedCode->invited_code);
-        $orderOwner = \App\Model\User::find($order->user_id);
-
-        $user = new User();
+        $user = \App\Model\User::where('openid',Request::input('openid'))->first();
         $user->phone = Request::input('phone');
-        $user->password = Hash::make(Request::input('password'));
-        $user->vip_level = $order->getVipLevel();
-        $user->origin_vip_level = $user->vip_level;
-        $user->parent_id = $orderOwner->id;
-        $user->indirect_id = $orderOwner->parent_id;
         $user->save();
-
-        //这里1.直接开发；2.间接开发；3.一级辅导；4.二级辅导
-        $order->benefitNew($user->id);
-
-        $invitedCode->code_status = 1;
-        $invitedCode->user_id = $user->id;
-        $invitedCode->save();
-
 
         return $this->jsonReturn(1);
     }
