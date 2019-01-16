@@ -956,4 +956,9 @@ class UserController extends Controller
             return view('food_detail')->with('product',$product)->with('order',$order)->with('cWeek',$cWeek)->with('lWeek',$lWeek);
         }
     }
+
+    public function anyBindmore()
+    {
+        return view('bindmore');
+    }
 }

@@ -70,8 +70,9 @@ class PassportController extends Controller
     public function postRegister()
     {
         $this->validate(Request::all(),[
-            'phone'=>'required|unique:users,phone',
+            'phone'=>'required',
 //            'password'=>'required',
+            'openid'=>'required',
             'register_sms_code'=>'required'
         ]);
 

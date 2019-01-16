@@ -25,7 +25,7 @@
         <h3 style="margin-top: 34px;font-size: 20px;font-color:#212229">{{$essay->title}}</h3>
         <div class="small-a" style="font-size: 12px;margin-top:6px;color:#a8a8a8;">{{date('Y年m月d日 H:i',strtotime($essay->created_at))}}</div>
         <iframe src="/passport/show-essay?id={{$essay->id}}" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;"></iframe>
-    </div>
+    </div>\
 @stop
 
 @section('script')
