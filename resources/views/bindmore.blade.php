@@ -127,7 +127,7 @@
     <div class="cus-row p-l-r-14">
         <div class="cus-row-col-4"></div>
         <div class="cus-row-col-4 t-al-c"><span class="fs-17-fc-212229" style="line-height: 68px;">完善个人资料</span></div>
-        <div class="cus-row-col-4 t-al-r"><a href="javascript:goHome();" id="next_step"><span class="fs-16-fc-212229">跳过</span></a></div>
+        <div class="cus-row-col-4 t-al-r"><a href="javascript:goHome();"><span class="fs-16-fc-212229">跳过</span></a></div>
     </div>
 
     <form id="form_data">
