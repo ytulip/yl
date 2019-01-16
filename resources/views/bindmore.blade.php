@@ -245,7 +245,7 @@
 
         function goHome()
         {
-            wx.miniProgram.redirectTo(
+            wx.miniProgram.switchTabTo(
             {
                 url: "/pages/index/main"
             });
