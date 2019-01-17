@@ -565,6 +565,7 @@ class ActivityController extends Controller
 
         $data = [];
         $data['openid'] = $response->openid;
+        $data['session_key'] = $response->session_key;
         $data['user'] = \App\Model\User::where('openid',$response->openid)->first();
 
         if( $data['user'] )
