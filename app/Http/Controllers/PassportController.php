@@ -86,6 +86,7 @@ class PassportController extends Controller
         {
             return $this->jsonReturn(1,['userId'=>$user->id]);
         }else {
+            $user = new \App\Model\User();
             $user->phone = Request::input('phone');
             $user->save();
 
