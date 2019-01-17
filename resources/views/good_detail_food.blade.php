@@ -4,6 +4,9 @@
 @stop
 @section('style')
     <style>
+        html,body{
+            background-color: #f9f9fb;
+        }
         .low-alert{position: fixed;left:0;right: 0;bottom: 90px;text-align: center;}
         .item-opr span{line-height: 40px;display: inline-block;}
         .show-img{width: 100%;border-radius: 12px;}
@@ -35,6 +38,12 @@
 
         .swiper-container{width: 100%;}
         .swiper-slide img{width: 100%;}
+
+        .red-v-l
+        {
+            height: 16px;
+            border-left: 4px solid #C50081;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -44,85 +53,113 @@
 
 
     <!--轮播-->
-    <div class="padding-container">
+    {{--<div class="padding-container">--}}
 
-        <div><span class="fs-26-fc-black">日常保洁</span></div>
+        {{--<div><span class="fs-26-fc-black">日常保洁</span></div>--}}
 
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="http://graphis.zhuyan.me/1.jpg"/>
-                </div>
-                <div class="swiper-slide">
-                    <img src="http://graphis.zhuyan.me/2.jpg"/></div>
-                <div class="swiper-slide">
-                    <img src="http://graphis.zhuyan.me/2.jpg"/>
-                </div>
-            </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
+        {{--<div class="swiper-container">--}}
+            {{--<div class="swiper-wrapper">--}}
+                {{--<div class="swiper-slide">--}}
+                    {{--<img src="http://graphis.zhuyan.me/1.jpg"/>--}}
+                {{--</div>--}}
+                {{--<div class="swiper-slide">--}}
+                    {{--<img src="http://graphis.zhuyan.me/2.jpg"/></div>--}}
+                {{--<div class="swiper-slide">--}}
+                    {{--<img src="http://graphis.zhuyan.me/2.jpg"/>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<!-- 如果需要分页器 -->--}}
+            {{--<div class="swiper-pagination"></div>--}}
 
-            <!-- 如果需要导航按钮 -->
+            {{--<!-- 如果需要导航按钮 -->--}}
         {{--<div class="swiper-button-prev"></div>--}}
         {{--<div class="swiper-button-next"></div>--}}
 
-        <!-- 如果需要滚动条 -->
+        {{--<!-- 如果需要滚动条 -->--}}
             {{--<div class="swiper-scrollbar"></div>--}}
-        </div>
+        {{--</div>--}}
+    {{--</div>--}}
+
+    <div>
+        <img src="{{ env('IMAGE_HOST') . $product->cover_image}}" style="width: 100%;"/>
     </div>
 
-
-    <div class="info-vue" style="margin-top: 16px;">
-
-        <div style="border-bottom:solid 1px #e9e9e9;margin-top: 10px;"></div>
-
-        <div class="padding-container">
-
-
-
-            <div class="">
-                <div class="cus-row"></div>
-                <div>
+    <div style="padding: 0 16px;">
+        <div style="background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;padding:24px;transform: translateY(-24px)">
+            <div class="cus-row cus-row-v-m">
+                <div class="cus-row-col-1 t-a-l">
+                    <div class="red-v-l"></div>
+                </div>
+                <div class="cus-row-col-8">
+                    <span class="fs-18-fc-000000-m">食谱简介</span>
+                </div>
+                <div class="cus-row-col-3 t-al-r">
 
                 </div>
             </div>
 
 
-            <div>
-                <div class="cus-row">
-                    <div class="cus-row-col-6">
-                        <div class="in-bl-v-m"><i class="agree-icon"></i></div>
-                        <div class="in-bl-v-m fs-16-fc-030303">服务价格</div>
-                    </div>
-                    <div class="cus-row-col-6 t-al-r fs-16-fc-f89a03">按照平方计算</div>
+            <iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>
+
+
+            <div class="cus-row cus-row-v-m">
+                <div class="cus-row-col-1 t-a-l">
+                    <div class="red-v-l"></div>
+                </div>
+                <div class="cus-row-col-8">
+                    <span class="fs-18-fc-000000-m">适宜人群</span>
+                </div>
+                <div class="cus-row-col-3 t-al-r">
+
                 </div>
             </div>
+        </div>
 
-            {{--<div class="product-list">--}}
-            {{--<div class="product-item">--}}
-            {{--<div class="item-info">--}}
-            {{--<img class="show-img" src="{{$product->cover_image}}"/>--}}
-            {{--</div>--}}
-            {{--<div class="item-opr"><span>{{$product->product_name}}</span></div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
 
-            {{--<div style="padding: 0 10px;"><div class="pro-essay-barr"></div></div>--}}
-            <div>服务介绍</div>
 
-            <iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" id="test" onload="this.height=100" style="width: 100%;margin-bottom: 50px;display: none;" v-bind:class="{ 'active-iframe': (tabIndex == 1) }"></iframe>
+        <div  style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box">
 
-            <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
 
-                <a class="btn3 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">购买</a>
-                {{--<div class="mui-row" style="line-height: 40px;">--}}
-                {{--<a class="mui-col-sm-2 mui-col-xs-2 btn-block2" href="tel:{{$product->consumer_service_phone}}">客服</a>--}}
-                {{--<a class="mui-col-sm-10 mui-col-xs-10 btn-block1 remove-radius" href="/user/report-bill?product_id={{$product->id}}">立即下单</a>--}}
-                {{--</div>--}}
-            </footer>
+            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
+                <img src="" class="slide-image" style="width: 100%;height: 100%;"/>
+            </div>
+
+
+            <div class="info-panel">
+                <div class="fs-18-fc-000000-m" style="line-height: 25px;">本周菜单</div>
+                <div class="fs-12-fc-7E7E7E-r">1月14日-1月18日</div>
+                <div>￥18.5</div>
+            </div>
+        </div>
+
+
+
+
+        <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;">
+
+
+            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
+                <img src="" class="slide-image" style="width: 100%;height: 100%;"/>
+            </div>
+
+
+            <div class="info-panel">
+                <div class="fs-18-fc-000000-m" style="line-height: 25px;">下周菜单</div>
+                <div class="fs-12-fc-7E7E7E-r">1月14日-1月18日</div>
+                <div>￥18.5</div>
+            </div>
         </div>
 
     </div>
+
+
+
+    <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+        <a class="yl_btn1 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">购买</a>
+    </footer>
+
 @stop
 
 @section('script')
@@ -217,14 +254,14 @@
 
 
 
-        new Vue({
-            el:".info-vue",
-            data:{tabIndex:1},
-            methods:{
-                setTab:function(index){
-                    this.tabIndex = index;
-                }
-            }
-        });
+//        new Vue({
+//            el:".info-vue",
+//            data:{tabIndex:1},
+//            methods:{
+//                setTab:function(index){
+//                    this.tabIndex = index;
+//                }
+//            }
+//        });
     </script>
 @stop
