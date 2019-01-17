@@ -69,24 +69,28 @@ class PassportController extends Controller
 
     public function postRegister()
     {
-        $this->validate(Request::all(),[
-            'phone'=>'required',
+        $this->validate(Request::all(), [
+            'phone' => 'required',
 //            'password'=>'required',
-            'openid'=>'required',
-            'register_sms_code'=>'required'
+//            'openid'=>'required',
+            'register_sms_code' => 'required'
         ]);
 
 
-        if ( Cache::get('register_sms_code' . Request::input('phone'))  !=  (Request::input('phone') . '_' . Request::input('register_sms_code')) )
-        {
-            return $this->jsonReturn(0,'验证码错误');
+        if (Cache::get('register_sms_code' . Request::input('phone')) != (Request::input('phone') . '_' . Request::input('register_sms_code'))) {
+            return $this->jsonReturn(0, '验证码错误');
         }
 
-        $user = \App\Model\User::where('openid',Request::input('openid'))->first();
-        $user->phone = Request::input('phone');
-        $user->save();
+        $user = \App\Model\User::where('phone', Request::input('phone'))->first();
+        if( $user instanceof  \App\Model\User)
+        {
+            return $this->jsonReturn(1,['userId'=>$user->id]);
+        }else {
+            $user->phone = Request::input('phone');
+            $user->save();
 
-        return $this->jsonReturn(1);
+            return $this->jsonReturn(1,['userId'=>$user->id]);
+        }
     }
 
     public function getLogin()
