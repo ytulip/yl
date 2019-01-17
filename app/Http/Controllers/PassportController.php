@@ -46,7 +46,7 @@ class PassportController extends Controller
         ]);
 
 
-        $code = DealString::random(6,'number');
+        $code = DealString::random(4,'number');
 
         if( Request::input('password') )
         {
