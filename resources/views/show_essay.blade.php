@@ -8,6 +8,6 @@
 </style>
 
 <body>
-{!! $essay->context !!}
+{!! $essay->content !!}
 </body>
 </html>
