@@ -637,6 +637,12 @@ class PassportController extends Controller
     }
 
 
+    public function anyPaySuccess()
+    {
+        return view('pay_success');
+    }
+
+
     public function anyRandom()
     {
         //869436034388526
