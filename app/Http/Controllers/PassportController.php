@@ -631,6 +631,52 @@ class PassportController extends Controller
         return view('habbit_remark');
     }
 
+    public function anyHabbitRemark2()
+    {
+        return view('habbit_remark2');
+    }
+
+
+    public function anyRandom()
+    {
+        //869436034388526
+        set_time_limit(600);
+        $total = Request::input('total',100);
+        $arr = [];
+        for ($i = 0; $i < $total; $i++ )
+        {
+//            $newRandom = 8694360  + rand(10000000,99999999);
+            $whileFlag = true;
+            while($whileFlag)
+            {
+                $newRandom = 8694360  . rand(10000000,99999999);
+                if(in_array($newRandom,$arr))
+                {
+                    continue;
+                } else {
+                    $arr[] = $newRandom;
+                    $whileFlag =false;
+                }
+            }
+        }
+
+
+        $dataList = [];
+        foreach ($arr as $key=>$item)
+        {
+            $dataList[] = [$item];
+        }
+
+
+
+        $data = array(
+            'title' => array('ids'),
+            'data' => $dataList,
+            'name' => 'tixian',
+        );
+        DownloadExcel::publicDownloadExcel($data);
+    }
+
 
 
 

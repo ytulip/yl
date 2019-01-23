@@ -19,6 +19,7 @@ a{color: #000000;cursor: pointer;}
 .fl-r{float: right;}
 .t-al-r{text-align: right;}
 .t-al-c{text-align: center;}
+.t-al-l{text-align: left;}
 .in-bl-fl-r{display: inline-block;float: right;margin-right: 30px;}
 
 .padding-passport{}
@@ -110,8 +111,20 @@ textarea.noscrollbars {
 
 
 
+
+
+
 .fs-18-fc-000000-m{font-size: 18px;color:#000000;line-height: 18px;font-family: PingFangSC-Medium;letter-spacing: -0.35px;}
 .fs-12-fc-7E7E7E-r{font-size: 12px;color:#7E7E7E;line-height: 12px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
+.fs-14-fc-7E7E7E-r{font-size: 14px;color:#7E7E7E;line-height: 14px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
+
+.fs-16-fc-080808-r{font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #080808;
+    letter-spacing: -0.39px;
+    text-align: center;
+    line-height: 16px;
+}
 
 
 .in-bl-v-m{display: inline-block;vertical-align: middle;}
@@ -190,6 +203,11 @@ textarea.noscrollbars {
 .cus-row-col-1
 {
     width: 8.33333333%;
+}
+
+
+.cus-row-col-1-7 {
+    width: 13.29%;
 }
 
 .back-icon{
@@ -392,4 +410,17 @@ input::-webkit-input-placeholder{color: #bebebe;  }
     height: 156px;
     padding: 18px 18px 18px 52px;
     box-sizing: border-box;
+}
+
+.quantity-plus-icon
+{
+    width: 21px;
+    height: 21px;
+}
+
+.quantity-plus
+{
+    font-family: PingFangSC-Medium;
+    font-size: 20px;
+    color: #212229;
 }
