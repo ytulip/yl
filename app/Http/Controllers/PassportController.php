@@ -626,6 +626,11 @@ class PassportController extends Controller
         return view('essay')->with('essay',$banner);
     }
 
+    public function anyHabbitRemark()
+    {
+        return view('habbit_remark');
+    }
+
 
 
 
