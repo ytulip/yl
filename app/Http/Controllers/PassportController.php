@@ -697,7 +697,6 @@ class PassportController extends Controller
         $errCode = $pc->decryptData($encryptedData, $iv, $data );
 
         if ($errCode == 0) {
-            print($data . "\n");
             return $this->jsonReturn(1,$data);
         } else {
             return $this->jsonReturn(0,$errCode);
