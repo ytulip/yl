@@ -14,7 +14,7 @@ class AuthCheck
         //如果有openid用openid进行登录
         if( $openid = Request::input('openid') )
         {
-            $user = User::where('openid',$openid)->first();
+            $user = User::where('id',$openid)->first();
             if( $user instanceof  User)
             {
                 Auth::loginUsingId($user->id);
