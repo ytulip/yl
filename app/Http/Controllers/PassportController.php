@@ -577,7 +577,8 @@ class PassportController extends Controller
     {
 
         //获得用户默认地址哟
-        $user = \App\Model\User::getUserByOpenid(Request::input('openid'));
+//        $user =  User (Request::input('openid'));
+        $user = \App\Model\User::find(Request::input('openid'));
         $userAddress = UserAddress::mineAddressList($user->id);
 
         $product = Product::find(Request::input('id'));
