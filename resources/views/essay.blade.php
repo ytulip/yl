@@ -13,12 +13,6 @@
 @section('container')
     {{--@include('segments.header',['headerTile'=>'最新动态'])--}}
 
-    <div class="cus-row p-l-r-14">
-        <div class="cus-row-col-4"><a href="/user/index"><i class="back-icon"></i></a></div>
-        <div class="cus-row-col-4 t-al-c"><span class="fs-17-fc-212229" style="line-height: 68px;">详情</span></div>
-        <div class="cus-row-col-4 t-al-r"></div>
-    </div>
-
     <div class="padding-container">
 
         <img  src="{{$essay->cover_image}}" style="width: 100%"/>
