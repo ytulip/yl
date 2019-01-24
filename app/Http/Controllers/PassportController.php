@@ -684,7 +684,23 @@ class PassportController extends Controller
         DownloadExcel::publicDownloadExcel($data);
     }
 
+    public function anyDecodeInfo()
+    {
+        require_once base_path() .'/plugin/swechatpay/mp/wxBizDataCrypt.php';
 
+        $appid = env('SMALL_APPID');
+        $sessionKey = Request::input('sessionKey');
+        $encryptedData=Request::input('encryptedData');
+        $iv = Request::input('iv');;
 
+        $pc = new \WXBizDataCrypt($appid, $sessionKey);
+        $errCode = $pc->decryptData($encryptedData, $iv, $data );
 
+        if ($errCode == 0) {
+            print($data . "\n");
+            return $this->jsonReturn(1,$data);
+        } else {
+            return $this->jsonReturn(0,$errCode);
+        }
+    }
 }
