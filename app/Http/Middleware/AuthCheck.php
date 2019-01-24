@@ -22,13 +22,13 @@ class AuthCheck
         }
 
 //        dd(Request::segment(2));
-        if(!Auth::check() && !in_array(Request::segment(2),['index','good-detail','essay','good-detail-xcx','report-bill'])){
-            if ($request->ajax()) {
-                return json_encode(['status'=>0,'desc'=>'请先登录']);
-            } else {
-                return redirect()->guest('/passport/login');
-            }
-        }
+//        if(!Auth::check() && !in_array(Request::segment(2),['index','good-detail','essay','good-detail-xcx','report-bill'])){
+//            if ($request->ajax()) {
+//                return json_encode(['status'=>0,'desc'=>'请先登录']);
+//            } else {
+//                return redirect()->guest('/passport/login');
+//            }
+//        }
 
 
         return $next($request);
