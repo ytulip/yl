@@ -178,6 +178,11 @@ class UserController extends Controller
         return view('addresses')->with('addressList',UserAddress::mineAddressList(Auth::id()));
     }
 
+    public function anyAddressData()
+    {
+        return $this->jsonReturn(1,UserAddress::mineAddressList(Auth::id()));
+    }
+
     public function getSetting()
     {
         return view('setting');
