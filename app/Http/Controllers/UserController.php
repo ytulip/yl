@@ -183,6 +183,14 @@ class UserController extends Controller
         return $this->jsonReturn(1,UserAddress::mineAddressList(Auth::id()));
     }
 
+
+    public function anyAddressInfo()
+    {
+        //组装社区数据
+        $neighborhood = Neighborhood::neighborhoodConfig();
+        return $this->jsonReturn(1,['neighborhood'=>$neighborhood]);
+    }
+
     public function getSetting()
     {
         return view('setting');
