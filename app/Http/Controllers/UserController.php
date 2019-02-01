@@ -726,6 +726,12 @@ class UserController extends Controller
         return view('info')->with('user',$this->user);
     }
 
+
+    public function anyUserCenter()
+    {
+        return $this->jsonReturn(1,['user'=>User::find(Auth::id())]);
+    }
+
     /**
      * 设置头像
      */
@@ -973,5 +979,20 @@ class UserController extends Controller
     public function anyBindmore()
     {
         return view('bindmore');
+    }
+
+
+    /**
+     * 红包
+     */
+    public function anyBonus()
+    {
+        $list = DB::table('bonuses')->where('user_id',Auth::id())->orderBy('id','desc')->get();
+        if(!$list)
+        {
+            $list = [];
+        }
+
+        return $this->jsonReturn(1,$list);
     }
 }
