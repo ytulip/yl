@@ -25,6 +25,7 @@ use App\Util\SmsTemplate;
 use Carbon\Carbon;
 use Faker\Provider\Address;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
