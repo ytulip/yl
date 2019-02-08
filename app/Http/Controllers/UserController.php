@@ -66,6 +66,40 @@ class UserController extends Controller
     }
 
     /**
+     * 编辑用户信息
+     */
+    public function anyEditUser()
+    {
+        $type = Request::input('type');
+        $user = User::find(Auth::id());
+
+        /**
+         * type 1修改姓名，2修改身份证号，3修改手机号
+         */
+        if( $type == 3)
+        {
+            if (Cache::get('register_sms_code' . Request::input('phone')) != (Request::input('phone') . '_' . Request::input('register_sms_code'))) {
+                return $this->jsonReturn(0, '验证码错误');
+            }
+
+
+
+            $phone = Request::input('phone');
+            /*手机号已被使用*/
+            if( User::where('phone',$phone)->count() )
+            {
+                return $this->jsonReturn(0,$phone . '已被使用');
+            }
+
+            $user->phone = $phone;
+
+        }
+
+        $user->save();
+        return $this->jsonReturn(1);
+    }
+
+    /**
      * 高级会购买
      */
     public function postReportBill()
