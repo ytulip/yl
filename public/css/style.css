@@ -409,6 +409,9 @@ input::-webkit-input-placeholder{color: #bebebe;  }
     width: 100%;
 }
 
+.btn-gray{background-image: none; background: #CECCCC;color:#ffffff;box-shadow:none;}
+
+.btn-gray:hover{color:#ffffff}
 
 .btn-white{background-image: none; background: #ffffff;color:#4A4A4A;box-shadow:none;border: 1px solid #CECCCC;}
 
