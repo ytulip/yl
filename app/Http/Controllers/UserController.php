@@ -94,6 +94,12 @@ class UserController extends Controller
 
             $user->phone = $phone;
 
+        }else if( $type == 2)
+        {
+            $user->id_card = Request::input('id_card');
+        }else if( $type == 1 )
+        {
+            $user->real_name = Request::input('real_name');
         }
 
         $user->save();
