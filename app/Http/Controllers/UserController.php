@@ -172,7 +172,52 @@ class UserController extends Controller
 
         $order->save();
 
-        return $this->jsonReturn(1,'下单成功');
+
+
+        //调起微信支付
+        require_once base_path() . "/plugin/wechatpay/lib/WxPay.Api.php";
+        require_once base_path() . "/plugin/wechatpay/example/WxPay.JsApiPay.php";
+
+
+        $tools = null;
+        $openid = Request::input('openid');
+        $tools = new \JsApiPay();
+
+        //创建支付订单
+//        $cashStream = new CashStream();
+//        $cashStream->refer_id = $order->id;
+//        $cashStream->cash_type = CashStream::CASH_TYPE_ALIPAY_BUY_PRODUCT;
+//        $cashStream->user_id = Auth::id();
+//        $cashStream->price = $order->need_pay;
+//        $cashStream->save();
+
+        //付款金额，必填
+        if( env('PAY_TEST')) {
+            $total_amount = 1;
+        } else {
+            $total_amount = $order->price * 100;
+        }
+
+
+
+
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("花甲服务");
+        $input->SetAttach("花甲服务");
+        $input->SetOut_trade_no($order->id);//这个订单号是特殊的
+        $input->SetTotal_fee($total_amount); //钱是以分计的
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetGoods_tag("花甲服务");
+        $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
+
+        $input->SetTrade_type("MWEB");
+        $wxorder = \WxPayApi::unifiedOrder($input);
+        return $this->jsonReturn(1,['mweb_url'=>$wxorder['mweb_url'] . '&redirect_url=' . urlencode(env('WECHAT_RETURN_URL') . '?order_id=' . $order->id )]);
+
+
+
+//        return $this->jsonReturn(1,'下单成功');
     }
 
     /*支付订单页面*/
