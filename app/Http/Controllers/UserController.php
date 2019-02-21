@@ -180,7 +180,7 @@ class UserController extends Controller
 
 
         $tools = null;
-        $openid = Request::input('openid');
+        $openid = Request::input('user_openid');
         $tools = new \JsApiPay();
 
         //创建支付订单
