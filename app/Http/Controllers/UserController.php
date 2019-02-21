@@ -210,13 +210,12 @@ class UserController extends Controller
         $input->SetTime_start(date("YmdHis"));
         $input->SetGoods_tag("花甲服务");
         $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
-
-        $input->SetTrade_type("MWEB");
-        $wxorder = \WxPayApi::unifiedOrder($input);
-        return $this->jsonReturn(1,['mweb_url'=>$wxorder['mweb_url'] . '&redirect_url=' . urlencode(env('WECHAT_RETURN_URL') . '?order_id=' . $order->id )]);
-
-
-
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openid);
+        $payOrder = \WxPayApi::unifiedOrder($input);
+        $tools = new \JsApiPay();
+        $jsApiParameters = $tools->GetJsApiParameters($payOrder);
+        return $this->jsonReturn(1,$jsApiParameters);
 //        return $this->jsonReturn(1,'下单成功');
     }
 
@@ -460,6 +459,11 @@ class UserController extends Controller
             $input->SetGoods_tag("辣木膳素食全餐");
             $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
 //            $input->SetOpenid($openId);
+
+
+
+
+
 
             if( Kit::isWechat() )
             {
