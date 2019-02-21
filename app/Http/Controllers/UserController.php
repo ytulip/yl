@@ -175,8 +175,8 @@ class UserController extends Controller
 
 
         //调起微信支付
-        require_once base_path() . "/plugin/wechatpay/lib/WxPay.Api.php";
-        require_once base_path() . "/plugin/wechatpay/example/WxPay.JsApiPay.php";
+        require_once base_path() . "/plugin/swechatpay/lib/WxPay.Api.php";
+        require_once base_path() . "/plugin/swechatpay/example/WxPay.JsApiPay.php";
 
 
         $tools = null;
