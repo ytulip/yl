@@ -196,220 +196,9 @@ class PassportController extends Controller
         var_dump($foodTime->startTimeList());
     }
 
-    public function anyInitActivityUser()
-    {
-        set_time_limit(3600);
-
-        $reader = \PHPExcel_IOFactory::createReader('Excel2007');
-        $PHPExcel = $reader->load(storage_path('sl.xlsx'));
-//
-//
-        $objWorksheet = $PHPExcel->getSheet(2);
-        $highestRow = $objWorksheet->getHighestRow(); // 取得总行数
-
-
-//        dd($highestRow);
-//        $highestColumn = $objWorksheet->getHighestColumn(); // 取得总列数
-//
-////        var_dump($highestRow);
-//
-//        $userArr = [];
-//        exit;
-//
-        for($i = 2; $i <= $highestRow;$i++)
-        {
-            $arr = [];
-//            $arr['id'] = 8000 + $i - 1;
-//            $arr['real_name'] = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
-//            $arr['phone'] = strval($objWorksheet->getCellByColumnAndRow(1, $i)->getValue());
-//            $arr['id_card'] = strval($objWorksheet->getCellByColumnAndRow(2, $i)->getValue());
-//            $arr['immediate_id'] = strval($objWorksheet->getCellByColumnAndRow(4, $i)->getValue());
-//
-//            $arr['password'] = Hash::make('123456');
-//            $arr['parent_phone'] = strval($objWorksheet->getCellByColumnAndRow(3, $i)->getValue());;
-//            $arr['indirect_phone'] = strval($objWorksheet->getCellByColumnAndRow(5, $i)->getValue());;
-//
-//            $userArr[] = $arr;
-            $phone = strval($objWorksheet->getCellByColumnAndRow(1, $i)->getValue());
-            $count = strval($objWorksheet->getCellByColumnAndRow(9, $i)->getValue());
-            $user = \App\Model\User::where('id','>',8000)->where('phone',$phone)->first();
-
-
-            if( $user instanceof  \App\Model\User )
-            {
-                echo $user->id . '-' . $count . '<br/>';
-                $user->get_good = $count;
-                $user->save();
-            } else
-            {
-                echo 'User not exist! <br/>';
-            }
-
-        }
-
-        exit;
-
-        foreach ( $userArr as $key=>$item)
-        {
-            $user = \App\Model\User::find($item['id']);
-
-            if( !($user instanceof  \App\Model\User))
-            {
-                continue;
-            }
-
-            $parentId = \App\Model\User::where('id', '>',8000)->where('phone',$item['parent_phone'])->pluck('id');
-            $indirectId = \App\Model\User::where('id', '>',8000)->where('phone',$item['indirect_phone'])->pluck('id');
-
-//            echo $user->id . '-' . $parentId . '-' . $indirectId . '<br/>';
-
-            $user->parent_id = $parentId;
-            $user->indirect_id = $indirectId;
-            $user->save();
 
 
 
-
-
-//            $newUser = new \App\Model\User();
-//            $newUser->id = $item['id'];
-//            $newUser->real_name = $item['real_name'];
-//            $newUser->phone = $item['phone'];
-//            $newUser->id_card = $item['id_card'];
-//            $newUser->save();
-        }
-
-
-
-
-//        dd($userArr);
-//
-//        $res = json_encode($userArr);
-//        file_put_contents(storage_path('activity.json'),$res);
-//        exit;
-//
-//        var_dump($userArr);
-
-//        $arr = json_decode(file_get_contents(storage_path('activity.json')),true);
-//
-//        for ($i =0; $i < count($arr); $i++)
-//        {
-//            $this->makeActivityUser($arr[$i]);
-//        }
-    }
-
-
-    private function makeActivityUser($arr)
-    {
-        var_dump($arr);
-        $user = \App\Model\User::where('phone',$arr['phone'])->first();
-
-        if($user instanceof \App\Model\User)
-        {
-            Logger::info('用户已存在' . $arr['phone'],'cz');
-
-            //判断是否有活动订单
-            $order = Order::where('user_id',$user->id)->where('buy_type',Order::BUY_TYPE_ACTIVITY)->first();
-
-            if( $order instanceof  Order )
-            {
-                Logger::info('用户已存在活动订单' . $arr['phone'],'cz');
-                return;
-            }
-
-            $user->activity_pay = 1;
-            $user->save();
-        } else
-        {
-            Logger::info('用户新建' . $arr['phone'],'cz');
-            $user = new \App\Model\User();
-            $user->phone = $arr['phone'];
-            $user->vip_level = \App\Model\User::LEVEL_ACTIVITY;
-            $user->origin_vip_level = \App\Model\User::LEVEL_ACTIVITY;
-
-            $user->real_name = $arr['real_name'];
-            $user->id_card = $arr['id_card'];
-            $user->activity_pay = 1;
-            $user->save();
-        }
-
-
-        //下单
-        //没有订单则创建订单哟
-        $order = new Order();
-        $order->user_id = $user->id;
-        $order->buy_type = Order::BUY_TYPE_ACTIVITY;
-        $order->need_pay = Product::find(2)->price;
-        $order->immediate_user_id = $arr['immediate_id'];
-
-        $order->pay_status = 1;
-        $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
-//        $order->pay_type = CashStream::CASH_PAY_TYPE_WECHAT;
-        $order->pay_time = date('Y-m-d H:i:s');
-        $order->save();
-
-        Logger::info('下单成功' . $order->id,'cz');
-
-
-    }
-
-
-    public function anyInitUser()
-    {
-
-        set_time_limit(3600);
-
-        $reader = \PHPExcel_IOFactory::createReader('Excel2007');
-        $PHPExcel = $reader->load(storage_path('3.xlsx'));
-
-        $objWorksheet = $PHPExcel->getActiveSheet();
-        $highestRow = $objWorksheet->getHighestRow(); // 取得总行数
-
-        dd($highestRow);
-//        $highestColumn = $objWorksheet->getHighestColumn(); // 取得总列数
-
-//        var_dump($highestRow);
-
-        $userArr = [];
-
-        for($i = 3; $i <= $highestRow;$i++)
-        {
-            $arr = [];
-            $arr['id'] = intval($objWorksheet->getCellByColumnAndRow(0, $i)->getValue());
-            $arr['real_name'] = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
-            $arr['phone'] = strval($objWorksheet->getCellByColumnAndRow(3, $i)->getValue());
-            $arr['parent_id'] = strval($objWorksheet->getCellByColumnAndRow(5, $i)->getValue());
-            $arr['indirect_id'] = strval($objWorksheet->getCellByColumnAndRow(7, $i)->getValue());
-
-            if($arr['real_name'] == '')
-            {
-                continue;
-            }
-
-
-            if($arr['parent_id'] == '无')
-            {
-                $arr['parent_id'] = 0;
-            }
-
-            if($arr['indirect_id'] == '无')
-            {
-                $arr['indirect_id'] = 0;
-            }
-
-            $arr['password'] = Hash::make('123456');
-
-            $userArr[] = $arr;
-
-        }
-
-//        dd($userArr);
-
-        $res = User::insert($userArr);
-        var_dump($res);
-        dd(3);
-
-    }
 
 
     public function anyTestSms()
@@ -429,25 +218,6 @@ class PassportController extends Controller
     public function anyShowEssay()
     {
         return view('show_essay')->with('essay',Banner::find(Request::input('id')));
-    }
-
-    public function anyGoodDetail()
-    {
-        $product = Product::find(Request::input('product_id'));
-
-        $index = Request::input('index');
-
-        if($index == 0)
-        {
-            $content = $product->context;
-        } else if( $index == 1)
-        {
-            $content = $product->context_deliver;
-        } else {
-            $content = $product->context_server;
-        }
-
-        return view('show_product_detail')->with('content',$content);
     }
 
     public function anyPdf()
@@ -534,12 +304,6 @@ class PassportController extends Controller
 
 
 
-    public function getXcxBind()
-    {
-        return view('xcx_bind');
-    }
-
-
     /**
      * 身份证号码转换性别
      */
@@ -550,12 +314,6 @@ class PassportController extends Controller
             return '';
         }
         return $id_card[16]%2 == 1?'男':'女';
-    }
-
-
-    public function anyVipGuide()
-    {
-        return view('vip_guide');
     }
 
 

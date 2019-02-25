@@ -25,6 +25,7 @@ use App\Util\SmsTemplate;
 use Carbon\Carbon;
 use Faker\Provider\Address;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -63,6 +64,46 @@ class UserController extends Controller
     public function getReportBill()
     {
         return view('report_bill')->with('product',Product::find(Request::input('product_id')));
+    }
+
+    /**
+     * 编辑用户信息
+     */
+    public function anyEditUser()
+    {
+        $type = Request::input('type');
+        $user = User::find(Auth::id());
+
+        /**
+         * type 1修改姓名，2修改身份证号，3修改手机号
+         */
+        if( $type == 3)
+        {
+            if (Cache::get('register_sms_code' . Request::input('phone')) != (Request::input('phone') . '_' . Request::input('register_sms_code'))) {
+                return $this->jsonReturn(0, '验证码错误');
+            }
+
+
+
+            $phone = Request::input('phone');
+            /*手机号已被使用*/
+            if( User::where('phone',$phone)->count() )
+            {
+                return $this->jsonReturn(0,$phone . '已被使用');
+            }
+
+            $user->phone = $phone;
+
+        }else if( $type == 2)
+        {
+            $user->id_card = Request::input('id_card');
+        }else if( $type == 1 )
+        {
+            $user->real_name = Request::input('real_name');
+        }
+
+        $user->save();
+        return $this->jsonReturn(1);
     }
 
     /**
@@ -131,7 +172,51 @@ class UserController extends Controller
 
         $order->save();
 
-        return $this->jsonReturn(1,'下单成功');
+
+
+        //调起微信支付
+        require_once base_path() . "/plugin/swechatpay/lib/WxPay.Api.php";
+        require_once base_path() . "/plugin/swechatpay/example/WxPay.JsApiPay.php";
+
+
+        $tools = null;
+        $openid = Request::input('user_openid');
+        $tools = new \JsApiPay();
+
+        //创建支付订单
+//        $cashStream = new CashStream();
+//        $cashStream->refer_id = $order->id;
+//        $cashStream->cash_type = CashStream::CASH_TYPE_ALIPAY_BUY_PRODUCT;
+//        $cashStream->user_id = Auth::id();
+//        $cashStream->price = $order->need_pay;
+//        $cashStream->save();
+
+        //付款金额，必填
+        if( env('PAY_TEST')) {
+            $total_amount = 1;
+        } else {
+            $total_amount = $order->price * 100;
+        }
+
+
+
+
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("花甲服务");
+        $input->SetAttach("花甲服务");
+        $input->SetOut_trade_no($order->id);//这个订单号是特殊的
+        $input->SetTotal_fee($total_amount); //钱是以分计的
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetGoods_tag("花甲服务");
+        $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openid);
+        $payOrder = \WxPayApi::unifiedOrder($input);
+        $tools = new \JsApiPay();
+        $jsApiParameters = $tools->GetJsApiParameters($payOrder);
+        return $this->jsonReturn(1,$jsApiParameters);
+//        return $this->jsonReturn(1,'下单成功');
     }
 
     /*支付订单页面*/
@@ -176,6 +261,19 @@ class UserController extends Controller
     public function getAddresses()
     {
         return view('addresses')->with('addressList',UserAddress::mineAddressList(Auth::id()));
+    }
+
+    public function anyAddressData()
+    {
+        return $this->jsonReturn(1,UserAddress::mineAddressList(Auth::id()));
+    }
+
+
+    public function anyAddressInfo()
+    {
+        //组装社区数据
+        $neighborhood = Neighborhood::neighborhoodConfig();
+        return $this->jsonReturn(1,['neighborhood'=>$neighborhood]);
     }
 
     public function getSetting()
@@ -361,6 +459,11 @@ class UserController extends Controller
             $input->SetGoods_tag("辣木膳素食全餐");
             $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
 //            $input->SetOpenid($openId);
+
+
+
+
+
 
             if( Kit::isWechat() )
             {
@@ -713,6 +816,12 @@ class UserController extends Controller
         return view('info')->with('user',$this->user);
     }
 
+
+    public function anyUserCenter()
+    {
+        return $this->jsonReturn(1,['user'=>User::find(Auth::id())]);
+    }
+
     /**
      * 设置头像
      */
@@ -960,5 +1069,20 @@ class UserController extends Controller
     public function anyBindmore()
     {
         return view('bindmore');
+    }
+
+
+    /**
+     * 红包
+     */
+    public function anyBonus()
+    {
+        $list = DB::table('bonuses')->where('user_id',Auth::id())->orderBy('id','desc')->get();
+        if(!$list)
+        {
+            $list = [];
+        }
+
+        return $this->jsonReturn(1,$list);
     }
 }
