@@ -702,4 +702,9 @@ class PassportController extends Controller
             return $this->jsonReturn(0,$errCode);
         }
     }
+
+    public function getTest1()
+    {
+        return view('withdraw_success');
+    }
 }

@@ -23,7 +23,20 @@ class IndexController extends Controller
         {
             $banner[$key]->url = env('IMAGE_HOST') . $item->cover_image;
         }
-        return $this->jsonReturn(1,['banners'=>$banner]);
+
+        //判断vip信息
+        $user = User::find(Request::input('openid'));
+        $vip = ['isVip'=>false];
+        if( $user instanceof  User)
+        {
+            if ( $user->vipExpireDay() )
+            {
+                $vip['isVip'] = true;
+                $vip['expire'] = $user->vipExpireDay();
+            }
+        }
+
+        return $this->jsonReturn(1,['banners'=>$banner,'vip'=>$vip]);
     }
 
 
