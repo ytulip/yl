@@ -38,6 +38,7 @@ color: #98CC3D;">返回主页</span></a></div>
 
 @section('script')
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
 <script>
     function goHome()
     {
@@ -45,5 +46,16 @@ color: #98CC3D;">返回主页</span></a></div>
             url: '/pages/index/main'
         });
     }
+
+
+    var date1 = new Date(2019,0,24).toTimeString();
+    var date2 = new Date(2019,0,25).toTimeString();
+    var date3 = new Date(2019,0,26).toTimeString();
+
+    var currentDate = new Date(2019,0,26).toTimeString();
+
+    var dateList = [date1,date2,date3];
+    console.log( _.indexOf(dateList,currentDate));
+
 </script>
 @stop
