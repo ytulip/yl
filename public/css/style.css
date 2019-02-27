@@ -409,6 +409,8 @@ input::-webkit-input-placeholder{color: #bebebe;  }
     width: 100%;
 }
 
+.yl_btn1:hover{color:#FFFFFF;}
+
 .btn-gray{background-image: none; background: #CECCCC;color:#ffffff;box-shadow:none;}
 
 .btn-gray:hover{color:#ffffff}

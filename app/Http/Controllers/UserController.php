@@ -791,7 +791,7 @@ class UserController extends Controller
         $product = Product::find(Request::input('product_id'));
         if($product->isCleanProduct())
         {
-            return view('good_detail_xcx')->with('product',$product);
+            return view('good_detail_clean')->with('product',$product);
         } else
         {
             return view('good_detail_food')->with('product',$product);
