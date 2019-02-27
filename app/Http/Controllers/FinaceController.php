@@ -15,118 +15,6 @@ use Illuminate\Support\Facades\Request;
 
 class FinaceController extends Controller
 {
-    public function anyAlipayNotify()
-    {
-        Logger::info(Request::getContent());
-
-        //验证有效性
-        $config = config('alipay');
-        require_once base_path() . '/plugin/alipay/wappay/service/AlipayTradeService.php';
-
-        $arr=$_POST;
-        $alipaySevice = new \AlipayTradeService($config);
-        $result = $alipaySevice->check($arr);
-
-        if($result) {
-            //判断是否处理过
-            $cashStream = CashStream::find($arr['out_trade_no']);
-
-            if(!$cashStream || $cashStream->pay_status) {
-                return "fail";
-            }
-
-            $order = Order::find($cashStream->refer_id);
-
-
-            if(!$order->needPay()) {
-                return "fail";
-            }
-
-            //更改订单信息
-            $order->pay_status = 1;
-            $order->order_status = ($order->deliver_type == Deliver::SELF_GET)?Order::ORDER_STATUS_WAIT_SELF_GET:Order::ORDER_STATUS_WAIT_DELIVER;
-            $order->pay_type = CashStream::CASH_PAY_TYPE_ALIPAY;
-            $order->pay_time = date('Y-m-d H:i:s');
-            $order->save();
-
-            //生成邀请码，如果是复购的话没有邀请码
-//            if( $order->buy_type == 1 ) {
-//                InvitedCodes::makeRecord($order->id);
-//            }
-
-            //生成开发辅导初始记录
-            $order = Order::find($order->id);
-            $order->paySuccess();
-            $cashStream->pay_status = 1;
-            $cashStream->save();
-            Message::addReport($order->id);
-
-
-
-            echo "success";		//请不要修改或删除
-        }else {
-            //验证失败
-            echo "fail";	//请不要修改或删除
-        }
-    }
-
-    /**
-     * 支付宝同步返回
-     */
-    public function anyAlipayReturn(){
-        Logger::info(Request::getContent());
-
-        //验证有效性
-        $config = config('alipay');
-        require_once base_path() . '/plugin/alipay/wappay/service/AlipayTradeService.php';
-
-        $arr=$_GET;
-        $alipaySevice = new \AlipayTradeService($config);
-        $result = $alipaySevice->check($arr);
-
-        if($result) {
-            //判断是否处理过
-            $cashStream = CashStream::find($arr['out_trade_no']);
-
-            if(!$cashStream || $cashStream->pay_status) {
-                return Redirect::to('/order/report-success?order_id=' . $cashStream->refer_id);
-            }
-
-            $order = Order::find($cashStream->refer_id);
-
-
-            if(!$order->needPay()) {
-                return Redirect::to('/order/report-success?order_id=' . $cashStream->refer_id);
-            }
-
-            //更改订单信息
-            $order->pay_status = 1;
-            $order->order_status = ($order->deliver_type == Deliver::SELF_GET)?Order::ORDER_STATUS_WAIT_SELF_GET:Order::ORDER_STATUS_WAIT_DELIVER;
-            $order->pay_type = CashStream::CASH_PAY_TYPE_ALIPAY;
-            $order->pay_time = date('Y-m-d H:i:s');
-            $order->save();
-
-            //生成邀请码
-            //生成邀请码，如果是复购的话没有邀请码
-//            if( $order->buy_type == 1 ) {
-//                InvitedCodes::makeRecord($order->id);
-//            }
-
-            //生成开发辅导初始记录
-            $order = Order::find($order->id);
-            $order->paySuccess();
-            $cashStream->pay_status = 1;
-            $cashStream->save();
-            Message::addReport($order->id);
-
-
-
-            return Redirect::to('/order/report-success?order_id=' . $cashStream->refer_id);		//请不要修改或删除
-        }else {
-            //验证失败
-            echo "fail";	//请不要修改或删除
-        }
-    }
 
     /**
      * 微信支付回调
@@ -240,14 +128,6 @@ class FinaceController extends Controller
 
         return "SUCCESS";
 
-    }
-
-
-    /**
-     * 微信支付回调
-     */
-    public function anyWechatReturn()
-    {
     }
 
 }

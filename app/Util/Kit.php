@@ -101,18 +101,9 @@ class Kit
 
     }
 
-    static public function signType($type)
+    static public function cleanServiceTimeType($ind)
     {
-        if( $type = 0)
-        {
-            $str = '随食';
-        }elseif( $type == 1)
-        {
-            $str = '换食';
-        } else {
-            $str = '代食';
-        }
-
-        return $str;
+        $arr = [2,2.5,3,3.5,4,4.5,5,5.5,6];
+        return $arr[$ind - 1];
     }
 }

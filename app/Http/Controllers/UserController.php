@@ -129,15 +129,18 @@ class UserController extends Controller
         $order = new Order();
         if( $product->isCleanProduct() )
         {
+            //获得打扫时长
+            $clean_service_time = Request::input('clean_service_time');
+
+
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
-            $order->quantity = 1;
-            $order->product_attr_id = $productAttr->id;
-            $order->need_pay = $productAttr->price;
-            $order->size = $productAttr->size;
+            $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
+            $order->quantity = Kit::cleanServiceTimeType($clean_service_time);
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
-            $order->service_time = Request::input('clean_service_time');
+//            $order->service_time = Request::input('clean_service_time');
+            $order->service_time = '';
         } else
         {
             //可以提取公共
