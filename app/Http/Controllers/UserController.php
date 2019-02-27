@@ -819,6 +819,15 @@ class UserController extends Controller
         return view('info')->with('user',$this->user);
     }
 
+    public function anyUserOrder()
+    {
+        $list = Order::where('user_id',Auth::id())->orderBy('id','desc')->get();
+        if( !$list)
+        {
+            $list = [];
+        }
+        return $this->jsonReturn(1,$list);
+    }
 
     public function anyUserCenter()
     {
@@ -922,14 +931,6 @@ class UserController extends Controller
         $smsTemplate->sendSms(Request::input('phone'),['code'=>$code]);
         Session::put('modify_phone_sms_code',(Request::input('phone') . '_' . $code));
         return $this->jsonReturn(1);
-    }
-
-    /**
-     *
-     */
-    public function anySubUserList()
-    {
-        return view('sub_user_list')->with('list',$this->user->subList());
     }
 
 
