@@ -261,6 +261,16 @@ class UserController extends Controller
         return view('order_detail')->with('order',$order)->with('direct',User::find($order->immediate_user_id))->with('productAttr',ProductAttr::find($order->product_attr_id));
     }
 
+    public function getOrderDetailData()
+    {
+        $order = Order::where('user_id',Auth::id())->where('id',Request::input('order_id'))->first();
+        if (!$order)
+        {
+            return $this->jsonReturn(0);
+        }
+        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id)]);
+    }
+
     public function getAddresses()
     {
         return view('addresses')->with('addressList',UserAddress::mineAddressList(Auth::id()));
