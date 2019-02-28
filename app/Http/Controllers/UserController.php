@@ -264,11 +264,12 @@ class UserController extends Controller
     public function getOrderDetailData()
     {
         $order = Order::where('user_id',Auth::id())->where('id',Request::input('order_id'))->first();
+        $product = Product::find($order->product_id);
         if (!$order)
         {
             return $this->jsonReturn(0);
         }
-        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id)]);
+        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product]);
     }
 
     public function getAddresses()
