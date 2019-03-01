@@ -268,7 +268,8 @@ class UserController extends Controller
         {
             return $this->jsonReturn(0);
         }
-        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id)]);
+        $product = Product::find($order->product_id);
+        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product]);
     }
 
     public function getAddresses()
