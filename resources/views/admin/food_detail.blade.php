@@ -64,14 +64,19 @@
             <div class="row">
                 <div class="col-md-3 col-lg-3">日期</div>
                 <div class="col-md-3 col-lg-3">菜单</div>
+                <div class="col-md-2 col-lg-2">午餐/晚餐</div>
+                <div class="col-md-3 col-lg-3">餐图</div>
             </div>
 
 
             @foreach($clWeekMenu as $item)
                 <div class="row">
-                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}" name="date"></div>
-                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}" name="remark"></div>
-                    <div class="col-md-3 col-lg-3"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
+                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}"></div>
+                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}"></div>
+                    <div class="col-md-2 col-lg-2"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
+                    <div class="col-md-3 col-lg-3">
+                        <img src="{{$item->cover_img}}" style="width: 120px;height: 120px;"/>
+                    </div>
                 </div>
             @endforeach
 
@@ -79,16 +84,21 @@
             <div class="row edit-row">
                 <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="date"></div>
                 <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="foods"></div>
-                <div class="col-md-3 col-lg-3">
+                <div class="col-md-2 col-lg-2">
                     <select name="type">
                         <option value="1">午餐</option>
                         <option value="2">晚餐</option>
                     </select>
                 </div>
-                <div class="col-md-3 col-lg-3"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil edit-tmp-menu" aria-hidden="true"></i></a></div>
+                <div class="col-md-3 col-lg-3">
+                    <img src=""  id="food_img" style="width: 120px;height: 120px;" onclick="uploadCover2()"/>
+                </div>
+                <div class="col-md-1 col-lg-1">
+                    <div class="btn btn-dark" id="edit_food_menu">新增</div>
+                </div>
             </div>
 
-            <input type="hidden" id="edit_food_menu"/>
+            {{--<input type="hidden" id="edit_food_menu"/>--}}
         </div>
 
     </div>
@@ -99,11 +109,18 @@
 
         var pageConfig = {
             product_id:{{$product->id}},
-            foodMenuTempData:{}
+            foodMenuTempData:{},
+            uploadImgId:'',
         }
 
 
         function uploadCover(){
+            pageConfig.uploadImgId = '';
+            $('input[name="images[]"]').click();
+        }
+
+        function uploadCover2(){
+            pageConfig.uploadImgId = 2;
             $('input[name="images[]"]').click();
         }
 
@@ -129,7 +146,14 @@
                 return true;
             },
             data:function(){
-                return pageConfig.foodMenuTempData;
+                return {
+                    product_id:pageConfig.product_id,
+                    foods:$('input[name="foods"]').val(),
+                    cover_img:$('#food_img').attr('src'),
+                    type:$('select[name="type"]').val(),
+                    date:$('input[name="date"]').val()
+
+                }
             },
             callback:function (el,val)
             {
@@ -167,7 +191,11 @@
                     success:function(data){
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
                         if(data.status) {
-                            $('.essay_img').find('img').attr('src',data.data[0]); 'http://static.liaoliaoy.com/' + data.data[0];
+                            if(pageConfig.uploadImgId){
+                                $('#food_img').attr('src',data.data[0]);
+                            } else {
+                                $('.essay_img').find('img').attr('src', data.data[0]);
+                            }
                         } else {
                             alert(data.desc);
                         }

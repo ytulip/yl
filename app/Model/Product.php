@@ -49,4 +49,6 @@ class Product extends Model
         $list = FoodMenu::where('product_id',$this->id)->whereIn('date',$foodTime->menuTimeList())->get();
         return $list;
     }
+
+
 }

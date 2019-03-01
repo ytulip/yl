@@ -72,4 +72,27 @@ class FoodTime
         return $list;
 
     }
+
+
+    public function thisWeekList()
+    {
+        $list = [];
+        foreach ($this->weekDates as $key=>$item)
+        {
+                $list[] =  $item->format('Y-m-d');
+        }
+
+        return $list;
+    }
+
+    public function lastWeekList()
+    {
+        $list = [];
+        foreach ($this->lastWeekDates as $key=>$item)
+        {
+            $list[] =  $item->format('Y-m-d');
+        }
+
+        return $list;
+    }
 }

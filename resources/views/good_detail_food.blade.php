@@ -157,7 +157,7 @@
             </div>
 
 
-            <iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>
+            {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
 
 
             <div class="cus-row cus-row-v-m">
@@ -179,14 +179,14 @@
 
 
             <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
-                <img src="" class="slide-image" style="width: 100%;height: 100%;"/>
+                <img src="{{$thisWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>
             </div>
 
 
             <div class="info-panel">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">本周菜单</div>
-                <div class="fs-12-fc-7E7E7E-r">1月14日-1月18日</div>
-                <div>￥18.5</div>
+                <div class="fs-12-fc-7E7E7E-r m-t-10">{{\App\Util\Kit::dateFormat3($thisWeekList[0])}}-{{\App\Util\Kit::dateFormat3($thisWeekList[6])}}</div>
+                <div class="fs-12-fc-7E7E7E-r" style="margin-top: 24px;line-height: 18px;"> {{$thisWeek->foods}}</div>
             </div>
         </div>
 
@@ -197,14 +197,14 @@
 
 
             <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
-                <img src="" class="slide-image" style="width: 100%;height: 100%;"/>
+                <img src="{{$nextWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>
             </div>
 
 
             <div class="info-panel">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">下周菜单</div>
-                <div class="fs-12-fc-7E7E7E-r">1月14日-1月18日</div>
-                <div>￥18.5</div>
+                <div class="fs-12-fc-7E7E7E-r m-t-10">{{\App\Util\Kit::dateFormat3($nextWeekList[0])}}-{{\App\Util\Kit::dateFormat3($nextWeekList[6])}}</div>
+                <div class="fs-12-fc-7E7E7E-r " style="margin-top: 24px;line-height: 18px;"> {{$nextWeek->foods}}</div>
             </div>
         </div>
 

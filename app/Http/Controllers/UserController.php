@@ -804,7 +804,10 @@ class UserController extends Controller
             return view('good_detail_clean')->with('product',$product);
         } else
         {
-            return view('good_detail_food')->with('product',$product);
+            $foodTime = new FoodTime();
+            $thisWeek =FoodMenu::where('product_id',$product->id)->whereIn('date', $foodTime->thisWeekList())->orderBy('date','asc')->orderBy('type','asc')->first();
+            $nextWeek = FoodMenu::where('product_id',$product->id)->whereIn('date', $foodTime->lastWeekList())->orderBy('date','asc')->orderBy('type','asc')->first();
+            return view('good_detail_food')->with('product',$product)->with('thisWeek',$thisWeek)->with('nextWeek',$nextWeek)->with('thisWeekList',$foodTime->thisWeekList())->with('nextWeekList',$foodTime->lastWeekList());
         }
     }
 
