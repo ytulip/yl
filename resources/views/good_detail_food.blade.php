@@ -175,7 +175,7 @@
 
 
 
-        <div  style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box">
+        <div  style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box" onclick="goMenuDetail(1)">
 
 
             <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
@@ -193,7 +193,7 @@
 
 
 
-        <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;">
+        <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;" onclick="goMenuDetail(1)">
 
 
             <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
@@ -320,11 +320,26 @@
 
         var pageConfig = {
             product_id: {{$product->id}},
-            openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}"
+            openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}",
+            thisWeekList:'{{    implode(',',$thisWeekList) }}',
+            nextWeekList:'{{    implode(',',$nextWeekList) }}'
         }
 
         function buy(){
             calderVue.openCalderSwitch();
+        }
+
+
+        function goMenuDetail(type)
+        {
+            if( type == 1)
+            {
+                // console.log();
+                location.href = "/passport/menu?product_id="+pageConfig.product_id+"&dates=" + pageConfig.thisWeekList;
+            } else
+            {
+                location.href = "/passport/menu?product_id="+pageConfig.product_id+"&dates=" + pageConfig.nextWeekList;
+            }
         }
 
 

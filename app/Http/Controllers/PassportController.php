@@ -6,6 +6,7 @@ use App\Log\Facades\Logger;
 use App\Model\Banner;
 use App\Model\CashStream;
 use App\Model\Essay;
+use App\Model\FoodMenu;
 use App\Model\InvitedCodes;
 use App\Model\Order;
 use App\Model\Period;
@@ -464,5 +465,79 @@ class PassportController extends Controller
     public function getTest1()
     {
         return view('withdraw_success');
+    }
+
+    /**
+     *
+     */
+    public function anyMenu()
+    {
+       $product = Product::find(Request::input('product_id'));
+       $dates = Request::input('dates');
+       $dates = explode(',',$dates);
+
+
+        $res = [];
+        foreach ( $dates as $date)
+        {
+            $foods = FoodMenu::where('product_id',$product->id)->where('date',$date)->get();
+
+            $lunch = (Object)[];
+            $dinner = (Object)[];
+
+            foreach ( $foods as $food)
+            {
+                if( $food->type == 1)
+                {
+                    $lunch = $food;
+                } else
+                {
+                    $dinner = $food;
+                }
+            }
+
+            $res[$date]['lunch'] = $lunch;
+            $res[$date]['dinner'] = $dinner;
+        }
+
+       return view('food_menu')->with('dates',$dates)->with('res',$res);
+    }
+
+
+    /**
+     * 根据日期获得菜单
+     */
+    public function getMenuByDates()
+    {
+        $dates = Request::input('dates');
+        $dates = explode(',',$dates);
+
+        $product = Product::find(Request::input('product_id'));
+
+        $res = [];
+
+        foreach ( $dates as $date)
+        {
+            $foods = FoodMenu::where('product_id',$product->id)->where('date',$date)->get();
+
+            $lunch = (Object)[];
+            $dinner = (Object)[];
+
+            foreach ( $foods as $food)
+            {
+                if( $food->type == 1)
+                {
+                    $lunch = $food;
+                } else
+                {
+                    $dinner = $food;
+                }
+            }
+
+            $res[$date]['lunch'] = $lunch;
+            $res[$date]['dinner'] = $dinner;
+        }
+
+        return $this->jsonReturn(1,$res);
     }
 }
