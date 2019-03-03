@@ -269,7 +269,44 @@ class UserController extends Controller
             return $this->jsonReturn(0);
         }
         $product = Product::find($order->product_id);
-        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product]);
+
+        /**
+         * 两周内的食物
+         */
+        $foodTime = new FoodTime();
+        $dates = $foodTime->startTimeList();
+        $dates = date('Y-m-d') . ',' . implode(',',$dates);
+        $dates = explode(',',$dates);
+
+//        var_dump($dates);
+//        exit;
+
+        $res = [];
+
+        foreach ( $dates as $date)
+        {
+            $foods = FoodMenu::where('product_id',$product->id)->where('date',$date)->get();
+
+            $lunch = (Object)[];
+            $dinner = (Object)[];
+
+            foreach ( $foods as $food)
+            {
+                if( $food->type == 1)
+                {
+                    $lunch = $food;
+                } else
+                {
+                    $dinner = $food;
+                }
+            }
+
+            $res[$date]['lunch'] = $lunch;
+            $res[$date]['dinner'] = $dinner;
+        }
+
+
+        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product,"res"=>$res]);
     }
 
     public function getAddresses()
