@@ -31,33 +31,7 @@
         </div>
 
         <div class="block-card mt-32">
-            <h3 class="">价格</h3>
 
-            <div class="row">
-                <div class="col-md-3 col-lg-3">小区</div>
-                <div class="col-md-3 col-lg-3">面积范围</div>
-                <div class="col-md-3 col-lg-3">价格</div>
-                <div class="col-md-3 col-lg-3">操作</div>
-            </div>
-
-
-            @foreach($product->getAttrs() as $item)
-                <div class="row">
-                    <div class="col-md-3 col-lg-3">{{$item->neighborhood_name}}</div>
-                    <div class="col-md-3 col-lg-3">{{$item->size}}</div>
-                    <div class="col-md-3 col-lg-3">{{$item->price}}</div>
-                    <div class="col-md-3 col-lg-3">
-                    </div>
-                </div>
-            @endforeach
-
-
-            <div class="row">
-                <div class="col-md-3 col-lg-3">{!! \App\Model\SyncModel::neighborhoods('neighborhood_name') !!}</div>
-                <div class="col-md-3 col-lg-3"><input id="size"/></div>
-                <div class="col-md-3 col-lg-3"><input id="price"/></div>
-                <div class="col-md-3 col-lg-3"><div class="btn btn-dark" id="add_attr">新增</div></div>
-            </div>
         </div>
     </div>
 @stop
