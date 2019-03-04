@@ -345,7 +345,7 @@ class UserController extends Controller
 
     public function anyUserAddressData()
     {
-        $address = Address::find('address_id',Request::input('address_id'));
+        $address = UserAddress::find(Request::input('address_id'));
         return $this->jsonReturn(1,$address);
     }
 
