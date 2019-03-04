@@ -343,6 +343,11 @@ class UserController extends Controller
         return $this->jsonReturn(1,UserAddress::mineAddressList(Auth::id()));
     }
 
+    public function anyUserAddressData()
+    {
+        $address = Address::find('address_id',Request::input('address_id'));
+        return $this->jsonReturn(1,$address);
+    }
 
     public function anyAddressInfo()
     {
