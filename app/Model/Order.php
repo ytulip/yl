@@ -409,5 +409,11 @@ class Order extends Model
         return false;
     }
 
+    public static function getDaysByType($ind)
+    {
+        $config = [1,7,30];
+        return $config[$ind - 1];
+    }
+
 
 }

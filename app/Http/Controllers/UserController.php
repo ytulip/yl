@@ -147,12 +147,13 @@ class UserController extends Controller
             //可以提取公共
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
-            $order->quantity = 1;
+            $order->quantity = Request::input('quantity');
             $order->product_attr_id = $productAttr->id;
             $order->need_pay = $productAttr->price;
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
             $order->buy_type = 100;
+            $order->days = Order::getDaysByType(Request::input('tabIndex'));
 
             $order->lunch_service_time = Request::input('lunch_service');
             $order->dinner_service_time = Request::input('dinner_service');
@@ -186,7 +187,7 @@ class UserController extends Controller
 
             $carbon = Carbon::parse(Request::input('service_start_time'));
 
-            for($i = 0; $i < $order->quantity ; $i++ )
+            for($i = 0; $i < $order->days ; $i++ )
             {
                 $subFoodOrders  = new SubFoodOrders();
                 $subFoodOrders->order_id = $order->id;
