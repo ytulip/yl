@@ -30,7 +30,7 @@ class SubFoodOrders extends Model
     const BUY_TYPE_CLEAN = 1;
     const BUY_TYPE_NEW_REPORT = 4;
 
-    public $table = 'sub_food_order';
+    public $table = 'sub_food_orders';
 
     public function needPay()
     {
