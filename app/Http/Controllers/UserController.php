@@ -14,6 +14,7 @@ use App\Model\Neighborhood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
+use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
@@ -156,6 +157,9 @@ class UserController extends Controller
             $order->lunch_service_time = Request::input('lunch_service');
             $order->dinner_service_time = Request::input('dinner_service');
             $order->service_start_time = Request::input('service_start_time');
+
+
+
         }
 
         //保存地址哟
@@ -174,6 +178,25 @@ class UserController extends Controller
 
 
         $order->save();
+
+
+        //如果是订餐订单的话插入小订单
+        if( !$product->isCleanProduct() )
+        {
+
+            $carbon = Carbon::parse(Request::input('service_start_time'));
+
+            for($i = 0; $i < $order->quantity ; $i++ )
+            {
+                $subFoodOrders  = new SubFoodOrders();
+                $subFoodOrders->order_id = $order->id;
+                $subFoodOrders->date = $carbon->format('Y-m-d');
+                $subFoodOrders->status = 0;
+                $carbon->addDay(1);
+                $subFoodOrders->save();
+            }
+        }
+
 
 
 
@@ -1139,5 +1162,29 @@ class UserController extends Controller
         }
 
         return $this->jsonReturn(1,$list);
+    }
+
+
+    /**
+     * 延后逻辑处理
+     */
+    public function anyYanHou()
+    {
+        $order = Order::find(Request::input('order_id'));
+        $foodTime = new FoodTime();
+        $nextDate = $foodTime->nextDay();
+
+        $subFoodOrders = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->first();
+
+        if( !($subFoodOrders instanceof  SubFoodOrders))
+        {
+            return $this->jsonReturn(0);
+        }
+
+        $subFoodOrders->status = 100; //已延后
+        $subFoodOrders->save();
+        return $this->jsonReturn(1);
+
+        //补偿优惠券
     }
 }

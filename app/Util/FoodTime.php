@@ -22,6 +22,11 @@ class FoodTime
         $this->lastWeekDates = [Carbon::parse($mon->toDateTimeString())->addDay(7),Carbon::parse($mon->toDateTimeString())->addDay(8),Carbon::parse($mon->toDateTimeString())->addDay(9),Carbon::parse($mon->toDateTimeString())->addDay(10),Carbon::parse($mon->toDateTimeString())->addDay(11),Carbon::parse($mon->toDateTimeString())->addDay(12),Carbon::parse($mon->toDateTimeString())->addDay(13)];
     }
 
+    public function nextDay()
+    {
+        return Carbon::parse($this->currentTime->toDateTimeString())->addDay(1)->format('Y-m-d');
+    }
+
     public function nextWeekServiceEndTime()
     {
         return $this->lastWeekDates[4];
