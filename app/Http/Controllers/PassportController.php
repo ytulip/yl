@@ -505,6 +505,44 @@ class PassportController extends Controller
 
 
     /**
+     * 订餐订单历史记录
+     */
+    public function getHistory()
+    {
+        $dates = Request::input('dates');
+        $dates = explode(',',$dates);
+
+        $product = Product::find(Request::input('product_id'));
+
+        $res = [];
+
+        foreach ( $dates as $date)
+        {
+            $foods = FoodMenu::where('product_id',$product->id)->where('date',$date)->get();
+
+            $lunch = (Object)[];
+            $dinner = (Object)[];
+
+            foreach ( $foods as $food)
+            {
+                if( $food->type == 1)
+                {
+                    $lunch = $food;
+                } else
+                {
+                    $dinner = $food;
+                }
+            }
+
+            $res[$date]['lunch'] = $lunch;
+            $res[$date]['dinner'] = $dinner;
+        }
+
+        return view('history')->with('dates',$dates)->with('res',$res);
+    }
+
+
+    /**
      * 根据日期获得菜单
      */
     public function getMenuByDates()
