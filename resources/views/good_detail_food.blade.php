@@ -174,6 +174,7 @@
         </div>
 
 
+        @if($thisWeek)
 
         <div  style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box" onclick="goMenuDetail(1)">
 
@@ -189,11 +190,13 @@
                 <div class="fs-12-fc-7E7E7E-r" style="margin-top: 24px;line-height: 18px;"> {{$thisWeek->foods}}</div>
             </div>
         </div>
+@endif
 
 
 
+        @if($nextWeek)
 
-        <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;" onclick="goMenuDetail(1)">
+        <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;" onclick="goMenuDetail(2)">
 
 
             <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
@@ -207,6 +210,8 @@
                 <div class="fs-12-fc-7E7E7E-r " style="margin-top: 24px;line-height: 18px;"> {{$nextWeek->foods}}</div>
             </div>
         </div>
+
+            @endif
 
     </div>
 
