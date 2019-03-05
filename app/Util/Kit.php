@@ -46,6 +46,12 @@ class Kit
         return date('m月d日',strtotime($dateStr));
     }
 
+
+    public static function dateFormat4($dateStr)
+    {
+        return date('Y年m月d日',strtotime($dateStr));
+    }
+
     public static function dateFormatDay($dateStr)
     {
         return date('Y-m-d',strtotime($dateStr));
