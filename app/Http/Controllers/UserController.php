@@ -923,7 +923,7 @@ class UserController extends Controller
 
     public function anyUserOrder2()
     {
-        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->get();
+        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->where('status','>',0)->get();
         if( !$list)
         {
             $list = [];
@@ -934,8 +934,17 @@ class UserController extends Controller
             $list[$key]->service_start_time_format = Kit::dateFormat4($item->service_start_time);
             if( $item->type != 1)
             {
-                $count = SubFoodOrders::where('order_id',$item->id)->where('date','>=',date('Y-md'))->count();
+                $count = SubFoodOrders::where('order_id',$item->id)->where('date','>=',date('Y-m-d'))->count();
                 $list[$key]->days_count =  $count;
+            } else
+            {
+                if( $item->service_start_time >= date('Y-m-d'))
+                {
+                    $list[$key]->days_count =  1;
+                } else
+                {
+                    $list[$key]->days_count =  0;
+                }
             }
         }
 
