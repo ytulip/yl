@@ -912,7 +912,7 @@ class UserController extends Controller
             $list[$key]->service_start_time_format = Kit::dateFormat4($item->service_start_time);
             if( $item->type != 1)
             {
-                $count = SubFoodOrders::where('order_id',$item->id)->where('date','>=',date('Y-md'))->count();
+                $count = SubFoodOrders::where('order_id',$item->id)->where('date','>=',date('Y-m-d'))->count();
                 $list[$key]->days_count =  $count;
             }
         }
