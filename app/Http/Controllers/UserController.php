@@ -901,11 +901,12 @@ class UserController extends Controller
 
     public function anyUserOrder()
     {
-        $list = Order::where('user_id',Auth::id())->orderBy('id','desc')->get();
+        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->get();
         if( !$list)
         {
             $list = [];
         }
+
         return $this->jsonReturn(1,$list);
     }
 
