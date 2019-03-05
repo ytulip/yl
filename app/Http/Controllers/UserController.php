@@ -901,7 +901,7 @@ class UserController extends Controller
 
     public function anyUserOrder()
     {
-        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->get();
+        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->where('service_start_time','>=',date('Y-m-d'))->where('order_status','0')->get();
         if( !$list)
         {
             $list = [];
