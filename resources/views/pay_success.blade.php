@@ -18,11 +18,11 @@
     </div>
 
     <div style="margin-top: 75px">
-        <a class="yl_btn1">返回首页</a>
+        <a class="yl_btn1" href="javascript:goHome()">返回首页</a>
     </div>
 
     <div style="margin-top: 24px">
-        <a class="yl_btn1 btn-white" href="javascript:goHome()">查看详情</a>
+        <a class="yl_btn1 btn-white" href="javascript:goDetail()">查看详情</a>
     </div>
 
 
@@ -37,6 +37,15 @@
             wx.miniProgram.switchTab({
                 url: '/pages/index/main'
             });
+        }
+
+        function goDetail()
+        {
+            wx.miniProgram.navigateTo(
+                {
+                    url:'/pages/billdetail2/main?id={{\Illuminate\Support\Facades\Request::input('id')}}'
+                }
+            );
         }
     </script>
 @stop
