@@ -598,6 +598,8 @@ class IndexController extends Controller
 //        $product->context = Request::input('content');
 //        $product->context_deliver = Request::input('content_deliver');
 //        $product->context_server = Request::input('content_server');
+        $product->food_desc = Request::input('food_desc');
+        $product->fit_indi = Request::input('fit_indi');
 
         $product->save();
         return $this->jsonReturn(1);
@@ -936,99 +938,6 @@ class IndexController extends Controller
     }
 
 
-    public function getDirectIndirectRecord()
-    {
-        $userId = Request::input('user_id');
-        $user = User::find($userId);
-        if (!$user) {
-            dd('用户不存在');
-        }
-
-        $query = CashStream::where('user_id', $user->id)->whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_DIRECT, CashStream::CASH_TYPE_BENEFIT_INDIRECT]);
-
-
-        Kit::equalQuery($query, array_only(Request::all(), ['cash_type', 'vip_level']));
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-
-        foreach ($paginate as $key => $val) {
-            $tempUser = User::find('refer_user_id');
-            if ($tempUser) {
-                $paginate[$key]->user_model = $tempUser;
-            } else {
-                $paginate[$key]->user_model = (object)[
-                    "real_name" => "未注册",
-                    "phone" => "未注册",
-                    "created_at" => "未注册"
-                ];
-            }
-        }
-
-        return view('admin.direct_indirect_record')->with('paginate', $paginate)->with('user', $user);
-    }
-
-    public function anyAddUser()
-    {
-        $this->validate(Request::all(), [
-            'new_user_phone' => 'required',
-            'new_user_real_name' => 'required',
-            'new_user_id_card' => 'required',
-            'new_user_up_phone' => 'exists:users,phone',
-        ]);
-
-        $addType = Request::input('add_type');
-
-        $user = User::where('phone', Request::input('new_user_phone'))->first();
-
-        if ($user instanceof User) {
-            return $this->jsonReturn(0, '改手机号已被使用');
-        }
-
-        $user = new User();
-        $user->phone = Request::input('new_user_phone');
-        $user->real_name = Request::input('new_user_real_name');
-        $user->id_card = Request::input('new_user_id_card');
-        $user->vip_level = ($addType == User::LEVEL_VIP)?User::LEVEL_VIP:User::LEVEL_MASTER;
-        $user->origin_vip_level = $user->vip_level;
-        $user->password = Hash::make('123456');
-        $user->get_good = Request::input('get_good',0);
-        $user->re_get_good = Request::input('re_get_good',0);
-        $user->angle_get_good = Request::input('angle_get_good',0);
-
-        if (Request::input('new_user_up_phone')) {
-            $upUser = User::where('phone', Request::input('new_user_up_phone'))->first();
-            $user->parent_id = $upUser->id;
-            $user->indirect_id = $upUser->parent_id;
-
-            //如果是天使会员是要自动升级的
-            if( !$upUser->vip_level )
-            {
-                return $this->jsonReturn(0,'无效上级');
-            }
-
-            if( $upUser->vip_level == User::LEVEL_VIP )
-            {
-                //如果下级达到三个则默认升级为高级会员
-                $count = User::where('parent_id',$upUser->id)->count();
-                if( $count >= 2)
-                {
-                    Logger::info($upUser->id . '默认升级为高级会员','admin_add_user');
-                    $upUser->vip_level = User::LEVEL_MASTER;
-                    $upUser->save();
-                }
-            }
-
-        }
-
-        $user->save();
-
-        Logger::info('添加会员' ,'admin_add_user');
-        Logger::info(Request::all() ,'admin_add_user');
-
-        return $this->jsonReturn(1);
-    }
-
-
     public function anyModifyUser()
     {
         $this->validate(Request::all(), [
@@ -1054,143 +963,14 @@ class IndexController extends Controller
     }
 
 
-    /**
-     * 增加活动会员
-     */
-    public function anyAddActivityUser()
-    {
-        $this->validate(Request::all(), [
-            'new_user_phone' => 'required',
-            'new_user_real_name' => 'required',
-            'new_user_id_card' => 'required',
-            'new_user_up_phone' => 'exists:users,phone'
-        ]);
-
-
-        $user = User::where('phone', Request::input('new_user_up_phone'))->first();
-        if (!in_array($user->vip_level,[User::LEVEL_MASTER,User::LEVEL_VIP])) {
-            return $this->jsonReturn(0, '无效的上级会员');
-        }
-
-        return User::makeActivityUser(['real_name' => Request::input('new_user_real_name'), 'phone' => Request::input('new_user_phone'), 'id_card' => Request::input('new_user_id_card'), 'immediate_id' => $user->id]);
-    }
-
-
     public function anyAddAngleUser()
     {
 
     }
 
-    public function anySignList()
+    public function anyOrderDetail()
     {
-        $query = DB::table('sign_record')->where('sign_status', 1)->leftJoin('users', 'sign_record.user_id', '=', 'users.id')->orderBy('sign_record.date', 'desc')->orderBy('sign_record.updated_at', 'desc')->selectRaw('sign_record.*,users.phone,users.real_name,users.id_card');
-        CommKit::equalQuery($query, array_only(Request::all(), ['comment_status', 'user_id']));
 
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $tempArray = array($item->id, $item->phone, $item->real_name, $item->id_card, ($item->comment_status ? '是' : '否'), $item->date);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('ID', '手机号', '姓名', '身份证号', '是否评论', '打卡时间'),
-                'data' => $dataList,
-                'name' => 'daka'
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.sign_list')->with('paginate', $paginate);
-//        return view('admin.sign_list');
-    }
-
-    public function anySignDetail()
-    {
-        $signRecord = SignRecord::find(Request::input('id'));
-
-
-        $list = SignRecord::where('user_id', $signRecord->user_id)->where('sign_status', 1)->get();
-        $countSum = 0;
-        foreach ($list as $item) {
-            $record = json_decode($item->sign_prov);
-            $countSum += ($record->countIndex + 1);
-        }
-
-
-        return view('admin.sign_detail')->with('signRecord', $signRecord)->with('signDetail', json_decode($signRecord->sign_prov))->with('user', User::find($signRecord->user_id))->with('list', $list)->with('countSum', $countSum);
-//        return view('admin.sign_list');
-    }
-
-
-    public function anySignComment()
-    {
-        $signRecord = SignRecord::find(Request::input('id'));
-        if (!$signRecord instanceof SignRecord) {
-            return $this->jsonReturn(0, '记录不存在');
-        }
-
-        $signRecord->comment_status = 1;
-        $signRecord->comment = Request::input('comment');
-        $signRecord->save();
-
-        Message::addSignComment($signRecord->id);
-
-        //发送评论消息
-
-        return $this->jsonReturn(1);
-    }
-
-    /**
-     * 用户提货记录
-     */
-    public function getGetGood()
-    {
-        $query = MonthGetGood::orderBy('month_get_good.id', 'desc')->leftJoin('users', 'user_id', '=', 'users.id')->selectRaw('*,month_get_good.id as get_id,month_get_good. created_at as get_created_at');
-
-        CommKit::equalQuery($query, array_only(Request::all(), ['get_status']));
-        CommKit::betweenTime($query, 'month_get_good.created_at');
-        CommKit::keywordSearch($query);
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $tempArray = array($item->get_id, $item->real_name, $item->phone, $item->count, $item->getTypeText(), $item->deliverTypeText(), $item->address_name, $item->address_phone, $item->address, $item->get_created_at);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('编号', '提货人姓名', '联系方式', '提货数量', '提货类型', '提货方式', '收件人姓名', '收件人手机',
-                    '收货地址', '提货时间'),
-                'data' => $dataList,
-                'name' => 'tihuo'
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.monthget')->with('paginate', $paginate);
-    }
-
-
-    /**
-     * 用户提货记录详情
-     */
-    public function getGetGoodDetail()
-    {
-        $orderId = Request::input('id');
-        $order = MonthGetGood::find($orderId);
-        if (!$order) {
-            dd('订单不存在');
-        }
-        return view('admin.monthgetdetail')->with('order', $order);
     }
 
 

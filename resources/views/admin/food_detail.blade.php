@@ -31,7 +31,38 @@
         </div>
 
         <div class="block-card mt-32">
-            <h3 class="">价格</h3>
+            <h4 class="">价格和简介</h4>
+
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <p class="sm-tag-text">价格</p>
+                    <p class="text-desc-decoration">李海波</p>
+                </div>
+            </div>
+
+            <div class="row m-t-10">
+                <div class="col-md-12 col-lg-12">
+                    <p class="sm-tag-text">食谱简介</p>
+                    <p class="text-desc-decoration">
+                        <textarea name="food_desc" style="width: 100%;height: 60px;">{{$product->food_desc}}</textarea>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row m-t-10">
+                <div class="col-md-12 col-lg-12">
+                    <p class="sm-tag-text">适宜人群</p>
+                    <p class="text-desc-decoration">
+                        <textarea name="fit_indi" style="width: 100%;height: 60px;">{{$product->fit_indi}}</textarea>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row m-t-10">
+                <div class="col-md-col-12">
+                 <button class="btn btn-primary" id="do_publish" style="margin-left: 15px;">保存</button>
+                </div>
+            </div>
             
         </div>
 
@@ -147,7 +178,7 @@
                 return true;
             },
             data:function(){
-                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src')};
+                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val()};
             },
             callback:function (el,val)
             {
