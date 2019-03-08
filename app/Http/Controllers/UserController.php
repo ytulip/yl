@@ -329,8 +329,11 @@ class UserController extends Controller
             $res[$date]['dinner'] = $dinner;
         }
 
+        $pastDays = SubFoodOrders::where('order_id',$order->id)->where('date','<',date('Y-m-d'))->get();
+        $days = SubFoodOrders::where('order_id',$order->id)->where('date','>=',date('Y-m-d'))->get();
 
-        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product,"res"=>$res]);
+
+        return $this->jsonReturn(1,['order'=>$order,'user'=>User::find($order->user_id),'product'=>$product,"res"=>$res,"pastDays"=>$pastDays,"days"=>$days]);
     }
 
     public function getAddresses()
