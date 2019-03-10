@@ -137,6 +137,7 @@ class UserController extends Controller
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
             $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
+            $order->origin_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
             $order->quantity = Kit::cleanServiceTimeType($clean_service_time);
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
@@ -150,6 +151,7 @@ class UserController extends Controller
             $order->quantity = Request::input('quantity');
             $order->product_attr_id = $productAttr->id;
             $order->need_pay = $productAttr->price;
+            $order->origin_pay = $product->price * $order->quantity * Order::getDaysByType(Request::input('tabIndex'));
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
             $order->buy_type = 100;
