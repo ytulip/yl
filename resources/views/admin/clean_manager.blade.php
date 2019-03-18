@@ -14,8 +14,8 @@
         <div class="block-card m-t-10">
             <div class="row paginate-list-row">
                 <div class="col-md-2 col-lg-2">序号</div>
-                <div class="col-md-1 col-lg-1">名称</div>
-                <div class="col-md-9 col-lg-9">操作</div>
+                <div class="col-md-7 col-lg-7">名称</div>
+                <div class="col-md-3 col-lg-3">操作</div>
             </div>
 
             @foreach($paginate as $key=>$val)
@@ -23,10 +23,7 @@
                     <div class="col-md-2 col-lg-2">{{$val->id}}</div>
                     <div class="col-md-1 col-lg-1">{{$val->product_name}}</div>
                     <div class="col-md-9 col-lg-9">
-                        <button type="button" class="btn btn-success col-gray-btn mt-32" onclick="goHref('/admin/index/clean-detail?id={{$val->id}}')">编辑</button>
-                        @if($val->status == 0 ) <button type="button" class=" btn btn-success col-gray-btn mt-32" onclick="setStatus({{$val->id}},1)">发布</button> <button type="button" class="btn btn-success col-gray-btn mt-32" onclick="setStatus({{$val->id}},3)">废弃</button>@endif
-                        @if($val->status == 1 ) <button type="button" class="btn btn-success col-gray-btn mt-32" onclick="setStatus({{$val->id}},2)">禁用</button>
-                            @endif
+                        <a class="btn btn-primary" href="/admin/index/clean-detail?id={{$val->id}}">编辑</a>
                     </div>
                 </div>
             @endforeach
@@ -35,9 +32,9 @@
         <div class="fl-r"><?php echo $paginate->render(); ?></div>
     </div>
 
-    <div style="position: fixed;right: 60px;bottom: 60px;">
-        <div style="width: 56px;height:56px;border-radius:96px;background-color:#697b8c; "><a style="width: 100%;display: block;line-height: 56px;text-align: center;font-size: 40px;color:#ffffff;" href="javascript:void(0)" id="add_user"><i class="fa fa-plus"></i></a></div>
-    </div>
+    {{--<div style="position: fixed;right: 60px;bottom: 60px;">--}}
+        {{--<div style="width: 56px;height:56px;border-radius:96px;background-color:#697b8c; "><a style="width: 100%;display: block;line-height: 56px;text-align: center;font-size: 40px;color:#ffffff;" href="javascript:void(0)" id="add_user"><i class="fa fa-plus"></i></a></div>--}}
+    {{--</div>--}}
 @stop
 
 @section('script')

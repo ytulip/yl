@@ -173,22 +173,6 @@
             </div>
         </div>
 
-        <div  style="background: #FFFFFF;
-    box-shadow: 0 2px 6px 0 #E7E9F0;
-    border-radius: 5px;padding:24px;margin-top: 16px;">
-            <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-1 t-a-l">
-                    <div class="red-v-l"></div>
-                </div>
-                <div class="cus-row-col-8">
-                    <span class="fs-18-fc-000000-m">服务范围及标准</span>
-                </div>
-                <div class="cus-row-col-3 t-al-r">
-
-                </div>
-            </div>
-        </div>
-
     </div>
 
 

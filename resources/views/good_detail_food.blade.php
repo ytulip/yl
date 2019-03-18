@@ -151,9 +151,10 @@
                 <div class="cus-row-col-8">
                     <span class="fs-18-fc-000000-m">食谱简介</span>
                 </div>
-                <div class="cus-row-col-3 t-al-r">
+            </div>
 
-                </div>
+            <div class="fs-14-fc-7E7E7E-r" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">
+                    {{$product->food_desc}}
             </div>
 
 
@@ -167,9 +168,10 @@
                 <div class="cus-row-col-8">
                     <span class="fs-18-fc-000000-m">适宜人群</span>
                 </div>
-                <div class="cus-row-col-3 t-al-r">
+            </div>
 
-                </div>
+            <div class="fs-14-fc-7E7E7E-r" style="margin-top: 14px;line-height: 18px;">
+                {{$product->food_desc}}
             </div>
         </div>
 
@@ -288,6 +290,7 @@
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">六</span></div>
                     </div>
 
+                    <div style="height: 210px;overflow: scroll;">
                     <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen}" v-on:click="setBegin(data[item][0].day)">@{{data[item][0].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen}" v-on:click="setBegin(data[item][1].day)">@{{data[item][1].day}}</span></div>
@@ -298,6 +301,7 @@
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen}" v-on:click="setBegin(data[item][6].day)">@{{data[item][6].day}}</span></div>
                     </div>
 
+                    </div>
                 </div>
 
                 <div style="margin-top: 26px;">
