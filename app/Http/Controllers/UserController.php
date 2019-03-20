@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\CashStream;
+use App\Model\Coupon;
 use App\Model\Deliver;
 use App\Model\Essay;
 use App\Model\FinanceClass;
@@ -1239,5 +1240,15 @@ class UserController extends Controller
         return $this->jsonReturn(1);
 
         //补偿优惠券
+    }
+
+
+    /**
+     * 获得优惠券列表
+     */
+    public function anyCouponList()
+    {
+        $list = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','<=',date('Y-m-d'))->orderBy('id','desc')->get();
+        return $this->jsonReturn(1,$list);
     }
 }
