@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Log\Facades\Logger;
 use App\Model\Banner;
 use App\Model\CashStream;
+use App\Model\Coupon;
 use App\Model\Essay;
 use App\Model\FoodMenu;
 use App\Model\InvitedCodes;
@@ -372,7 +373,17 @@ class PassportController extends Controller
             }
         }
 
-        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice,'userAddress'=>$userAddress,'product'=>$product->toArray()]);
+
+        //用户的优惠券信息
+        $coupon = Coupon::where('user_id',$user->id)->where('status',1)->where('expire_at','>=',date('Y-m-d'))->where('coupon_type',$product->id)->get();
+        if(isset($coupon[0]))
+        {
+            $couponId =$coupon[0]->id;
+        }else{
+            $couponId = '';
+        }
+
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice,'userAddress'=>$userAddress,'product'=>$product->toArray(),'couponId'=>$couponId]);
     }
 
 
