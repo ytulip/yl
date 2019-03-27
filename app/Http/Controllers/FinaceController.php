@@ -10,6 +10,8 @@ use App\Model\Message;
 use App\Model\Order;
 use App\Model\ProductAttr;
 use App\Model\User;
+use App\Model\VipOrder;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 
@@ -28,6 +30,55 @@ class FinaceController extends Controller
             return;
         }
         $tradeNo = $wxObj->out_trade_no;
+
+
+
+        if( strpos($tradeNo,'v') == 0 )
+        {
+
+            $tradeNo = str_replace('v','',$tradeNo);
+            $vipOrder = VipOrder::find($tradeNo);
+            if( $vipOrder->pay_status )
+            {
+                return 'SUCCESS';
+            }
+            $vipOrder->pay_status = 1;
+            $vipOrder->save();
+
+
+            //购买会员的
+            $user = User::find($vipOrder->user_id);
+            $month = (Request::input('type') == 1)?6:12;
+
+            if( $expireDay = $user->vipExpireDay() )
+            {
+                $expireMonth = Carbon::parse(Carbon::parse($expireDay)->format('Y-m'));
+                //增加月份
+                $expireMonth->addMonths($month);
+                //把日期算上去？
+                $expireMonth->addDays( ($user->pay_day < $expireMonth->daysInMonth)?($user->pay_day - 1):($expireMonth->daysInMonth - 1));
+
+            } else
+            {
+                $expireMonth = Carbon::parse(Carbon::now()->format('Y-m'));
+                $expireMonth->addMonths($month);
+                if( $expireMonth->daysInMonth < date('d') )
+                {
+                    //到期日子没有今天的日子，那到期日就是他了
+                    $expireMonth->addDays($expireMonth->daysInMonth - 1);
+                } else {
+                    //到期日要减一天
+                    $expireMonth->addDays(date('d'))->subDay()->subDay();
+                }
+                $user->pay_day = (date('d') == 1)?31:(date('d') - 1);
+
+            }
+            $user->expire_time= $expireMonth->format('Y-m-d');
+
+            $user->save();
+            return "SUCCESS";
+        }
+
 
         //判断是否处理过
         $cashStream = CashStream::find($tradeNo);

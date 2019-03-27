@@ -117,6 +117,7 @@ class UserController extends Controller
         $order = new VipOrder();
         $order->buy_type = 1;
         $order->price = 1;
+        $order->user_id = Auth::id();
         $order->save();
 
         //调起微信支付
