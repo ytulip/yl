@@ -174,7 +174,7 @@
         </div>
 
 
-        <div style="background: #FFFFFF;
+        <div class="m-t-16" style="background: #FFFFFF;
     box-shadow: 0 2px 6px 0 #E7E9F0;
     border-radius: 5px;padding:24px;transform: translateY(-24px)">
             <div class="cus-row cus-row-v-m">
@@ -194,7 +194,7 @@
         </div>
 
 
-        <div style="background: #FFFFFF;
+        <div class="m-t-24" style="background: #FFFFFF;
     box-shadow: 0 2px 6px 0 #E7E9F0;
     border-radius: 5px;padding:24px;transform: translateY(-24px)">
             <div class="cus-row cus-row-v-m">
