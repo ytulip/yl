@@ -19,6 +19,7 @@ use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
+use App\Model\VipOrder;
 use App\Model\YlConfig;
 use App\Util\DealString;
 use App\Util\FoodTime;
@@ -106,6 +107,60 @@ class UserController extends Controller
 
         $user->save();
         return $this->jsonReturn(1);
+    }
+
+
+    public function postReportVip()
+    {
+
+
+        $order = new VipOrder();
+        $order->buy_type = 1;
+        $order->price = 1;
+        $order->save();
+
+        //调起微信支付
+        require_once base_path() . "/plugin/swechatpay/lib/WxPay.Api.php";
+        require_once base_path() . "/plugin/swechatpay/example/WxPay.JsApiPay.php";
+
+
+        $tools = null;
+        $openid = Request::input('user_openid');
+        $tools = new \JsApiPay();
+
+        //创建支付订单
+//        $cashStream = new CashStream();
+//        $cashStream->refer_id = $order->id;
+//        $cashStream->cash_type = CashStream::CASH_TYPE_ALIPAY_BUY_PRODUCT;
+//        $cashStream->user_id = Auth::id();
+//        $cashStream->price = $order->need_pay;
+//        $cashStream->save();
+
+        //付款金额，必填
+        if( env('PAY_TEST')) {
+            $total_amount = 1;
+        } else {
+            $total_amount = $order->price * 100;
+        }
+
+
+
+
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("花甲会员");
+        $input->SetAttach("花甲会员");
+        $input->SetOut_trade_no('v' . $order->id);//这个订单号是特殊的
+        $input->SetTotal_fee($total_amount); //钱是以分计的
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetGoods_tag("花甲汇演");
+        $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openid);
+        $payOrder = \WxPayApi::unifiedOrder($input);
+        $tools = new \JsApiPay();
+        $jsApiParameters = $tools->GetJsApiParameters($payOrder);
+        return $this->jsonReturn(1,$jsApiParameters);
     }
 
     /**
@@ -720,130 +775,11 @@ class UserController extends Controller
         return $res;
     }
 
-    /**
-     * 提现功能
-     */
-    public function getWithdraw()
-    {
-        return view('withdraw_input')->with('user',$this->user);
-    }
 
 
-    public function getWithdrawConfirm()
-    {
-//        if ( !Session::get('withdraw_confirm_ok'))
-//        {
-//            return Redirect::to('/user/withdraw');
-//        }
-//
-//        Session::forget('withdraw_confirm_ok');
-
-        $withdraw = round(Request::input('withdraw'),2);
-        if( $withdraw <= 0 ) {
-            dd('金额有误');
-        }
-
-        return view('withdraw')->with('withdraw',$withdraw)->with('user',$this->user);
-
-    }
-
-    /**
-     *
-     */
-    public function postWithdraw()
-    {
-        if ( Session::get('withdraw_sms_code') !=  ($this->user->phone . '_' . Request::input('withdraw_sms_code')) )
-        {
-            return $this->jsonReturn(0,'验证码错误');
-        }
-
-        Session::put('withdraw_confirm_ok',1);
-        Session::forget('withdraw_sms_code');
 
 
-        return $this->jsonReturn(1);
 
-//        $withdraw = Request::input('withdraw');
-//        if( $withdraw <= 0 ) {
-//            return $this->jsonReturn(0,'金额有误');
-//        }
-
-//        $withdraw = round($withdraw,2);
-//
-//        $res = DB::query("update users set charge = case when charge - $withdraw >= 0 then charge then charge where user_id = {$this->user->id}");
-//        var_dump($res);
-//        exit;
-//
-//        $cashStream = new CashStream();
-//        $cashStream->user_id = $this->user->id;
-//        $cashStream->cash_type = CashStream::CASH_TYPE_WITHDRAW;
-//        $cashStream->direction = CashStream::CASH_DIRECTION_OUT;
-//        $cashStream->pay_status = 1;
-//        $cashStream->price = $withdraw;
-//        $cashStream->save();
-    }
-
-    public function postWithdrawConfirm()
-    {
-        //验证密码
-        if ( !Hash::check(Request::input('password'),$this->user->password))
-        {
-            return $this->jsonReturn(0,'密码有误');
-        }
-
-        if ( Session::get('withdraw_sms_code') !=  ($this->user->phone . '_' . Request::input('withdraw_sms_code')) )
-        {
-            return $this->jsonReturn(0,'验证码错误');
-        }
-
-//        Session::put('withdraw_confirm_ok',1);
-        Session::forget('withdraw_sms_code');
-
-        $withdraw = round(Request::input('withdraw'),2);
-        if( $withdraw < env('WITHDRAW_LOW_LIMIT',1000) ) {
-            return $this->jsonReturn(0,'提现金额不能小于'.env('WITHDRAW_LOW_LIMIT',1000).'元');
-        }
-
-        $withdraw = round($withdraw,2);
-
-
-        //每月最大提现次数限制
-        $withdrawCount = CashStream::where('user_id',$this->user->id)->where('cash_type',CashStream::CASH_TYPE_WITHDRAW)->whereRaw('DATE_FORMAT( created_at, "%Y%m" ) = DATE_FORMAT( CURDATE( ) , "%Y%m" ) ')->count();
-
-        if( $withdrawCount > env('WITHDRAW_COUNT_LIME',2) )
-        {
-            return $this->jsonReturn(0,'提现次数超出本月最大限制');
-        }
-
-        $res = DB::update("update users set charge = case when charge - $withdraw >= 0 then charge - $withdraw else charge end where id = {$this->user->id}");
-
-
-        if( !$res ) {
-            return $this->jsonReturn(0,'金额有误');
-        }
-
-        $cashStream = new CashStream();
-        $cashStream->user_id = $this->user->id;
-        $cashStream->cash_type = CashStream::CASH_TYPE_WITHDRAW;
-        $cashStream->direction = CashStream::CASH_DIRECTION_OUT;
-        $cashStream->pay_status = 1;
-        $cashStream->withdraw_account = Request::input('account');
-        $cashStream->price = $withdraw;
-        $cashStream->withdraw_type = Request::input('withdraw_type');
-        $cashStream->save();
-
-        return $this->jsonReturn(1);
-
-    }
-
-    public function postWithdrawSms()
-    {
-        $code = DealString::random(6,'number');
-        $smsTemplate = new SmsTemplate(SmsTemplate::WITHDRAW_SMS);
-        $smsTemplate->sendSms($this->user->phone,['code'=>$code]);
-        Session::put('withdraw_sms_code',($this->user->phone . '_' . $code));
-        return $this->jsonReturn(1);
-    }
 
     public function getWithdrawSuccess()
     {
