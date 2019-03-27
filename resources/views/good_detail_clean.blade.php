@@ -165,12 +165,49 @@
                     <div class="red-v-l"></div>
                 </div>
                 <div class="cus-row-col-8">
-                    <span class="fs-18-fc-000000-m">自费说明</span>
+                    <span class="fs-18-fc-000000-m">资费说明</span>
                 </div>
                 <div class="cus-row-col-3 t-al-r">
 
                 </div>
             </div>
+        </div>
+
+
+        <div style="background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;padding:24px;transform: translateY(-24px)">
+            <div class="cus-row cus-row-v-m">
+                <div class="cus-row-col-1 t-a-l">
+                    <div class="red-v-l"></div>
+                </div>
+                <div class="cus-row-col-8">
+                    <span class="fs-18-fc-000000-m">服务范围及标准</span>
+                </div>
+                <div class="cus-row-col-3 t-al-r">
+
+                </div>
+            </div>
+
+
+            {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
+        </div>
+
+
+        <div style="background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;padding:24px;transform: translateY(-24px)">
+            <div class="cus-row cus-row-v-m">
+                <div class="cus-row-col-1 t-a-l">
+                    <div class="red-v-l"></div>
+                </div>
+                <div class="cus-row-col-8">
+                    <span class="fs-18-fc-000000-m">常见问题</span>
+                </div>
+            </div>
+
+
+            {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
         </div>
 
     </div>
