@@ -16,7 +16,9 @@ Route::get('/', function () {
     return \Illuminate\Support\Facades\Redirect::to('/user/index');
 });
 Route::get('hello',function(){
-	return 'hello';
+//	return 'hello';
+    $vipOrder = \App\Model\VipOrder::find('7');
+    $vipOrder->doCoupon();
 });
 
 Route::controller('/finace','FinaceController');

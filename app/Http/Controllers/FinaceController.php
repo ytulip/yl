@@ -46,6 +46,9 @@ class FinaceController extends Controller
             $vipOrder->save();
 
 
+
+            $vipOrder->doCoupon();
+
             //购买会员的
             $user = User::find($vipOrder->user_id);
             $month = (Request::input('type') == 1)?6:12;
@@ -74,6 +77,11 @@ class FinaceController extends Controller
 
             }
             $user->expire_time= $expireMonth->format('Y-m-d');
+
+
+            /**
+             * 发放优惠券
+             */
 
             $user->save();
             return "SUCCESS";

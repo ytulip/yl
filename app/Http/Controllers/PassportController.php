@@ -383,7 +383,7 @@ class PassportController extends Controller
             $couponId = '';
         }
 
-        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice,'userAddress'=>$userAddress,'product'=>$product->toArray(),'couponId'=>$couponId]);
+        return $this->jsonReturn(1,['arr'=>$arr,'timeArr'=>$timeArray,'lunchArr'=>json_decode(YlConfig::value('lunch_service_time')),'dinnerArr'=>json_decode(YlConfig::value('dinner_service_time')),'start_deliver_day'=>$foodTime->startTimeList(),'periodPrice'=>$periodPrice,'userAddress'=>$userAddress,'product'=>$product->toArray(),'couponId'=>$couponId,'coupons'=>$coupon->toArray()]);
     }
 
 
