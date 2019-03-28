@@ -204,7 +204,11 @@
                 <div class="cus-row-col-8">
                     <span class="fs-18-fc-000000-m">常见问题</span>
                 </div>
+                <div class="cus-row-col-3 t-al-r">
+                    <span class="next-icon"></span>
+                </div>
             </div>
+
 
 
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
