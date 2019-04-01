@@ -58,6 +58,7 @@ class VipOrder extends Model
             $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
             $coupon->type_text = $foodTypeText;
             $coupon->user_id = $this->user_id;
+            $coupon->refer_id = $this->id;
             $coupon->status = 1;
             $coupon->save();
 
