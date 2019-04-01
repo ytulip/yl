@@ -1092,6 +1092,31 @@ class UserController extends Controller
             "vip_health"=>YlConfig::value('vip_health')
             ];
 
+
+       //如果是会员的话,则要显示相应的信息
+        if ( $data['isVip'] )
+        {
+            //拿最近的会员支付订单
+            $vipOrder = VipOrder::where('user_id',$user->id)->where('pay_status',1)->orderBy('id','desc')->first();
+
+
+            //点餐服务
+            $foodTotal = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[1,2,3])->count();
+            $foodActive = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[1,2,3])->where('status',1)->count();
+            $data['foodTotal'] = $foodTotal;
+            $data['foodActive'] = $foodActive;
+
+            //家庭清洁
+            $cleanTotal = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[4,5,6])->count();
+            $cleanActive = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[4,5,6])->where('status',1)->count();
+            $data['cleanTotal'] = $cleanTotal;
+            $data['cleanActive'] = $cleanActive;
+
+            //理财咨询
+
+            //健康体检
+        }
+
         return $this->jsonReturn(1,$data);
     }
 
