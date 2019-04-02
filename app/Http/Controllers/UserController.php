@@ -268,6 +268,9 @@ class UserController extends Controller
 
         if( count($couponIds) == $order->quantity * $order->days )
         {
+            /**把优惠券置为已使用**/
+            
+
             //标识全部已由优惠券抵扣，无需再支付
             return $this->jsonReturn(1,333);
         }
