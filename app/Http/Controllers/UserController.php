@@ -259,6 +259,21 @@ class UserController extends Controller
 
 
 
+        //查看代金券是否抵扣完全，如果代金券抵扣完全，那么直接跳转到支付成功页面
+        /*使用代金券数目*/
+        $couponIdsStr = Request::input('couponIds');
+        $couponIds = explode(',',$couponIdsStr);
+        $order->coupons = $couponIdsStr;
+        $order->save();
+
+        if( count($couponIds) == $order->quantity * $order->days )
+        {
+            //标识全部已由优惠券抵扣，无需再支付
+            return $this->jsonReturn(1,333);
+        }
+
+
+
 
         //调起微信支付
         require_once base_path() . "/plugin/swechatpay/lib/WxPay.Api.php";
@@ -360,10 +375,6 @@ class UserController extends Controller
         $dates = $foodTime->startTimeList();
         $dates = date('Y-m-d') . ',' . implode(',',$dates);
         $dates = explode(',',$dates);
-
-//        var_dump($dates);
-//        exit;
-
         $res = [];
 
         foreach ( $dates as $date)
