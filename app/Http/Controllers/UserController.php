@@ -266,19 +266,37 @@ class UserController extends Controller
         $order->coupons = $couponIdsStr;
         $order->save();
 
-        if( count($couponIds) == $order->quantity * $order->days )
-        {
-            /**把优惠券置为已使用**/
-            foreach ($couponIds as $couponId) {
-                $coupon = Coupon::find($couponId);
-                $coupon->order_id = $order->id;
-                $coupon->status = 2;
-                $coupon->save();
-            }
-            
 
-            //标识全部已由优惠券抵扣，无需再支付
-            return $this->jsonReturn(1,333);
+        if( !$product->isCleanProduct() ) {
+
+
+            if (count($couponIds) == $order->quantity * $order->days) {
+                /**把优惠券置为已使用**/
+                foreach ($couponIds as $couponId) {
+                    $coupon = Coupon::find($couponId);
+                    $coupon->order_id = $order->id;
+                    $coupon->status = 2;
+                    $coupon->save();
+                }
+
+
+                //标识全部已由优惠券抵扣，无需再支付
+                return $this->jsonReturn(1, 333);
+            }
+        } else {
+            if( count($couponIds) )
+            {
+                /**把优惠券置为已使用**/
+                foreach ($couponIds as $couponId) {
+                    $coupon = Coupon::find($couponId);
+                    $coupon->order_id = $order->id;
+                    $coupon->status = 2;
+                    $coupon->save();
+                }
+
+                return $this->jsonReturn(1, 333);
+            }
+
         }
 
 
