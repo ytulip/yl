@@ -269,6 +269,12 @@ class UserController extends Controller
         if( count($couponIds) == $order->quantity * $order->days )
         {
             /**把优惠券置为已使用**/
+            foreach ($couponIds as $couponId) {
+                $coupon = Coupon::find($couponId);
+                $coupon->order_id = $order->id;
+                $coupon->status = 2;
+                $coupon->save();
+            }
             
 
             //标识全部已由优惠券抵扣，无需再支付
