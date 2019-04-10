@@ -410,7 +410,9 @@ class PassportController extends Controller
 
     public function anyPaySuccess()
     {
-        return view('pay_success');
+        $user = \App\Model\User::find(Request::input('openid'));
+        $order = Order::where('user_id',$user->id)->orderBy('id','desc')->first();
+        return view('pay_success')->with('order',$order);
     }
 
 

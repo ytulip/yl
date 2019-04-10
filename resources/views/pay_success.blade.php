@@ -32,6 +32,11 @@
 @section('script')
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script>
+
+        var pageConfig = {
+            id:{{$order->id}}
+        }
+
         function goHome()
         {
             wx.miniProgram.switchTab({
@@ -43,7 +48,7 @@
         {
             wx.miniProgram.navigateTo(
                 {
-                    url:'/pages/billdetail2/main?id={{\Illuminate\Support\Facades\Request::input('id')}}'
+                    url:'/pages/billdetail2/main?id=' + pageConfig.id
                 }
             );
         }
