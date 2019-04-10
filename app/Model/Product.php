@@ -59,5 +59,13 @@ class Product extends Model
         return Product::where('type',3)->orderBy('id','desc')->first();
     }
 
+    /**
+     * 健康体检
+     */
+    public static function activeHealth()
+    {
+        return Product::where('type',4)->orderBy('id','desc')->first();
+    }
+
 
 }

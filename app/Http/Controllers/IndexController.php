@@ -184,7 +184,9 @@ class IndexController extends Controller
 
     public function getHealth()
     {
-
+        $product = Product::activeHealth();
+        $user_id = Request::input('user_id');
+        return view('health')->with('product',$product);
     }
 
 
