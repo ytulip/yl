@@ -206,8 +206,8 @@ class UserController extends Controller
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
             $order->quantity = Request::input('quantity');
-            $order->product_attr_id = $productAttr->id;
-            $order->need_pay = $productAttr->price;
+//            $order->product_attr_id = $productAttr->id;
+            $order->need_pay = $product->price;
             $order->origin_pay = $product->price * $order->quantity * Order::getDaysByType(Request::input('tabIndex'));
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
