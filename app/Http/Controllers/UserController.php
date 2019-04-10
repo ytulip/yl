@@ -199,7 +199,18 @@ class UserController extends Controller
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
 //            $order->service_time = Request::input('clean_service_time');
-            $order->service_time = '';
+//            $order->service_time = '';
+
+
+            //处理预约时间
+            $serviceStartTime = Request::input('service_start_time');
+            $foodTime = new FoodTime();
+            $timeList = $foodTime->startTimeList();
+
+            $order->service_time = $timeList[$serviceStartTime[0]];
+            $order->service_start_time = $order->service_time;
+
+
         } else
         {
             //可以提取公共
