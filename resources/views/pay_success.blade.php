@@ -48,7 +48,7 @@
         {
             wx.miniProgram.navigateTo(
                 {
-                    url:'/pages/billdetail2/main?id=' + pageConfig.id
+                    url:'/pages/billinfo/main?id=' + pageConfig.id
                 }
             );
         }
