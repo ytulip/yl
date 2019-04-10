@@ -115,7 +115,7 @@ class UserController extends Controller
 
 
         $order = new VipOrder();
-        $order->buy_type = 1;
+        $order->buy_type = Request::input('type');
         $order->price = 1;
         $order->user_id = Auth::id();
         $order->save();
