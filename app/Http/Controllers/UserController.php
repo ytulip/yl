@@ -262,7 +262,12 @@ class UserController extends Controller
         //查看代金券是否抵扣完全，如果代金券抵扣完全，那么直接跳转到支付成功页面
         /*使用代金券数目*/
         $couponIdsStr = Request::input('couponIds');
-        $couponIds = explode(',',$couponIdsStr);
+        if( $couponIdsStr )
+        {
+            $couponIds = explode(',',$couponIdsStr);
+        } else {
+            $couponIds = [];
+        }
         $order->coupons = $couponIdsStr;
         $order->save();
 
