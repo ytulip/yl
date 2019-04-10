@@ -1162,11 +1162,13 @@ class UserController extends Controller
             $data['foodActive'] = $foodActive;
 
             //家庭清洁
-            $cleanTotal = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[4,5,6])->count();
-            $cleanActive = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[4,5,6])->where('status',1)->count();
+            $cleanTotal = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[1,2,3])->count();
+            $cleanActive = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[1,2,3])->where('status',1)->count();
             $data['cleanTotal'] = $cleanTotal;
             $data['cleanActive'] = $cleanActive;
 
+
+            $data['foodId'] = in_array($vipOrder->buy_type,[1,2])?4:5;
             //理财咨询
 
             //健康体检
