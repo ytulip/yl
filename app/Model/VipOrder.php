@@ -24,27 +24,27 @@ class VipOrder extends Model
             $foodTypeText = '套餐A';
             $cleanCount = '';
             $healthCount = '';
-            $financeCount = '';
+            $financeCount = 4;
         } else if ( $this->buy_type == 2)
         {
             $foodCount = 180;
             $foodTypeText = '套餐B';
             $cleanCount = '';
             $healthCount = '';
-            $financeCount = '';
+            $financeCount = 4;
         } else if ( $this->buy_type == 3)
         {
             $foodCount = 90;
             $foodTypeText = '套餐A';
             $cleanCount = '';
             $healthCount = '';
-            $financeCount = '';
+            $financeCount = 4;
         } else {
             $foodCount = 180;
             $foodTypeText = '套餐B';
             $cleanCount = '';
             $healthCount = '';
-            $financeCount = '';
+            $financeCount = 4;
         }
 
 
