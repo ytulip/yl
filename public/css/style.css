@@ -435,6 +435,7 @@ input::-webkit-input-placeholder{color: #bebebe;  }
 .btn-gray:hover{color:#ffffff}
 
 .btn-white{background-image: none; background: #ffffff;color:#4A4A4A;box-shadow:none;border: 1px solid #CECCCC;}
+.btn-white:hover{color:#4A4A4A;}
 
 
 .info-panel
