@@ -1154,15 +1154,16 @@ class UserController extends Controller
             $vipOrder = VipOrder::where('user_id',$user->id)->where('pay_status',1)->orderBy('id','desc')->first();
 
 
+
             //点餐服务
-            $foodTotal = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[1,2,3])->count();
-            $foodActive = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[1,2,3])->where('status',1)->count();
+            $foodTotal = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[1,2,3])->count();
+            $foodActive = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[1,2,3])->where('status',1)->count();
             $data['foodTotal'] = $foodTotal;
             $data['foodActive'] = $foodActive;
 
             //家庭清洁
-            $cleanTotal = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[4,5,6])->count();
-            $cleanActive = Coupon::where('refer_id',$vipOrder->id)->where('coupon_type',[4,5,6])->where('status',1)->count();
+            $cleanTotal = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[4,5,6])->count();
+            $cleanActive = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[4,5,6])->where('status',1)->count();
             $data['cleanTotal'] = $cleanTotal;
             $data['cleanActive'] = $cleanActive;
 
