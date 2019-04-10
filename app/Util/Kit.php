@@ -52,6 +52,19 @@ class Kit
         return date('Y年m月d日',strtotime($dateStr));
     }
 
+
+    public static function dateFormat5($dateStr)
+    {
+        $commonStr = date('m月d日',strtotime($dateStr));
+
+        $weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        $weekStr = $weekarray[date("w",strtotime($dateStr))];
+        //星期几
+
+        return $commonStr . ' '. $weekStr;
+
+    }
+
     public static function dateFormatDay($dateStr)
     {
         return date('Y-m-d',strtotime($dateStr));
