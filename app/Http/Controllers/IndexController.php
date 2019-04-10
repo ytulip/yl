@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Banner;
+use App\Model\Book;
 use App\Model\Product;
 use App\Model\RandomPool;
 use App\Model\SmsManager;
@@ -151,6 +152,39 @@ class IndexController extends Controller
 
         $user->save();
         dd('修改成功');
+    }
+
+
+    /**
+     * 理财报名
+     */
+    public function getAttendFinance()
+    {
+        $product = Product::activeFinance();
+        $user_id = Request::input('user_id');
+
+        $booked = Book::isBooked($user_id,$product->id)?true:false;
+        return view('attend_finance')->with('product',$product)->with('booked',$booked);
+    }
+
+
+    /**
+     * 理财预约
+     */
+    public function anyBookFinance()
+    {
+        $product = Product::activeFinance();
+        $user_id = Request::input('user_id');
+
+        Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+
+        return $this->jsonReturn(1);
+    }
+
+
+    public function getHealth()
+    {
+
     }
 
 

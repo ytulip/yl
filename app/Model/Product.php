@@ -51,4 +51,13 @@ class Product extends Model
     }
 
 
+    /**
+     * 最后一次金融讲座
+     */
+    public static function activeFinance()
+    {
+        return Product::where('type',3)->orderBy('id','desc')->first();
+    }
+
+
 }
