@@ -186,7 +186,9 @@ class IndexController extends Controller
     {
         $product = Product::activeHealth();
         $user_id = Request::input('user_id');
-        return view('health')->with('product',$product);
+
+        $booked = Book::where('user_id',$user_id)->where('product_id',$product->id)->where('status',1)->count();
+        return view('health')->with('product',$product)->with('booked',$booked?true:false);
     }
 
 
