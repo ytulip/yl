@@ -201,7 +201,7 @@
         $(function () {
             new SubmitButton({
                 selectorStr:"#next_step",
-                url:'/index/book-finance',
+                url:'/index/book-health',
                 data:function()
                 {
                     return {product_id:pageConfig.product_id,user_id:pageConfig.user_id};
