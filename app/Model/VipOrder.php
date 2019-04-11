@@ -64,6 +64,41 @@ class VipOrder extends Model
 
         }
 
+
+        //每一个保洁服务送3张代金券
+        for ($i = 0; $i < 3; $i++ )
+        {
+            $coupon = new Coupon();
+            $coupon->coupon_type = 1;
+            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
+            $coupon->type_text = '日常保洁';
+            $coupon->user_id = $this->user_id;
+            $coupon->refer_id = $this->id;
+            $coupon->status = 1;
+            $coupon->save();
+
+
+            $coupon = new Coupon();
+            $coupon->coupon_type = 2;
+            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
+            $coupon->type_text = '深度保洁';
+            $coupon->user_id = $this->user_id;
+            $coupon->refer_id = $this->id;
+            $coupon->status = 1;
+            $coupon->save();
+
+
+            $coupon = new Coupon();
+            $coupon->coupon_type = 3;
+            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
+            $coupon->type_text = '开荒保洁';
+            $coupon->user_id = $this->user_id;
+            $coupon->refer_id = $this->id;
+            $coupon->status = 1;
+            $coupon->save();
+
+        }
+
         return true;
 
 //        for ($i = 0; $i < $cleanCount; $i++ )
