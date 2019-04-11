@@ -193,13 +193,16 @@ class IndexController extends Controller
 
     public function anyBookHealth()
     {
-        $product = Product::activeFinance();
+        $product = Product::activeHealth();
         $user_id = Request::input('user_id');
 
         //拿最近的会员支付订单
         $vipOrder = VipOrder::where('user_id',$user_id)->where('pay_status',1)->orderBy('id','desc')->first();
 
-        $book = Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+//        $book = Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+        $book = new Book();
+        $book->product_id = $product->id;
+        $book->user_id = $user_id;
         $book->status = 1;
         $book->refer_id = $vipOrder->id;
         $book->save();
