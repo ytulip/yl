@@ -8,6 +8,7 @@ use App\Model\Product;
 use App\Model\RandomPool;
 use App\Model\SmsManager;
 use App\Model\User;
+use App\Model\VipOrder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
