@@ -101,4 +101,14 @@ class FoodTime
 
         return $list;
     }
+
+    public static function hoursList()
+    {
+        return [9,10,11,12,13,14];
+    }
+
+    public static function minList()
+    {
+        return ['00','30'];
+    }
 }
