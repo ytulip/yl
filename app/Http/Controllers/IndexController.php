@@ -8,6 +8,7 @@ use App\Model\Product;
 use App\Model\RandomPool;
 use App\Model\SmsManager;
 use App\Model\User;
+use App\Model\VipOrder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -186,7 +187,28 @@ class IndexController extends Controller
     {
         $product = Product::activeHealth();
         $user_id = Request::input('user_id');
-        return view('health')->with('product',$product);
+
+        $booked = Book::where('user_id',$user_id)->where('product_id',$product->id)->where('status',1)->count();
+        return view('health')->with('product',$product)->with('booked',$booked?true:false);
+    }
+
+    public function anyBookHealth()
+    {
+        $product = Product::activeHealth();
+        $user_id = Request::input('user_id');
+
+        //拿最近的会员支付订单
+        $vipOrder = VipOrder::where('user_id',$user_id)->where('pay_status',1)->orderBy('id','desc')->first();
+
+//        $book = Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+        $book = new Book();
+        $book->product_id = $product->id;
+        $book->user_id = $user_id;
+        $book->status = 1;
+        $book->refer_id = $vipOrder->id;
+        $book->save();
+
+        return $this->jsonReturn(1);
     }
 
 

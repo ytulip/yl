@@ -172,7 +172,7 @@
 
     <div style="margin-bottom: 100px;"></div>
 
-    @if(false)
+    @if($booked)
         <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约</a>
         </footer>
@@ -201,7 +201,7 @@
         $(function () {
             new SubmitButton({
                 selectorStr:"#next_step",
-                url:'/index/book-finance',
+                url:'/index/book-health',
                 data:function()
                 {
                     return {product_id:pageConfig.product_id,user_id:pageConfig.user_id};

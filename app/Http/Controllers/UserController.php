@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Book;
 use App\Model\CashStream;
 use App\Model\Coupon;
 use App\Model\Deliver;
@@ -1166,6 +1167,12 @@ class UserController extends Controller
             $cleanActive = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[1,2,3])->where('status',1)->count();
             $data['cleanTotal'] = $cleanTotal;
             $data['cleanActive'] = $cleanActive;
+
+
+            $count = Book::where('user_id',$user->id)->where('refer_id',$vipOrder->id)->count();
+
+            $data['healthTotal'] = $user->health_count;
+            $data['healthActive'] = $user->health_count - $count;
 
 
 //            $data['foodId'] = in_array($vipOrder->buy_type,[1,2])?4:5;
