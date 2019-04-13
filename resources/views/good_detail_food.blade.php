@@ -528,7 +528,13 @@
                            //周六、周日不可点击
                            tmpData[mo][mod].day = i+1;
 
-                           if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
+                           // if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
+                           // {
+                           //     tmpData[mo][mod].forbiddenChosen = true;
+                           // }
+
+
+                           if((new Date(this.year,this.month - 1,i + 1) < this.currentDay))
                            {
                                tmpData[mo][mod].forbiddenChosen = true;
                            }
