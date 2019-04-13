@@ -211,6 +211,10 @@ class UserController extends Controller
             $order->service_time = $timeList[$serviceStartTime[0]];
             $order->service_start_time = $order->service_time;
 
+            $hourList = FoodTime::hoursList();
+            $minList = FoodTime::minList();
+            $order->begin_time = $hourList[$serviceStartTime[1]] . ':' . $minList[$serviceStartTime[2]];
+
 
         } else
         {
