@@ -1267,6 +1267,21 @@ class UserController extends Controller
 
         $subFoodOrders->status = 100; //已延后
         $subFoodOrders->save();
+
+        //
+        $count = $order->quantity;
+
+        for($i = 0;$i < $count;$i++)
+        {
+            $coupon = new Coupon();
+            $coupon->coupon_type = $order->product_id;
+            $coupon->expire_at = Carbon::now()->addDays(180)->format('Y-m-d');
+            $coupon->type_text = $order->product_name;
+            $coupon->user_id = $order->user_id;
+            $coupon->status = 1;
+            $coupon->save();
+        }
+
         return $this->jsonReturn(1);
 
         //补偿优惠券
