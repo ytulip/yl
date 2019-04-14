@@ -416,7 +416,7 @@
                        this.calderSwitch = true;
                    },
                    deQuantity:function () {
-                       if( this.quantity > 2)
+                       if( this.quantity > 1)
                        {
                            this.quantity = this.quantity - 1;
                        }
