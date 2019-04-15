@@ -8,6 +8,12 @@
         .item-opr span{line-height: 40px;display: inline-block;}
         .show-img{width: 100%;border-radius: 12px;}
         .pro-essay-barr{border-bottom: 1px solid #9c9c9c;margin: 20px 0;}
+
+        .pre-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
     </style>
 @stop
 @section('container')
