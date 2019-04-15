@@ -230,6 +230,8 @@
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
         </div>
 
+        <div style="margin-bottom: 200px;"></div>
+
     </div>
 
 
