@@ -601,6 +601,36 @@ class IndexController extends Controller
         $product->food_desc = Request::input('food_desc');
         $product->fit_indi = Request::input('fit_indi');
 
+
+
+        if ( Request::input('context') )
+        {
+            $product->context = Request::input('context');
+        }
+
+
+        if ( Request::input('context_deliver') )
+        {
+            $product->context_deliver = Request::input('context_deliver');
+        }
+
+        if ( Request::input('context_server') )
+        {
+            $product->context_server = Request::input('context_server');
+        }
+
+        if ( Request::input('common_ques') )
+        {
+            $product->common_ques = Request::input('common_ques');
+        }
+
+        if ( Request::input('sub_desc') )
+        {
+            $product->sub_desc = Request::input('sub_desc');
+        }
+
+
+
         $product->save();
         return $this->jsonReturn(1);
     }

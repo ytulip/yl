@@ -602,4 +602,12 @@ class PassportController extends Controller
 
         return $this->jsonReturn(1,$res);
     }
+
+    /**
+     *
+     */
+    public function anyCommonQues()
+    {
+        return view('common_ques')->with('product',Product::find(Request::input('product_id')));
+    }
 }

@@ -132,6 +132,13 @@
             width: 21px;
             height: 21px;
         }
+
+
+        .pre-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -157,6 +164,12 @@
             </div>
 
 
+            <div class="fs-14-fc-7E7E7E-r pre-text"   style="margin-top: 14px;line-height: 18px;margin-bottom: 22px;">{{$product->sub_desc}}</div>
+
+
+
+
+
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
 
 
@@ -171,6 +184,9 @@
 
                 </div>
             </div>
+
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;line-height: 18px;margin-bottom: 22px;">{{$product->context_deliver}}</div>
+
         </div>
 
 
@@ -189,6 +205,9 @@
                 </div>
             </div>
 
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;line-height: 18px;margin-bottom: 22px;">{{$product->context_server}}</div>
+
+
 
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
         </div>
@@ -196,7 +215,7 @@
 
         <div class="m-t-24" style="background: #FFFFFF;
     box-shadow: 0 2px 6px 0 #E7E9F0;
-    border-radius: 5px;padding:24px;transform: translateY(-24px)">
+    border-radius: 5px;padding:24px;transform: translateY(-24px);" onclick="commonQue()">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-1 t-a-l">
                     <div class="red-v-l"></div>
@@ -208,9 +227,6 @@
                     <span class="next-icon"></span>
                 </div>
             </div>
-
-
-
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
         </div>
 
@@ -326,7 +342,17 @@
 
         var pageConfig = {
             product_id: {{$product->id}},
-            openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}"
+            openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}",
+            commonQues:'{{urlencode($product->common_ques)}}'
+        }
+        
+        function commonQue() {
+            //信息框
+            // layer.open({
+            //     content: '<p class="pre-text t-al-l">' + decodeURI(pageConfig.commonQues) + '</p>'
+            //     ,btn: '关闭'
+            // });
+            location.href = '/passport/common-ques?product_id=' + pageConfig.product_id ;
         }
 
         function buy(){

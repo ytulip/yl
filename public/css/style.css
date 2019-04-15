@@ -478,3 +478,10 @@ input::-webkit-input-placeholder{color: #bebebe;  }
 .bg-f9f9fb{background-color: #f9f9fb !important;}
 
 .p16{padding: 16px;}
+
+
+.pre-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+}
