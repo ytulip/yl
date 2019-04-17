@@ -98,7 +98,7 @@
 
         .chosen{
             background: #C50081;
-            border-radius: 14px;
+            border-radius: 16px;
             /*height: 28px;*/
             /*width: 28px;*/
             display: inline-block;
