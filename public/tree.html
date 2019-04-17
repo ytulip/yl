@@ -2,7 +2,24 @@
 <html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/mui.css">
 <title>tree</title>
+<style>
+    .checked{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABr0lEQVRYR+3WPWtUQRQG4CdEkUBQCxXyC4RUFkkjCBbaJCksJE0MpDKNChY2gp2lhSR2pkpSJUUEJURIoeAvSOGfsBIkpcqR2XC9zO792N1ss9PdOR/vO++Zc+dMGPGaGDG+MYGcAtexgSVMtyhRI1Vzzjt41AK4E9I3gVNM4Qe+tyByNxNzC3PYKtvKbOP7d3Lax3ILAuWQAP+Ky3iOt0WHYROYx3ECD9xXeH1eBG7jc+Eiv8Cb8ypBgMfJ4y7FyoKHYRgliEt4WAd8GAQC/AiXqk7erWd7dcG9JGu3xriPjwXwp3hX1UV1S7CJJylhJC6vRRzgYjKUwWdxA39SS57F1yEwgxNcS1HvsZ6SxVaAf8CFLuCxHf+Uh8n+H2YdAhF3E98KJLaxhgfYqwAfCIEciS+4g8l0sscIdXKrbwU6SctKdPZ7gQ9MgW4kqsAHTqBYjpc9ZC+WYmAlKCa9gp9VfZ7sQyFQE/uf25hAbQVCrn5Hslxp4lccw27cmatFh9wAuYuVJgVu4Bu5V6sIxKMRj89Cy7E8x+cXPuFZGnbPfBqN0A1OWtt1TGDkCvwFWihmIbwtbewAAAAASUVORK5CYII=);
+        background-size: 20px 20px;
+    }
+    .no_checked{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAqUlEQVRYR+3XsQkCQRCF4e9CQdBEi7AUMRQTsQV7EVswM7UWmzBSxFBkYQM9Ds9gZZPZeHnz80/yplH5NZXnC4AuA1PssMCw0IruOGGLy3tmF8AB60KD2zEpe9MH8MAgk54LgcwwwQ2jbwDJyDN/OGJVCCBlLXPWh/X2CgIgDISBMBAGwkAYCAPVDaTS8s9KdsW4rxNWL6Wplu8xr1XLC/XQ32LiNKtu4AUnJEoh8GMI4QAAAABJRU5ErkJggg==);
+        background-size: 20px 20px;
+    }
+</style>
 <body>
 <div id="vue_container">
     <ul class="tree_container" v-for="item in list">
@@ -14,15 +31,15 @@
 <script type="text/x-template" id="treeMenu">
     <li>
         <div>
-            <i  @click='toggle' v-if='isFolder' class="mui-icon iconfont" :class="[open?'icon-wenjianjia':'icon-wenjianjiaguanbi']"></i>
-            <!--isFolder判断是否存在子级改变图标-->
-            <i  @click='toggle' class="mui-icon iconfont icon-wenjian" style="color: #00ccff" v-else></i>
-            <!--这里用到的方法是给父组件传值，具体可看上一篇文章-->
-            <span @click="propInstCode(model);propInstName(model)">
+
+            <i class="checked" v-if="chosen" v-on:click='chosenToggle'></i>
+            <i class="no_checked"  v-else v-on:click='chosenToggle'></i>
+
+            <span v-on:click='subToggle'>
         {{model.name}}
       </span>
         </div>
-        <ul v-show="open" v-if='isFolder'>
+        <ul v-if='showSub'>
             <menu-tree v-for='cel in model.childList' :model='cel'></menu-tree>
         </ul>
     </li>
@@ -35,32 +52,36 @@
         components: {},
         data() {
             return {
-                open: true,
-                isFolder: true
+                isFolder: false,
+                showSub:false,
+                chosen:false
             }
         },
         computed: {
         },
         methods: {
-            toggle: function() {
-                if(this.isFolder){
-                    this.open = !this.open;
-                }
+            subToggle: function() {
+                this.showSub = !this.showSub;
+            },
+            chosenToggle: function() {
+                this.chosen = !this.chosen;
             },
             //通过总线将值传给父组件
             propInstCode:function (model) {
+                console.log('传值给父组件');
                 //$emit触发当前实例事件
                 // bus.$emit('custTreeSay',this.model.id);
             },
             propInstName:function (model) {
+                console.log('传值给父组件2');
                 // bus.$emit('custTreeSayName',this.model.name);
             }
         },
         created(){
             //将isFolder放在这里判断可以识别出最底层菜单，然后改变图标，放在computed的话会一直报错并识别不出最底层菜单改变样式
-            console.log('模型');
-            console.log(this.model);
-            this.isFolder = this.model.childList && this.model.childList.length;
+            // console.log('模型');
+            // console.log(this.model);
+            // this.isFolder = this.model.childList && this.model.childList.length;
         }
     });
 
