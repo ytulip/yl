@@ -106,6 +106,18 @@
             line-height: 28px !important;
             opacity: 1;
             padding: 0 7px;
+            position: relative;
+        }
+
+        .begin:after{
+            position: absolute;
+            content: "起送";
+            color:#C50081;
+            font-family: PingFangSC-Medium;
+            font-size: 12px;
+            left: 0;
+            right: 0;
+            bottom: -22px;
         }
 
         .cus-row-col-1-7 span{line-height: 22px;}
@@ -300,13 +312,13 @@
 
                     <div style="height: 180px;overflow: scroll;">
                     <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen}" v-on:click="setBegin(data[item][0].day)">@{{calCurrent?data[item][0].day:data[item][0].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen}" v-on:click="setBegin(data[item][1].day)">@{{data[item][1].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen}" v-on:click="setBegin(data[item][2].day)">@{{data[item][2].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen}" v-on:click="setBegin(data[item][3].day)">@{{data[item][3].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen}" v-on:click="setBegin(data[item][4].day)">@{{(calCurrent && (data[item][4].day == currentDate))?'明天':data[item][4].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen}" v-on:click="setBegin(data[item][5].day)">@{{data[item][5].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen}" v-on:click="setBegin(data[item][6].day)">@{{data[item][6].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen,begin:(beginStr == data[item][0].ymd)}" v-on:click="setBegin(data[item][0].day)">@{{(calCurrent && (data[item][0].day == currentDate))?'明天':data[item][0].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen,begin:(beginStr == data[item][1].ymd)}" v-on:click="setBegin(data[item][1].day)">@{{(calCurrent && (data[item][1].day == currentDate))?'明天':data[item][1].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen,begin:(beginStr == data[item][2].ymd)}" v-on:click="setBegin(data[item][2].day)">@{{(calCurrent && (data[item][2].day == currentDate))?'明天':data[item][2].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen,begin:(beginStr == data[item][3].ymd)}" v-on:click="setBegin(data[item][3].day)">@{{(calCurrent && (data[item][3].day == currentDate))?'明天':data[item][3].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen,begin:(beginStr == data[item][4].ymd)}" v-on:click="setBegin(data[item][4].day)">@{{(calCurrent && (data[item][4].day == currentDate))?'明天':data[item][4].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen,begin:(beginStr == data[item][5].ymd)}" v-on:click="setBegin(data[item][5].day)">@{{(calCurrent && (data[item][5].day == currentDate))?'明天':data[item][5].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen,begin:(beginStr == data[item][6].ymd) }" v-on:click="setBegin(data[item][6].day)">@{{(calCurrent && (data[item][6].day == currentDate))?'明天':data[item][6].day}}</span></div>
                     </div>
 
                     </div>
@@ -542,6 +554,7 @@
 
                            //周六、周日不可点击
                            tmpData[mo][mod].day = i+1;
+                           tmpData[mo][mod].ymd = this.year + '-' + (this.month) + '-' + (i+1);
 
                            // if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
                            // {
@@ -639,6 +652,17 @@
                       {
                           return false;
                       }
+                   },
+                   beginStr:function()
+                   {
+                       if( this.startDay )
+                       {
+                           console.log('起送日期:' + this.startDay.Format('yyyy-M-d'));
+                           return this.startDay.Format('yyyy-M-d');
+                       }else
+                       {
+                           return '';
+                       }
                    }
                }
 
