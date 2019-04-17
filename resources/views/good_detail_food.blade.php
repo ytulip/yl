@@ -149,7 +149,7 @@
                     <div class="red-v-l"></div>
                 </div>
                 <div class="cus-row-col-8">
-                    <span class="fs-18-fc-000000-m">食谱简介</span>
+                    <span class="fs-18-fc-000000-m">{{$product->product_name}}</span>
                 </div>
             </div>
 
@@ -175,6 +175,12 @@
             </div>
         </div>
 
+        <div class="cus-row cus-row-v-m" style="margin-bottom: 14px;">
+            <div class="cus-row-col-6"><span class="fs-18-fc-000000-m">健康菜单</span></div>
+            <div class="cus-row-col-6 t-al-r">
+                <span class="fs-14-fc-484848-r">仅显示2周内菜单</span>
+            </div>
+        </div>
 
         @if($thisWeek)
 
@@ -218,6 +224,7 @@
     </div>
 
 
+    <div style="margin-bottom: 100px;"></div>
 
     <div id="calder_vue">
 
