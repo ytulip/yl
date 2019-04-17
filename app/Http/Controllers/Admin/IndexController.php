@@ -501,6 +501,7 @@ class IndexController extends Controller
         $essay->title = Request::input('title');
         $essay->content = Request::input('content');
         $essay->sub_title = Request::input('sub_title');
+        $essay->status = Request::input('status');
 
         $essay->save();
         return $this->jsonReturn(1);

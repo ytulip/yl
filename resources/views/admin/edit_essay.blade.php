@@ -24,12 +24,13 @@
             </div>
 
 
+
+
+
             <div class="block-card mt-32">
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <p>副标题</p>
-                        {{--<div><div class="" contenteditable="true"></div><a class="fl-r"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>--}}
-                        {{--<div class="form-horizontal"><div class="form-group"><input class="form-control"/><a class="fl-r"><i class="fa fa-pencil" aria-hidden="true"></i></a></div></div>--}}
                         <div class="row">
                             <div class="col-md-11 col-lg-11"><input class="form-control no-border-input" name="sub_title" value="{{isset($essay->sub_title)?$essay->sub_title:''}}"/></div>
                             <div class="col-md-1 col-lg-1"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
@@ -37,6 +38,28 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="block-card mt-32">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <p>状态</p>
+
+                        <div class="form-group v-a-b">
+                            <div class="input-group">
+                                <select type="text" class="form-control" name="status">
+                                    <option value="2" @if($essay->status == 2) selected @endif>下架</option>
+                                    <option value="0"  @if($essay->status == 0) selected @endif>编辑中</option>
+                                    <option value="1"  @if($essay->status == 1) selected @endif>发布</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div class="row mt-32">
                 <div class="col-md-12 col-lg-12">
@@ -59,8 +82,6 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-success col-gray-btn mt-32">删除</button>
-            <button type="button" class="btn btn-success col-gray-btn mt-32" onclick="essayPreview()">预览</button>
             <button type="button" class="btn btn-success col-gray-btn mt-32" id="do_publish">发布</button>
         </div>
     </div>
@@ -135,7 +156,7 @@
             return true;
         },
         data:function(){
-            return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src'),sub_title:$('input[name="sub_title"]').val()};
+            return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src'),sub_title:$('input[name="sub_title"]').val(),status:$('select[name="status"]').val()};
         },
         callback:function(el,val){
             location.reload();
