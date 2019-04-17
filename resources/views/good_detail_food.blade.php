@@ -226,7 +226,7 @@
 
     <div style="margin-bottom: 100px;"></div>
 
-    <div id="calder_vue">
+    <div id="calder_vue" class="dpn">
 
     <div style="position: fixed;top:0;bottom: 0;left: 0;right: 0;background-color: rgba(28,36,75,0.80);z-index:9999" id="calder" v-if="calderSwitch">
         <div style="position: absolute;left:0;bottom: 0;right: 0;">
@@ -400,6 +400,9 @@
                chosenType:''
            },
            created:function(){
+
+               $('.dpn').removeClass('dpn');
+
                let fullDay = new Date(this.year,this.month,0).getDate();
                let startWeek = new Date(this.year,this.month - 1,1).getDay();
                this.currentDay = new Date();

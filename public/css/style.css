@@ -58,6 +58,8 @@ textarea.noscrollbars {
     overflow: hidden;
 }
 
+.dpn{display: none;}
+
 .list-mg-bottom{margin-bottom: 6px;}
 .list-mg-top{margin-top: 6px;}
 .card-item{background-color: #ffffff;padding: 15px;position: relative}
