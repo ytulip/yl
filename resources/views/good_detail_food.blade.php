@@ -99,12 +99,13 @@
         .chosen{
             background: #C50081;
             border-radius: 14px;
-            height: 28px;
-            width: 28px;
+            /*height: 28px;*/
+            /*width: 28px;*/
             display: inline-block;
             color: #ffffff !important;
             line-height: 28px !important;
             opacity: 1;
+            padding: 0 7px;
         }
 
         .cus-row-col-1-7 span{line-height: 22px;}
@@ -233,7 +234,7 @@
 
 
             <div style="padding-left: 16px;margin-bottom: 16px;">
-                <img src="/images/icon_unsuess_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
+                <img src="/images/icon_close3_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
             </div>
 
 
@@ -256,13 +257,13 @@
                 <div style="margin:26px 0;border: 1px solid #e1e1e1;"></div>
 
                 <div style="">
-                    <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限五天内 节假日暂不供应</span>
+                    <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限七日内 节假日暂不供应</span>
                 </div>
 
                 <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
                     <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">单次</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">按周</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">按月</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">周(7日)</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">月(30日)</span></div>
                 </div>
 
                 <div class="t-al-c" style="margin-top: 40px;">
@@ -299,11 +300,11 @@
 
                     <div style="height: 180px;overflow: scroll;">
                     <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen}" v-on:click="setBegin(data[item][0].day)">@{{data[item][0].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen}" v-on:click="setBegin(data[item][0].day)">@{{calCurrent?data[item][0].day:data[item][0].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen}" v-on:click="setBegin(data[item][1].day)">@{{data[item][1].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen}" v-on:click="setBegin(data[item][2].day)">@{{data[item][2].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen}" v-on:click="setBegin(data[item][3].day)">@{{data[item][3].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen}" v-on:click="setBegin(data[item][4].day)">@{{data[item][4].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen}" v-on:click="setBegin(data[item][4].day)">@{{(calCurrent && (data[item][4].day == currentDate))?'明天':data[item][4].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen}" v-on:click="setBegin(data[item][5].day)">@{{data[item][5].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen}" v-on:click="setBegin(data[item][6].day)">@{{data[item][6].day}}</span></div>
                     </div>
@@ -394,6 +395,7 @@
                lines:[0,1,2,3,4,5],
                tabIndex:1,
                currentDay:'',
+               currentDate:'',
                startDay:'',
                calderSwitch:false,
                chosenDay:'',
@@ -412,6 +414,9 @@
 
                this.year = this.currentDay.getFullYear();
                this.month = this.currentDay.getMonth() + 1;
+               this.currentDate = this.currentDay.getDate() + 1;
+
+               // console.log('currentDate:' + this.currentDate);
 
                this.updateCalder();
            },
@@ -484,10 +489,10 @@
                        {
                            //
                            beginDay = new Date(beginDay.getFullYear(),beginDay.getMonth(),beginDay.getDate() + 1);
-                           if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
-                           {
-                               continue;
-                           }
+                           // if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
+                           // {
+                           //     continue;
+                           // }
 
                            arr.push(beginDay.toString());
 
@@ -610,9 +615,9 @@
                                return [this.startDay.toString()];
                            } else if( this.tabIndex == 2)
                            {
-                               return this.getDateArr(this.startDay,5);
+                               return this.getDateArr(this.startDay,7);
                            } else {
-                               return this.getDateArr(this.startDay,22);
+                               return this.getDateArr(this.startDay,30);
                            }
                        } else
                        {
@@ -621,8 +626,19 @@
                    },
                    confirmText:function()
                    {
-                       var daysArr = [1,5,22]
+                       var daysArr = [1,7,30]
                        return this.quantity + '人份 ' + daysArr[this.tabIndex - 1] +'天';
+                   },
+                   calCurrent:function()
+                   {
+                       // return this.year + '年' + this.month + '月';
+                      if( (this.year == this.currentDay.getFullYear()) && (this.month = this.currentDay.getMonth() + 1) )
+                      {
+                          return true;
+                      } else
+                      {
+                          return false;
+                      }
                    }
                }
 
