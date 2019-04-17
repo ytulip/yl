@@ -32,19 +32,24 @@
     <li>
         <div>
 
-            <i class="checked" v-if="chosen" v-on:click='chosenToggle'></i>
+            <i class="checked" v-if="model.checked" v-on:click='chosenToggle'></i>
             <i class="no_checked"  v-else v-on:click='chosenToggle'></i>
 
             <span v-on:click='subToggle'>
-        {{model.name}}
+        {{model.featuresName}}
       </span>
         </div>
         <ul v-if='showSub'>
-            <menu-tree v-for='cel in model.childList' :model='cel'></menu-tree>
+            <menu-tree v-for='cel in model.children' :model='cel'></menu-tree>
         </ul>
     </li>
 </script>
 <script>
+
+    var list = {"status":"0","message":"操作成功","data":{"featuresId":"RootMenu","featuresName":"根目录菜单","seq":0,"checked":false,"children":[{"featuresId":"1","featuresName":"首页","featureUrl":"/index.do","seq":1,"checked":false,"children":[{"featuresId":"1","featuresName":"首页下级","featureUrl":"/index.do","seq":1,"checked":false,"children":[]}]},{"featuresId":"10","featuresName":"修改菜单","featureUrl":"/plate/updatePlate.do","seq":1,"checked":false,"children":[]},{"featuresId":"100","featuresName":"删除红包雨配置","featureUrl":"/redrain/delete.do","seq":1,"checked":false,"children":[]},{"featuresId":"101","featuresName":"条件查询红包雨配置","featureUrl":"/redrain/condition.do","seq":1,"checked":false,"children":[]},{"featuresId":"102","featuresName":"获取所有管理员信息","featureUrl":"/getAllAdministrator.do","seq":1,"checked":false,"children":[]},{"featuresId":"103","featuresName":"查询用户列表","featureUrl":"/user/queryUserList.do","seq":1,"checked":false,"children":[]},{"featuresId":"104","featuresName":"查询进件列表","featureUrl":"/user/queryNewApplyUserList.do","seq":1,"checked":false,"children":[]},{"featuresId":"105","featuresName":"查询进件详情","featureUrl":"/user/queryNewApplyDetail.do","seq":1,"checked":false,"children":[]},{"featuresId":"106","featuresName":"查询随心花订单","featureUrl":"/order/queryCashOrderList.do","seq":1,"checked":false,"children":[]},{"featuresId":"107","featuresName":"查询商城分期订单","featureUrl":"/order/queryMarketOrderList.do","seq":1,"checked":false,"children":[]},{"featuresId":"108","featuresName":"查询订单详情","featureUrl":"/order/queryOrderDetail.do","seq":1,"checked":false,"children":[]},{"featuresId":"109","featuresName":"个人绑卡信息","featureUrl":"/bank/getByCertId.do","seq":1,"checked":false,"children":[]},{"featuresId":"11","featuresName":"下拉框","featureUrl":"/dictionary/getInfo.do","seq":1,"checked":false,"children":[]},{"featuresId":"110","featuresName":"变更记录信息","featureUrl":"/bank/getByCondition.do","seq":1,"checked":false,"children":[]},{"featuresId":"115","featuresName":"添加运营人员","featureUrl":"/addAdminUserList.do","seq":1,"checked":false,"children":[]},{"featuresId":"116","featuresName":"查询运营人员列表","featureUrl":"/queryAdminUserList.do","seq":1,"checked":false,"children":[]},{"featuresId":"117","featuresName":"查询所有岗位信息","featureUrl":"/roleInfo/queryAllRoles.do","seq":1,"checked":false,"children":[]},{"featuresId":"118","featuresName":"设置岗位","featureUrl":"/updateAdminRoles.do","seq":1,"checked":false,"children":[]},{"featuresId":"119","featuresName":"重置密码","featureUrl":"/resetPassword.do","seq":1,"checked":false,"children":[]},{"featuresId":"120","featuresName":"添加运营人员","featureUrl":"/addAdminUser.do","seq":1,"checked":false,"children":[]},{"featuresId":"121","featuresName":"删除运营人员","featureUrl":"/deleteAdminUser.do","seq":1,"checked":false,"children":[]},{"featuresId":"122","featuresName":"查询岗位列表","featureUrl":"/roleInfo/queryRoles.do","seq":1,"checked":false,"children":[]},{"featuresId":"123","featuresName":"增加岗位","featureUrl":"/roleInfo/addRole.do","seq":1,"checked":false,"children":[]},{"featuresId":"124","featuresName":"修改岗位","featureUrl":"/roleInfo/updateRole.do","seq":1,"checked":false,"children":[]},{"featuresId":"125","featuresName":"删除岗位","featureUrl":"/roleInfo/deleteRole.do","seq":1,"checked":false,"children":[]},{"featuresId":"126","featuresName":"查询岗位下的员工列表","featureUrl":"/credit/roleship/queryRoleShip.do","seq":1,"checked":false,"children":[]},{"featuresId":"127","featuresName":"删除员工岗位","featureUrl":"/credit/roleship/deleteRoleShip.do","seq":1,"checked":false,"children":[]},{"featuresId":"128","featuresName":"添加员工岗位","featureUrl":"/credit/roleship/addRoleShip.do","seq":1,"checked":false,"children":[]},{"featuresId":"129","featuresName":"查询未添加岗位的员工列表","featureUrl":"/credit/roleship/queryAdminUserList.do","seq":1,"checked":false,"children":[]},{"featuresId":"130","featuresName":"查询岗位下的权限","featureUrl":"/role/features/queryRoleFeatureMenus.do","seq":1,"checked":false,"children":[]},{"featuresId":"2","featuresName":"查询淘宝客选品库类型","featureUrl":"/uatmFavorites/searchTbkUatmFavorites.do","seq":1,"checked":false,"children":[]},{"featuresId":"20","featuresName":"下拉框","featureUrl":"/plate/deleteById.do","seq":1,"checked":false,"children":[]},{"featuresId":"21","featuresName":"上传图片","featureUrl":"/image/putImageToOss.do","seq":1,"checked":false,"children":[]},{"featuresId":"22","featuresName":"获取类目","featureUrl":"/plateCat/queryAllCat.do","seq":1,"checked":false,"children":[]},{"featuresId":"23","featuresName":"查询精选详情","featureUrl":"/plateCat/queryPlateDetail.do","seq":1,"checked":false,"children":[]},{"featuresId":"3","featuresName":"新增选品库","featureUrl":"/uatmFavorites/add.do","seq":1,"checked":false,"children":[]},{"featuresId":"35","featuresName":"查询用户关系","featureUrl":"/user/developing/queryUserDeveloping.do","seq":1,"checked":false,"children":[]},{"featuresId":"37","featuresName":"添加下级","featureUrl":"/user/developing/addSubDeveloping.do","seq":1,"checked":false,"children":[]},{"featuresId":"39","featuresName":"修改组织","featureUrl":"/user/changeUserLiveChannel.do","seq":1,"checked":false,"children":[]},{"featuresId":"4","featuresName":"删除选品库","featureUrl":"/uatmFavorites/delete.do","seq":1,"checked":false,"children":[]},{"featuresId":"40","featuresName":"查看上下级关系","featureUrl":"/user/queryUserDevelopingShipDetail.do","seq":1,"checked":false,"children":[]},{"featuresId":"41","featuresName":"导出报表","featureUrl":"/user/developing/exportDevelopingList.do","seq":1,"checked":false,"children":[]},{"featuresId":"42","featuresName":"间接下级列表查询","featureUrl":"/user/developing/queryChildList.do","seq":1,"checked":false,"children":[]},{"featuresId":"43","featuresName":"所有直属下级查询","featureUrl":"/user/developing/querySubChildList.do","seq":1,"checked":false,"children":[]},{"featuresId":"44","featuresName":"初始化单个合伙人","featureUrl":"/user/addUser.do","seq":1,"checked":false,"children":[]},{"featuresId":"45","featuresName":"初始化批量合伙人","featureUrl":"/user/addBatchUsers.do","seq":1,"checked":false,"children":[]},{"featuresId":"46","featuresName":"调整等级","featureUrl":"/user/changeUserLevel.do","seq":1,"checked":false,"children":[]},{"featuresId":"47","featuresName":"分佣信息列表查询","featureUrl":"/user/rebateLog/queryRebateLogList.do","seq":1,"checked":true,"children":[]},{"featuresId":"48","featuresName":"分佣总额和分佣金额","featureUrl":"/user/rebateLog/sumCommission.do","seq":1,"checked":true,"children":[]},{"featuresId":"49","featuresName":"分佣详情查询","featureUrl":"/user/rebateLog/queryCommissionDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"5","featuresName":"修改选品库","featureUrl":"/uatmFavorites/update.do","seq":1,"checked":false,"children":[]},{"featuresId":"50","featuresName":"提交财务审核","featureUrl":"/user/rebateLog/submitFinanceReview.do","seq":1,"checked":false,"children":[]},{"featuresId":"51","featuresName":"退回","featureUrl":"/user/rebateLog/rejectRebateLog.do","seq":1,"checked":true,"children":[]},{"featuresId":"52","featuresName":"确认月结","featureUrl":"/user/rebateLog/confirmReview.do","seq":1,"checked":true,"children":[]},{"featuresId":"53","featuresName":"导出报表","featureUrl":"/user/rebateLog/exportRebateLog.do","seq":1,"checked":true,"children":[]},{"featuresId":"54","featuresName":"签到接口","featureUrl":"/score/signScore","seq":1,"checked":false,"children":[]},{"featuresId":"55","featuresName":"查询积分接口","featureUrl":"/score/queryScoreLogByMonth","seq":1,"checked":false,"children":[]},{"featuresId":"56","featuresName":"查询总积分接口","featureUrl":"/score/getUserScore","seq":1,"checked":false,"children":[]},{"featuresId":"57","featuresName":"查询账户","featureUrl":"/account/queryAccountList.do","seq":1,"checked":true,"children":[]},{"featuresId":"58","featuresName":"查询账户交易明细","featureUrl":"/account/queryAccountDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"59","featuresName":"导出账户管理","featureUrl":"/account/exportAccountList.do","seq":1,"checked":false,"children":[]},{"featuresId":"6","featuresName":"查询本地选品库类型","featureUrl":"/uatmFavorites/searchLocalUatmFavorites.do","seq":1,"checked":false,"children":[]},{"featuresId":"60","featuresName":"导出账户明细","featureUrl":"/account/exportAccountDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"61","featuresName":"导出支出管理","featureUrl":"/account/exportSpendingDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"62","featuresName":"导出收入管理","featureUrl":"/account/exportIncomeDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"63","featuresName":"合伙人数据统计","featureUrl":"/user/developing/queryPartnerSummary.do","seq":1,"checked":false,"children":[]},{"featuresId":"64","featuresName":"导出合伙人数据统计","featureUrl":"/user/developing/exportPartnerSummary.do","seq":1,"checked":false,"children":[]},{"featuresId":"65","featuresName":"查询支出管理","featureUrl":"/account/querySpendingDetail.do","seq":1,"checked":true,"children":[]},{"featuresId":"66","featuresName":"查询收入管理","featureUrl":"/account/queryIncomeDetail.do","seq":1,"checked":false,"children":[]},{"featuresId":"67","featuresName":"查询用户关系总数","featureUrl":"/user/developing/queryUserDevelopingCount.do","seq":1,"checked":false,"children":[]},{"featuresId":"68","featuresName":"查询所有直属下级总数","featureUrl":"/user/developing/querySubChildListCount.do","seq":1,"checked":false,"children":[]},{"featuresId":"69","featuresName":"查询间接下级列表总数","featureUrl":"/user/developing/queryChildListCount.do","seq":1,"checked":false,"children":[]},{"featuresId":"7","featuresName":"查询选品库列表","featureUrl":"/uatmFavorites/searchUatmFavoritesList.do","seq":1,"checked":false,"children":[]},{"featuresId":"70","featuresName":"查询分佣信息列表总数","featureUrl":"/user/rebateLog/queryRebateLogListCount.do","seq":1,"checked":true,"children":[]},{"featuresId":"71","featuresName":"合伙人数据统计总数","featureUrl":"/user/developing/queryPartnerSummaryCount.do","seq":1,"checked":false,"children":[]},{"featuresId":"8","featuresName":"获取首页菜单","featureUrl":"/plate/getMenu.do","seq":1,"checked":false,"children":[]},{"featuresId":"89","featuresName":"淘客订单","featureUrl":"/trade-info/list.do","seq":1,"checked":false,"children":[]},{"featuresId":"9","featuresName":"添加菜单","featureUrl":"/plate/addPlate.do","seq":1,"checked":false,"children":[]},{"featuresId":"90","featuresName":"获取用户临时授权验证码","featureUrl":"/user/getUserSmsCode.do","seq":1,"checked":false,"children":[]},{"featuresId":"91","featuresName":"查询广告列表","featureUrl":"/advertisement/queryAdvertisementList.do","seq":1,"checked":false,"children":[]},{"featuresId":"92","featuresName":"添加广告","featureUrl":"/advertisement/addAdvertisement.do","seq":1,"checked":false,"children":[]},{"featuresId":"93","featuresName":"修改广告","featureUrl":"/advertisement/updateAdvertisement.do","seq":1,"checked":false,"children":[]},{"featuresId":"94","featuresName":"删除广告","featureUrl":"/advertisement/deleteAdvertisement.do","seq":1,"checked":false,"children":[]},{"featuresId":"95","featuresName":"发布广告","featureUrl":"/advertisement/publishAdverts.do","seq":1,"checked":false,"children":[]},{"featuresId":"96","featuresName":"查询广告","featureUrl":"/advertisement/queryAdvertById.do","seq":1,"checked":false,"children":[]},{"featuresId":"97","featuresName":"上传图片","featureUrl":"/image/uploadAdvertFileToOSS.do","seq":1,"checked":false,"children":[]},{"featuresId":"98","featuresName":"添加红包雨配置","featureUrl":"/redrain/add.do","seq":1,"checked":false,"children":[]},{"featuresId":"99","featuresName":"修改红包雨配置","featureUrl":"/redrain/update.do","seq":1,"checked":false,"children":[]}]},"dataCount":0};
+
+    var powerList = [list.data];
+
     Vue.component('menu-tree', {
         // 声明 props
         template: '#treeMenu',
@@ -64,7 +69,10 @@
                 this.showSub = !this.showSub;
             },
             chosenToggle: function() {
-                this.chosen = !this.chosen;
+               // this.model.checked = !this.model.checked;
+               // this.$refs.child.clickme(this.model.checked);
+                //操作model
+                changeModel(this.model,this.model.checked?false:true);
             },
             //通过总线将值传给父组件
             propInstCode:function (model) {
@@ -79,8 +87,6 @@
         },
         created(){
             //将isFolder放在这里判断可以识别出最底层菜单，然后改变图标，放在computed的话会一直报错并识别不出最底层菜单改变样式
-            // console.log('模型');
-            // console.log(this.model);
             // this.isFolder = this.model.childList && this.model.childList.length;
         }
     });
@@ -89,22 +95,26 @@
         el:"#vue_container",
         data:
         {
-            list:[{
-                id:'YH',
-                name:'银行',
-                pid:0,
-                childList:[{
-                    id: 'YH******',
-                    name: '国家开发银行',
-                    pid: 'YH',
-                    childList: [{
-                        id: 'YH*****3',
-                        name: '国家开发银行香港分行',
-                        pid: 'YH******',
-                        childList: []
-                    }]
-                  }]
-        }]
-    }})
+            list:powerList
+        }
+    })
+
+
+    function changeModel(obj,val)
+    {
+        obj.checked = val;
+        console.log('子集:');
+        console.log(obj.children);
+        if( obj.children.length )
+        {
+            // return changeModel(obj.children,val);
+            for(var i=0; i < obj.children.length; i++)
+            {
+                changeModel(obj.children[i],val);
+            }
+        }else {
+            return false;
+        }
+    }
 </script>
 </html>
