@@ -1293,7 +1293,7 @@ class UserController extends Controller
      */
     public function anyCouponList()
     {
-        $list = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','>=',date('Y-m-d'))->orderBy('id','desc')->get();
+        $list = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','>=',date('Y-m-d'))->orderBy('expire_at','asc')->get();
         return $this->jsonReturn(1,$list);
     }
 }

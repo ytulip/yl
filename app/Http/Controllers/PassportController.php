@@ -376,7 +376,7 @@ class PassportController extends Controller
 
 
         //用户的优惠券信息
-        $coupon = Coupon::where('user_id',$user->id)->where('status',1)->where('expire_at','>=',date('Y-m-d'))->where('coupon_type',$product->id)->get();
+        $coupon = Coupon::where('user_id',$user->id)->where('status',1)->where('expire_at','>=',date('Y-m-d'))->where('coupon_type',$product->id)->orderBy('expire_at','asc')->get();
         if(isset($coupon[0]))
         {
             $couponId =$coupon[0]->id;
