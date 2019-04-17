@@ -1588,7 +1588,7 @@ class IndexController extends Controller
     public function anyAddBanner()
     {
         $banner = new Banner();
-        $banner->title = '破鞋';
+        $banner->title = Request::input('title');
         $banner->type = 1;
         $banner->status = 0;
         $banner->save();

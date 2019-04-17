@@ -109,7 +109,7 @@
                 <div class="row mb-12">
                     <div class="col-md-3 col-lg-3 t-al-r">文字描述:</div>
                     <div class="col-md-9 col-lg-9">
-                        <input class="form-control" name="new_user_phone"/>
+                        <input class="form-control" name="title"/>
                     </div>
                 </div>
 
