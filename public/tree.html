@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>tree</title>
+<body>
+<div id="vue_container">
+    <ul class="tree_container" v-for="item in list">
+        <menu-tree :model='item' :instType='this.instType'></menu-tree>
+    </ul>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script type="text/x-template" id="treeMenu">
+    <li>
+        <div>
+            <i  @click='toggle' v-if='isFolder' class="mui-icon iconfont" :class="[open?'icon-wenjianjia':'icon-wenjianjiaguanbi']"></i>
+            <!--isFolder判断是否存在子级改变图标-->
+            <i  @click='toggle' class="mui-icon iconfont icon-wenjian" style="color: #00ccff" v-else></i>
+            <!--这里用到的方法是给父组件传值，具体可看上一篇文章-->
+            <span @click="propInstCode(model);propInstName(model)">
+        {{model.name}}
+      </span>
+        </div>
+        <ul v-show="open" v-if='isFolder'>
+            <menu-tree v-for='cel in model.childList' :model='cel'></menu-tree>
+        </ul>
+    </li>
+</script>
+<script>
+    Vue.component('menu-tree', {
+        // 声明 props
+        template: '#treeMenu',
+        props: ['model','instType'],
+        components: {},
+        data() {
+            return {
+                open: true,
+                isFolder: true
+            }
+        },
+        computed: {
+        },
+        methods: {
+            toggle: function() {
+                if(this.isFolder){
+                    this.open = !this.open;
+                }
+            },
+            //通过总线将值传给父组件
+            propInstCode:function (model) {
+                //$emit触发当前实例事件
+                // bus.$emit('custTreeSay',this.model.id);
+            },
+            propInstName:function (model) {
+                // bus.$emit('custTreeSayName',this.model.name);
+            }
+        },
+        created(){
+            //将isFolder放在这里判断可以识别出最底层菜单，然后改变图标，放在computed的话会一直报错并识别不出最底层菜单改变样式
+            console.log('模型');
+            console.log(this.model);
+            this.isFolder = this.model.childList && this.model.childList.length;
+        }
+    });
+
+    new Vue({
+        el:"#vue_container",
+        data:
+        {
+            list:[{
+                id:'YH',
+                name:'银行',
+                pid:0,
+                childList:[{
+                    id: 'YH******',
+                    name: '国家开发银行',
+                    pid: 'YH',
+                    childList: [{
+                        id: 'YH*****3',
+                        name: '国家开发银行香港分行',
+                        pid: 'YH******',
+                        childList: []
+                    }]
+                  }]
+        }]
+    }})
+</script>
+</html>
