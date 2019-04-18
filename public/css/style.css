@@ -242,6 +242,12 @@ line-height: 24px;}
 .fs-14-fc-7E7E7E-r{font-size: 14px;color:#7E7E7E;line-height: 14px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
 .fs-14-fc-484848-r{font-size: 14px;color:#484848;line-height: 16px;font-family: PingFangSC-Regular;}
 
+.fs-14-fc-c50081-m{font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #C50081;
+    letter-spacing: -0.31px;
+}
+
 
 .back-icon{
     display: inline-block;
