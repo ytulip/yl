@@ -152,6 +152,7 @@
             padding-top: 16px;
             padding-bottom: 16px;
             margin-bottom: 16px;
+            position: relative;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
@@ -204,8 +205,12 @@
                     </div>
 
                     <div class="time-list" style="margin-top: 24px;">
-                        <div class="in-bl t-al-c time-item" style="width: 50%;" v-for="item in timeList">
-                            <div class="fs-18-fc-000000-m time-item-box">@{{item.text}}</div>
+                        <div class="in-bl t-al-c time-item" style="width: 50%;" v-for="(item,index) in timeList">
+                            <div class="fs-18-fc-000000-m time-item-box" v-on:click="setTab(index)">@{{item.text}}
+
+                                <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"  v-if="tabIndex == index"></div>
+
+                            </div>
                         </div>
                     </div>
 
@@ -274,20 +279,7 @@
         var calderVue = new Vue({
             el:"#calder_vue",
             data:{
-                quantity:1,
-                year:2019,
-                month:1,
-                data:[
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-                ],
-                s:'12',
-                lines:[0,1,2,3,4,5],
-                tabIndex:1,
+                tabIndex:-1,
                 currentDay:'',
                 startDay:'',
                 calderSwitch:false,
@@ -296,173 +288,19 @@
                 timeList:pageConfig.timeList
             },
             created:function(){
-                let fullDay = new Date(this.year,this.month,0).getDate();
-                let startWeek = new Date(this.year,this.month - 1,1).getDay();
-                this.currentDay = new Date();
-                // this.startDay = this.currentDay;
-                this.chosenDay = this.startDay;
-
-
-                this.year = this.currentDay.getFullYear();
-                this.month = this.currentDay.getMonth() + 1;
-
-                this.updateCalder();
+                $('.dpn').removeClass('dpn');
             },
             methods:
                 {
-                    closeCalderSwitch:function()
-                    {
-                        this.calderSwitch = false;
-                    },
-                    openCalderSwitch:function()
-                    {
-                        this.calderSwitch = true;
-                    },
-                    deQuantity:function () {
-                        if( this.quantity > 2)
-                        {
-                            this.quantity = this.quantity - 1;
-                        }
-                    },
-                    addQuantity:function(){
-                        this.quantity = this.quantity + 1;
-                    },
-                    setBegin:function(day)
-                    {
-                        let tmpStartDay = new Date(this.year,this.month - 1,day);
-
-                        let startWeek = new Date(this.year,this.month - 1,1).getDay();
-                        day = day - 1;
-                        let mo  = parseInt((startWeek + day) / 7);
-                        let mod = (day+startWeek)%7;
-
-                        if ( this.data[mo][mod].forbiddenChosen )
-                        {
-                            return;
-                        }
-
-
-                        if ( tmpStartDay == this.startDay)
-                        {
-                            return;
-                        }
-
-
-
-                        for(let i = 0 ;i < 35;i++)
-                        {
-                            let mo2  = parseInt(i / 7);
-                            let mod2 = i % 7;
-
-                            if (this.data[mo2][mod2].chosen)
-                            {
-                                this.data[mo2][mod2].chosen = false;
-                            }
-                        }
-
-                        this.startDay = tmpStartDay;
-                        this.updateCalder()
-                    },
                     setTab:function(index){
                         this.tabIndex = index;
-
-                        this.updateCalder();
                     },
-                    getDateArr:function(startDay,n)
-                    {
-                        let conFlag = true;
-                        let arr = [startDay.toString()];
-                        let beginDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate());
-                        while(conFlag)
-                        {
-                            //
-                            beginDay = new Date(beginDay.getFullYear(),beginDay.getMonth(),beginDay.getDate() + 1);
-                            if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
-                            {
-                                continue;
-                            }
-
-                            arr.push(beginDay.toString());
-
-                            if( arr.length > (n - 1))
-                            {
-                                conFlag = false;
-                            }
-                        }
-                        return arr;
+                    openCalderSwitch(){
+                        this.calderSwitch = true;
                     },
-                    monthGo:function(direction)
-                    {
-                        let currTmp = new Date(this.year,this.month - 1 + direction,1);
-                        this.year = currTmp.getFullYear();
-                        this.month = currTmp.getMonth() + 1;
-//                console.log(currTmp.getFullYear());
-//                console.log(currTmp.getMonth + 1);
-
-                        this.updateCalder();
-
-                    },
-                    updateCalder:function()
-                    {
-                        let fullDay = new Date(this.year,this.month,0).getDate();
-                        let startWeek = new Date(this.year,this.month - 1,1).getDay();
-
-                        // console.log(fullDay);
-                        // console.log(startWeek);
-
-                        let tmpData =  [
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-
-                        ];
-
-                        for(let i = 0;i<fullDay;i++)
-                        {
-                            let mo  = parseInt((i+startWeek) / 7);
-                            let mod = (i+startWeek)%7;
-
-                            // console.log(mo);
-                            // console.log(mod);
-
-                            //周六、周日不可点击
-                            tmpData[mo][mod].day = i+1;
-
-                            if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
-                            {
-                                tmpData[mo][mod].forbiddenChosen = true;
-                            }
-
-                            //设置为选中
-                            // console.log('選中的日期');
-                            // console.log(this.chosenDays);
-                            if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1).toString()) !== -1 ) {
-                                tmpData[mo][mod].chosen = true;
-                            }
-                        }
-
-                        this.data = tmpData;
-                        console.log('渲染日历');
-                        console.log(JSON.stringify(this.data));
-                        this.$forceUpdate();
-
-                    },
-                    setChosenDay:function () {
-
-                        // this.chosenDay = this.startDay;
-                        // this.chosenType = this.tabIndex;
-                        // this.closeCalderSwitch();
-
-                        var url = "/pages/fillfoodbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid + '&tabIndex=' + this.tabIndex + '&quantity=' + this.quantity + '&startDay=' + this.startDay.Format('yyyy-MM-dd');
-                        console.log(url);
-                        wx.miniProgram.navigateTo(
-                            {
-                                url: url
-                            });
-                    },
+                    closeCalderSwitch(){
+                        this.calderSwitch = false;
+                    }
                 },
             computed:
                 {
