@@ -165,7 +165,21 @@ class IndexController extends Controller
         $user_id = Request::input('user_id');
 
         $booked = Book::isBooked($user_id,$product->id)?true:false;
-        return view('attend_finance')->with('product',$product)->with('booked',$booked);
+
+
+        $startTimestamp = strtotime($product->start_time);
+        $endTimestamp = strtotime($product->end_time);
+
+        $timeList = [];
+        while( $startTimestamp < $endTimestamp )
+        {
+            $begin = date('H:i',$startTimestamp);
+            $startTimestamp = $startTimestamp + 1800;
+            $timeList[] = (Object)['text'=>$begin . '-' . date('H:i',$startTimestamp)];
+        }
+
+
+        return view('attend_finance')->with('product',$product)->with('booked',$booked)->with('timeList',$timeList);
     }
 
 
@@ -189,6 +203,9 @@ class IndexController extends Controller
         $user_id = Request::input('user_id');
 
         $booked = Book::where('user_id',$user_id)->where('product_id',$product->id)->where('status',1)->count();
+
+
+
         return view('health')->with('product',$product)->with('booked',$booked?true:false);
     }
 

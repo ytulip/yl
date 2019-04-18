@@ -41,6 +41,11 @@ class Kit
         return date('m月d日 H:i',strtotime($dateStr));
     }
 
+    public static function dateFormatHi($dateStr)
+    {
+        return date('H:i',strtotime($dateStr));
+    }
+
     public static function dateFormat3($dateStr)
     {
         return date('m月d日',strtotime($dateStr));

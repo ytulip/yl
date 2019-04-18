@@ -132,6 +132,27 @@
             width: 21px;
             height: 21px;
         }
+
+        .time-list .time-item:nth-child(2n)
+        {
+            padding-left:8px;
+        }
+
+        .time-list .time-item:nth-child(2n-1)
+        {
+            padding-right: 8px;
+        }
+
+        .time-item-box
+        {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #F3F3F3;
+            border-radius: 4px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -152,12 +173,51 @@
         <div class="fs-14-fc-7E7E7E-r m-t-24">花甲联合各家专业机构为会员提供专业的金融资讯建议，建立完备的社区金融服务。充分为老人梳理完备的金融知识建立正确的金融价值观。
         </div>
 
-        <div class="fs-14-fc-000000-m m-t-16">服务地点:</div>
-        <div class="fs-14-fc-000000-m" style="margin-top: 6px;">服务时间:</div>
+        <div class="fs-14-fc-000000-m m-t-16">服务地点:{{$product->context_deliver}}</div>
+        <div class="fs-14-fc-000000-m" style="margin-top: 6px;">服务时间:{{\App\Util\Kit::dateFormat4($product->start_time)}}  {{\App\Util\Kit::dateFormatHi($product->start_time)}}-{{\App\Util\Kit::dateFormatHi($product->end_time)}}</div>
 
     </div>
 
     <div style="margin-bottom: 100px;"></div>
+
+
+    <div id="calder_vue">
+
+        <div style="position: fixed;top:0;bottom: 0;left: 0;right: 0;background-color: rgba(28,36,75,0.80);z-index:9999" id="calder" v-if="calderSwitch">
+            <div style="position: absolute;left:0;bottom: 0;right: 0;">
+
+
+                <div style="padding-left: 16px;margin-bottom: 16px;">
+                    <img src="/images/icon_close3_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
+                </div>
+
+
+
+                <div style="padding: 26px 16px 6px; background-color: #ffffff;border-top-left-radius: 16px;border-top-right-radius: 16px;">
+
+
+                    <div class="cus-row ">
+                        <div class="cus-row-col-6">
+                            <span class="fs-18-fc-212229-m">预约时间</span>
+                        </div>
+
+                    </div>
+
+                    <div class="time-list" style="margin-top: 24px;">
+                        <div class="in-bl t-al-c time-item" style="width: 50%;" v-for="item in timeList">
+                            <div class="fs-18-fc-000000-m time-item-box">@{{item.text}}</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 26px;">
+                        <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;" v-if="canSend">@{{confirmText}}</a>
+                        <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;" v-else>请选择起送日期</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     @if($booked)
         <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
@@ -180,26 +240,32 @@
 
         var pageConfig = {
             product_id: {{$product->id}},
-            user_id:'{{\Illuminate\Support\Facades\Request::input('user_id')}}'
+            user_id:'{{\Illuminate\Support\Facades\Request::input('user_id')}}',
+            timeList:{!! json_encode($timeList) !!}
         }
 
 
 
-        $(function () {
-            new SubmitButton({
-                selectorStr:"#next_step",
-                url:'/index/book-finance',
-                data:function()
-                {
-                    return {product_id:pageConfig.product_id,user_id:pageConfig.user_id};
-                },
-                callback:function(el,data)
-                {
-                    $('#next_step').remove();
-                    $('footer').append('<a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约</a>');
-                }
-            });
+
+        $('#next_step').click(function(){
+            calderVue.openCalderSwitch();
         });
+
+        // $(function () {
+        //     new SubmitButton({
+        //         selectorStr:"#next_step",
+        //         url:'/index/book-finance',
+        //         data:function()
+        //         {
+        //             return {product_id:pageConfig.product_id,user_id:pageConfig.user_id};
+        //         },
+        //         callback:function(el,data)
+        //         {
+        //             $('#next_step').remove();
+        //             $('footer').append('<a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约</a>');
+        //         }
+        //     });
+        // });
 
 
 
@@ -226,7 +292,8 @@
                 startDay:'',
                 calderSwitch:false,
                 chosenDay:'',
-                chosenType:''
+                chosenType:'',
+                timeList:pageConfig.timeList
             },
             created:function(){
                 let fullDay = new Date(this.year,this.month,0).getDate();
