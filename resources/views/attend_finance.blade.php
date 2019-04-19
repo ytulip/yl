@@ -154,6 +154,26 @@
             margin-bottom: 16px;
             position: relative;
         }
+
+
+
+        .active{
+            background: #F9F9FB;
+            border: 1px solid #C50081;
+            border-radius: 4px;
+        }
+
+        .disable{
+            background: #FFFFFF;
+            border: 1px solid #F3F3F3;
+            border-radius: 4px;
+        }
+
+        .disable span{
+            opacity: 0.4;
+        }
+
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -182,7 +202,7 @@
     <div style="margin-bottom: 100px;"></div>
 
 
-    <div id="calder_vue">
+    <div id="calder_vue" class="dpn">
 
         <div style="position: fixed;top:0;bottom: 0;left: 0;right: 0;background-color: rgba(28,36,75,0.80);z-index:9999" id="calder" v-if="calderSwitch">
             <div style="position: absolute;left:0;bottom: 0;right: 0;">
@@ -206,7 +226,7 @@
 
                     <div class="time-list" style="margin-top: 24px;">
                         <div class="in-bl t-al-c time-item" style="width: 50%;" v-for="(item,index) in timeList">
-                            <div class="fs-18-fc-000000-m time-item-box" v-on:click="setTab(index)">@{{item.text}}
+                            <div class="fs-18-fc-000000-m time-item-box" v-bind:class="{'active':(tabIndex == index),'disable':item.disable}" v-on:click="setTab(index)"><span>@{{item.text}}</span>
 
                                 <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"  v-if="tabIndex == index"></div>
 
@@ -215,8 +235,7 @@
                     </div>
 
                     <div style="margin-top: 26px;">
-                        <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;" v-if="canSend">@{{confirmText}}</a>
-                        <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;" v-else>请选择起送日期</a>
+                        <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;">确定</a>
                     </div>
                 </div>
             </div>
@@ -226,7 +245,7 @@
 
     @if($booked)
         <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-            <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约</a>
+            <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约 {{$book->time_text}}</a>
         </footer>
         @else
     <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
@@ -293,6 +312,13 @@
             methods:
                 {
                     setTab:function(index){
+
+                        if( this.timeList[index].disable )
+                        {
+                            console.log('can not');
+                            return;
+                        }
+
                         this.tabIndex = index;
                     },
                     openCalderSwitch(){
@@ -300,6 +326,23 @@
                     },
                     closeCalderSwitch(){
                         this.calderSwitch = false;
+                    },
+                    setChosenDay(){
+
+                        if( this.tabIndex < 0 )
+                        {
+                            mAlert('请选择预约时间');
+                            return;
+                        }
+
+                        $.post('/index/book-finance',{product_id:pageConfig.product_id,user_id:pageConfig.user_id,tab_index:this.tabIndex,time_text:this.timeList[this.tabIndex].text},function(data){
+                            if( data.status )
+                            {
+                                location.reload();
+                            }else {
+                                mAlert(data.desc);
+                            }
+                        },'json');
                     }
                 },
             computed:

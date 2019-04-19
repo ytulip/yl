@@ -164,22 +164,29 @@ class IndexController extends Controller
         $product = Product::activeFinance();
         $user_id = Request::input('user_id');
 
+        $book = Book::where('user_id',$user_id)->where('product_id',$product->id)->first();
         $booked = Book::isBooked($user_id,$product->id)?true:false;
+
+
+        $tabIndex = Book::where('product_id',$product->id)->lists('tab_index');
+        $tabIndex = $tabIndex->toArray();
 
 
         $startTimestamp = strtotime($product->start_time);
         $endTimestamp = strtotime($product->end_time);
 
         $timeList = [];
+        $i = 0;
         while( $startTimestamp < $endTimestamp )
         {
             $begin = date('H:i',$startTimestamp);
             $startTimestamp = $startTimestamp + 1800;
-            $timeList[] = (Object)['text'=>$begin . '-' . date('H:i',$startTimestamp)];
+            $timeList[] = (Object)['text'=>$begin . '-' . date('H:i',$startTimestamp),'disable'=>in_array($i,$tabIndex)?true:false];
+            $i++;
         }
 
 
-        return view('attend_finance')->with('product',$product)->with('booked',$booked)->with('timeList',$timeList);
+        return view('attend_finance')->with('product',$product)->with('booked',$booked)->with('timeList',$timeList)->with('book',$book);
     }
 
 
@@ -191,7 +198,17 @@ class IndexController extends Controller
         $product = Product::activeFinance();
         $user_id = Request::input('user_id');
 
-        Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+
+        if( Book::where('product_id',$product->id)->where('tab_index',Request::input('tab_index'))->count() )
+        {
+            return $this->jsonReturn(0,'该时段已被预约');
+        }
+
+
+        $book = Book::firstOrCreate(['product_id'=>$product->id,'user_id'=>$user_id]);
+        $book->time_text = Request::input('time_text');
+        $book->tab_index = Request::input('tab_index');
+        $book->save();
 
         return $this->jsonReturn(1);
     }
