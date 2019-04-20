@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-    <title>商品详情</title>
+    <title>金融服务</title>
 @stop
 @section('style')
     <style>
@@ -241,7 +241,27 @@
             </div>
         </div>
 
+
+        <div class="layer-shadow dpn" v-if="layerFlag">
+            <div class="layer-center" style="padding: 24px;">
+                <div class="f-f-m t-al-c">
+                    <div class="fs-18-fc-2E3133" style="padding: 20px 0;" >预约@{{timeList[tabIndex].text}}的金融服务?</div>
+                </div>
+
+                <div class="cus-row" style="margin-top: 34px;">
+                    <div class="cus-row-col-6">
+                        <a class="yl_btn1 btn-none" v-on:click="cancelLayer">取消</a>
+                    </div>
+                    <div class="cus-row-col-6">
+                        <a class="yl_btn1" v-on:click="nextStep">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
 
     @if($booked)
         <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
@@ -304,7 +324,9 @@
                 calderSwitch:false,
                 chosenDay:'',
                 chosenType:'',
-                timeList:pageConfig.timeList
+                timeList:pageConfig.timeList,
+                layerFlag:false
+
             },
             created:function(){
                 $('.dpn').removeClass('dpn');
@@ -324,6 +346,10 @@
                     openCalderSwitch(){
                         this.calderSwitch = true;
                     },
+                    cancelLayer()
+                    {
+                        this.layerFlag = 0;
+                    },
                     closeCalderSwitch(){
                         this.calderSwitch = false;
                     },
@@ -335,6 +361,11 @@
                             return;
                         }
 
+                        this.calderSwitch = false;
+                        this.layerFlag = true;
+                    },
+                    nextStep(){
+                        this.cancelLayer();
                         $.post('/index/book-finance',{product_id:pageConfig.product_id,user_id:pageConfig.user_id,tab_index:this.tabIndex,time_text:this.timeList[this.tabIndex].text},function(data){
                             if( data.status )
                             {
