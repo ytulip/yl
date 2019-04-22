@@ -50,8 +50,16 @@
             color:#C50081 !important;
         }
 
-        .swiper-slide{width: auto!important;padding-top:10px;padding-bottom: 10px; }
+        #swiper1 .swiper-slide{width: auto!important;padding-top:10px;padding-bottom: 10px; }
         .topmenu{background-color: white;border-bottom: 1px solid #CCCCCC;padding: 0 10px;}
+
+        .food-img{width: 100%;}
+        .food-img img{width: 100%;}
+
+        #swiper2 img{width: 100%;}
+        #swiper2 .swiper-slide{width: 100%;overflow: hidden;}
+
+        #swiper2 .swiper-slide img{border-radius: 8px;}
 
         body,html{background: #f9f9fb;}
     </style>
@@ -59,7 +67,7 @@
 @stop
 @section('container')
     <div class="topmenu">
-        <div class="swiper-container">
+        <div class="swiper-container" id="swiper1">
             <div class="swiper-wrapper">
                 @foreach($dates as $key=>$item)
                 <span class="swiper-slide fs-16-fc-484848 @if($key== 0) active @endif" style="line-height: 22px;" data-date="{{$item}}">{{\App\Util\Kit::dateFormat3($item)}}</span>
@@ -68,14 +76,27 @@
         </div>
     </div>
 
+    <!---->
+    {{--<div class="swiper-img">--}}
+        {{--<div class="swiper-wrapper">--}}
+            {{--<div>--}}
+                {{--<img src=""/>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
-    <div>
-
-    </div>
 
     <div class="bg-f9f9fb p16">
 
-    <div class="common-panel-24-16">
+
+        <div class="swiper-container" id="swiper2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="/imgsys/4d5455314e546b794d6a67774e44413d.jpg"></div><div class="swiper-slide"><img src="/imgsys/4d5455314e546b794d6a67304e44413d.jpg"></div>
+            </div>
+        </div>
+
+
+    <div class="common-panel-24-16" style="margin-top: 14px;">
         <div class="cus-row cus-row-v-m">
             <div class="cus-row-col-1 t-a-l">
                 <div class="red-v-l"></div>
@@ -125,30 +146,39 @@
         };
 
         $(function () {
-            var swiper = new Swiper('.swiper-container', {
+            var swiper = new Swiper('#swiper1', {
                 spaceBetween: 20,
-                slidesPerView:'auto',
+                slidesPerView: 'auto',
                 freeMode: true
             });
-        })
-
-        $('.swiper-slide').click(function(){
-            if( $(this).hasClass('active') )
-            {
-                return;
-            }
-            $('.active').removeClass('active');
-            $(this).addClass('active');
-
-            var date = $(this).attr('data-date');
 
 
+            var imgSwiper = new Swiper('#swiper2', {
+                autoplay:true,
+            });
 
 
+            $('.swiper-slide').click(function () {
+                if ($(this).hasClass('active')) {
+                    return;
+                }
+                $('.active').removeClass('active');
+                $(this).addClass('active');
 
-            $('#lunch').html(pageConfig.dataJson[date]['lunch']['foods']?pageConfig.dataJson[date]['lunch']['foods']:'');
-            $('#dinner').html(pageConfig.dataJson[date]['dinner']['foods']?pageConfig.dataJson[date]['dinner']['foods']:'');
+                var date = $(this).attr('data-date');
 
+
+                // $('#swiper2 .swiper-wrapper').html('<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['lunch'] ? pageConfig.dataJson[date]['lunch']['cover_img'] : '') + '"/></div><div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['dinner'] ? pageConfig.dataJson[date]['dinner']['cover_img'] : '') + '"/></div>');
+                // mySwiper.updateSlides();
+                imgSwiper.removeAllSlides();
+                // mySwiper.ad
+                imgSwiper.appendSlide([ '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['lunch'] ? pageConfig.dataJson[date]['lunch']['cover_img'] : '') + '"/></div>', '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['dinner'] ? pageConfig.dataJson[date]['dinner']['cover_img'] : '') + '"/></div>' ]);
+
+
+                $('#lunch').html(pageConfig.dataJson[date]['lunch']['foods'] ? pageConfig.dataJson[date]['lunch']['foods'] : '');
+                $('#dinner').html(pageConfig.dataJson[date]['dinner']['foods'] ? pageConfig.dataJson[date]['dinner']['foods'] : '');
+
+            });
         });
     </script>
 @stop
