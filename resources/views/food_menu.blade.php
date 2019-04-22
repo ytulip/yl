@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-    <title>个人信息</title>
+    <title>贴心菜单</title>
 @stop
 @section('style')
     <style>
@@ -62,6 +62,11 @@
         #swiper2 .swiper-slide img{border-radius: 8px;}
 
         body,html{background: #f9f9fb;}
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: #ffffff !important;
+        }
     </style>
     <link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
 @stop
@@ -91,8 +96,10 @@
 
         <div class="swiper-container" id="swiper2">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="/imgsys/4d5455314e546b794d6a67774e44413d.jpg"></div><div class="swiper-slide"><img src="/imgsys/4d5455314e546b794d6a67304e44413d.jpg"></div>
+                <div class="swiper-slide"><img src="{{$res[$dates[0]]['lunch']->cover_img}}"/></div>
+                <div class="swiper-slide"><img src="{{$res[$dates[0]]['dinner']->cover_img}}"/></div>
             </div>
+            <div class="swiper-pagination"></div><!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
         </div>
 
 
@@ -155,6 +162,9 @@
 
             var imgSwiper = new Swiper('#swiper2', {
                 autoplay:true,
+                pagination: {
+                    el: '.swiper-pagination',
+                }
             });
 
 
