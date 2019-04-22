@@ -506,8 +506,8 @@ class PassportController extends Controller
         {
             $foods = FoodMenu::where('product_id',$product->id)->where('date',$date)->get();
 
-            $lunch = (Object)[];
-            $dinner = (Object)[];
+            $lunch = (Object)['cover_img'=>''];
+            $dinner = (Object)['cover_img'=>''];
 
             foreach ( $foods as $food)
             {
