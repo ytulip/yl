@@ -240,7 +240,13 @@ line-height: 24px;}
 .fs-18-fc-000000-m{font-size: 18px;color:#000000;line-height: 18px;font-family: PingFangSC-Medium;letter-spacing: -0.35px;}
 .fs-12-fc-7E7E7E-r{font-size: 12px;color:#7E7E7E;line-height: 12px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
 .fs-14-fc-7E7E7E-r{font-size: 14px;color:#7E7E7E;line-height: 14px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
+.fs-14-fc-7E7E7E-m{font-size: 14px;color:#7E7E7E;line-height: 14px;font-family: PingFangSC-Medium;;letter-spacing: -0.23px;}
 .fs-14-fc-484848-r{font-size: 14px;color:#484848;line-height: 16px;font-family: PingFangSC-Regular;}
+
+.fs-14-fc-2E3133-m{font-family: PingFangSC-Medium;
+font-size: 14px;
+color: #2E3133;
+text-align: center;line-height: 14px;}
 
 .fs-14-fc-c50081-m{font-family: PingFangSC-Medium;
     font-size: 14px;
@@ -524,3 +530,5 @@ input::-webkit-input-placeholder{color: #bebebe;  }
 
 .btn-none {background-image: none;background: #f9f9fb;box-shadow: none;color: #000;}
 .btn-none:hover {color: #000;}
+
+
