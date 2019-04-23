@@ -26,6 +26,11 @@ class UserHabit extends Model
                 continue;
             }
 
+            if(!$item)
+            {
+                continue;
+            }
+
             UserHabit::firstOrCreate(['user_id' => $userid, 'habit' => $item]);
         }
     }
