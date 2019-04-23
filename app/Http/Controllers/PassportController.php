@@ -411,7 +411,16 @@ class PassportController extends Controller
 
     public function anyHabbitRemark()
     {
-        $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+
+        $product = Product::find(Request::input('product_id'));
+
+        if ( $product->isCleanProduct() )
+        {
+            $myHabit = UserHabit2::where('user_id',Request::input('user_id'))->get();
+        } else {
+            $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+        }
+
         return view('habbit_remark')->with('habit',$myHabit->toArray());
     }
 
