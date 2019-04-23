@@ -228,6 +228,12 @@ class UserController extends Controller
             $order->origin_pay = $product->price * $order->quantity * Order::getDaysByType(Request::input('tabIndex'));
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
+
+
+            /*新增remark*/
+            UserHabit::addHabit($order->user_id,$order->remark);
+
+
             $order->buy_type = 100;
             $order->days = Order::getDaysByType(Request::input('tabIndex'));
 
