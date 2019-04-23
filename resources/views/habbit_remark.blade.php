@@ -72,26 +72,26 @@
 
     <!--轮播-->
     <div class="p16 dpn" id="app">
-        <textarea class="tare" placeholder="输入口味、偏好要求等"></textarea>
+        <textarea class="tare" placeholder="输入口味、偏好要求等" v-model="habitText"></textarea>
 
         <div class="cus-row m-t-24 cus-row-v-m">
             <div class="cus-row-col-6">
                 <span class="fs-14-fc-2E3133-m">快捷标签</span>
             </div>
             <div class="cus-row-col-6 t-al-r">
-                <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg" v-on:click="saveHabit">保存</span>
+                <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg">保存</span>
                 <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-else>编辑</span>
             </div>
         </div>
 
         <div class="in-bl in-bl-line" style="margin-top: 8px;">
-            <div class="habbit-item" @click="">不吃辣</div>
-            <div class="habbit-item" @click="">少放辣</div>
-            <div class="habbit-item" @click="">不吃蒜</div>
-            <div class="habbit-item" @click="">不吃葱</div>
-            <div class="habbit-item" @click="">不吃香菜</div>
-            <div class="habbit-item" @click="">少放盐</div>
-            <div class="habbit-item" @click="" v-for="(item,index) in habit" style="position: relative" v-if="!item.hide">
+            <div class="habbit-item" @click="addText('不吃辣')">不吃辣</div>
+            <div class="habbit-item" @click="addText('少放辣')">少放辣</div>
+            <div class="habbit-item" @click="addText('不吃蒜')">不吃蒜</div>
+            <div class="habbit-item" @click="addText('不吃葱')">不吃葱</div>
+            <div class="habbit-item" @click="addText('不吃香菜')">不吃香菜</div>
+            <div class="habbit-item" @click="addText('少放盐')">少放盐</div>
+            <div class="habbit-item" @click="addText(item.habit)" v-for="(item,index) in habit" style="position: relative" v-if="!item.hide">
                 @{{ item.habit }}
                 <div style="position: absolute;right: -10px;top: -10px;" v-if="editFlg" v-on:click="addDelete(index)">
                     <img src="/images/icon_close2_nor@3x.png" style="width: 20px;"/>
@@ -139,7 +139,8 @@
                 data:
                     {
                         editFlg:false,
-                        habit:pageConfig.habit
+                        habit:pageConfig.habit,
+                        habitText:''
                     },
                 created:function()
                 {
@@ -147,18 +148,71 @@
                 },
                 methods:
                     {
+                        addText(text)
+                        {
+                            if( this.editFlg )
+                            {
+                                return false;
+                            }
+
+                            this.habitText += ' ' + text;
+
+                        },
                         edit(){
                             this.editFlg = true;
                         },
                         save()
                         {
-                            this.editFlag = false;
+                            this.editFlg = false;
+
+                            var ids = [];
+                            for( var i=0 ; i < this.habit.length; i++)
+                            {
+                                if ( this.habit[i].hide )
+                                {
+                                    ids.push(this.habit[i].id);
+                                }
+                            }
+
+                            console.log(ids);
+
+                            if( !ids.length )
+                            {
+                                return;
+                            }
+
+                            var _self = this;
+                            $.post('/user/update-habit',{ids:ids.join(',')},function(data){
+
+                            },'json');
                         },
                         addDelete(ind)
                         {
                             this.habit[ind].hide = true;
                             console.log(this.habit);
                             this.$forceUpdate();
+                        },
+                        saveHabit()
+                        {
+                            //找出hide为true的所有id，然后请求接口删除
+                            // var ids = [];
+                            // for( var i=0 ; i < this.habit.length; i++)
+                            // {
+                            //     if ( this.habit[i].hide )
+                            //     {
+                            //         ids.push(this.habit[i].id);
+                            //     }
+                            // }
+                            //
+                            // console.log(ids);
+                            //
+                            // if( !ids.length )
+                            // {
+                            //     return;
+                            // }
+                            // $.post('/user/update-habit',{ids:ids.join(',')},function(data){
+                            //
+                            // },'json');
                         }
                     }
             }

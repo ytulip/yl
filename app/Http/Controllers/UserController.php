@@ -1298,6 +1298,21 @@ class UserController extends Controller
         return $this->jsonReturn(1,$list);
     }
 
+    /**
+     * 更新列表
+     */
+    public function anyUpdateHabit()
+    {
+        $ids = Request::input('ids');
+
+        DB::delete("delete from user_habit where id in (".$ids .")");
+
+
+        $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+        return $this->jsonReturn(1,$myHabit->toArray());
+
+    }
+
 
 //    public function anyUserHabit()
 //    {
