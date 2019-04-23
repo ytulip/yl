@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-    <title>商品详情</title>
+    <title>忌口备注</title>
 @stop
 @section('style')
     <style>
@@ -49,6 +49,21 @@
             padding: 16px;
             box-sizing: border-box;
         }
+
+        .habbit-item{
+            background: #FFFFFF;
+            border: 1px solid #E1E1E1;
+            border-radius: 17px;
+            line-height: 34px;
+            padding: 0 16px;
+            display: inline-block;
+            font-family: PingFangSC-Medium;
+            font-size: 16px;
+            color: #2E3133;
+            text-align: center;
+            margin-right: 14px;
+            margin-top: 14px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -56,8 +71,28 @@
     {{--@include('segments.header',['headerTile'=>'辣木膳购买系统'])--}}
 
     <!--轮播-->
-    <div class="p16">
+    <div class="p16 dpn" id="app">
         <textarea class="tare" placeholder="输入口味、偏好要求等"></textarea>
+
+        <div class="cus-row m-t-24 cus-row-v-m">
+            <div class="cus-row-col-6">
+                <span class="fs-14-fc-2E3133-m">快捷标签</span>
+            </div>
+            <div class="cus-row-col-6 t-al-r">
+                <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg">保存</span>
+                <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-else>编辑</span>
+            </div>
+        </div>
+
+        <div class="in-bl in-bl-line" style="margin-top: 8px;">
+            <div class="habbit-item" @click="">不吃辣</div>
+            <div class="habbit-item" @click="">少放辣</div>
+            <div class="habbit-item" @click="">不吃蒜</div>
+            <div class="habbit-item" @click="">不吃葱</div>
+            <div class="habbit-item" @click="">不吃香菜</div>
+            <div class="habbit-item" @click="">少放盐</div>
+        </div>
+
     </div>
 
 
@@ -86,5 +121,29 @@
                 }
             );
         }
+
+        new Vue(
+            {
+                el:'#app',
+                data:
+                    {
+                        editFlg:false
+                    },
+                created:function()
+                {
+                    $('.dpn').removeClass('dpn');
+                },
+                methods:
+                    {
+                        edit(){
+                            this.editFlg = true;
+                        },
+                        save()
+                        {
+                            this.editFlag = false;
+                        }
+                    }
+            }
+        );
     </script>
 @stop
