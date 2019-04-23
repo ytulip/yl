@@ -652,7 +652,7 @@
                    calCurrent:function()
                    {
                        // return this.year + '年' + this.month + '月';
-                      if( (this.year == this.currentDay.getFullYear()) && (this.month = this.currentDay.getMonth() + 1) )
+                      if( (this.year == this.currentDay.getFullYear()) && (this.month == this.currentDay.getMonth() + 1) )
                       {
                           return true;
                       } else
