@@ -164,7 +164,7 @@
             </div>
 
 
-            <div class="fs-14-fc-7E7E7E-r pre-text"   style="margin-top: 14px;line-height: 18px;margin-bottom: 22px;">{{$product->sub_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text"   style="margin-top: 14px;line-height: 18px;margin-bottom: 22px;">{{$product->context}}</div>
 
 
 
