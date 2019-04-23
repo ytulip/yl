@@ -114,7 +114,7 @@
     <script type="text/javascript">
 
 
-        var pageConfig = {habit:{!! json_encode($habit) !!}}
+        var pageConfig = {habit:{!! json_encode($habit) !!},remark:'{!! \Illuminate\Support\Facades\Request::input('remark') !!}'}
 
 
         function buy()
@@ -140,7 +140,7 @@
                     {
                         editFlg:false,
                         habit:pageConfig.habit,
-                        habitText:''
+                        habitText:pageConfig.remark
                     },
                 created:function()
                 {
