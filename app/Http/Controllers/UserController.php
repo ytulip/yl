@@ -20,6 +20,7 @@ use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
+use App\Model\UserHabit;
 use App\Model\VipOrder;
 use App\Model\YlConfig;
 use App\Util\DealString;
@@ -1296,4 +1297,10 @@ class UserController extends Controller
         $list = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','>=',date('Y-m-d'))->orderBy('expire_at','asc')->get();
         return $this->jsonReturn(1,$list);
     }
+
+
+//    public function anyUserHabit()
+//    {
+//        UserHabit::where('user_id',Auth::id())
+//    }
 }

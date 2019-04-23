@@ -13,6 +13,7 @@ use App\Model\Order;
 use App\Model\Period;
 use App\Model\Product;
 use App\Model\UserAddress;
+use App\Model\UserHabit;
 use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
@@ -410,7 +411,8 @@ class PassportController extends Controller
 
     public function anyHabbitRemark()
     {
-        return view('habbit_remark');
+        $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+        return view('habbit_remark')->with('habit',$myHabit->toArray());
     }
 
     public function anyHabbitRemark2()

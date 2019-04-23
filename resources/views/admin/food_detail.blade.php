@@ -3,7 +3,9 @@
     <style>
         #edui1{width:100%!important;}
         .essay_img{position: absolute;top:50%;right: 40px;width: 60px;height: 60px;border-radius: 8px;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow: hidden;}
+        .essay_img2{position: absolute;top:50%;right: 40px;width: 60px;height: 60px;border-radius: 8px;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow: hidden;}
         .essay_img img{width: 60px;height: 60px;border-radius: 8px;}
+        .essay_img2 img{width: 60px;height: 60px;border-radius: 8px;}
     </style>
 @stop
 @section('left_content')
@@ -28,6 +30,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3 col-lg-3">
+                <div class="block-card">
+                    <p>详情封面</p>
+                    <a href="javascript:uploadCover3()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                    <a id="do_publish" style="margin-left: 36px;"><i class="fa fa-save" aria-hidden="true"></i></a>
+
+                    <div class="essay_img2">
+                        <img src="{{isset($product->cover_image2)?$product->cover_image2:'/imgsys/1.jpg'}}"/>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="block-card mt-32">
@@ -133,6 +149,11 @@
             $('input[name="images[]"]').click();
         }
 
+        function uploadCover3(){
+            pageConfig.uploadImgId = 3;
+            $('input[name="images[]"]').click();
+        }
+
 
         $('.edit-tmp-menu').click(function(){
             var editRow = $(this).parents('.edit-row');
@@ -178,7 +199,7 @@
                 return true;
             },
             data:function(){
-                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val()};
+                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val(),cover_image2:$('.essay_img2').find('img').attr('src')};
             },
             callback:function (el,val)
             {
@@ -200,9 +221,11 @@
                     success:function(data){
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
                         if(data.status) {
-                            if(pageConfig.uploadImgId){
+                            if(pageConfig.uploadImgId == 2){
                                 $('#food_img').attr('src',data.data[0]);
-                            } else {
+                            } if(pageConfig.uploadImgId == 3) {
+                                $('.essay_img2').find('img').attr('src', data.data[0]);
+                            }else {
                                 $('.essay_img').find('img').attr('src', data.data[0]);
                             }
                         } else {

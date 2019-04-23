@@ -595,6 +595,7 @@ class IndexController extends Controller
         $product = Product::find(Request::input('id'));
 //        $product->consumer_service_phone = Request::input('consumer_service_phone');
         $product->cover_image = Request::input('cover_image');
+        $product->cover_image2 = Request::input('cover_image2');
 //        $product->product_name = Request::input('title');
 //        $product->context = Request::input('content');
 //        $product->context_deliver = Request::input('content_deliver');

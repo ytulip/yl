@@ -79,7 +79,7 @@
                 <span class="fs-14-fc-2E3133-m">快捷标签</span>
             </div>
             <div class="cus-row-col-6 t-al-r">
-                <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg">保存</span>
+                <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg" v-on:click="saveHabit">保存</span>
                 <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-else>编辑</span>
             </div>
         </div>
@@ -91,6 +91,12 @@
             <div class="habbit-item" @click="">不吃葱</div>
             <div class="habbit-item" @click="">不吃香菜</div>
             <div class="habbit-item" @click="">少放盐</div>
+            <div class="habbit-item" @click="" v-for="(item,index) in habit" style="position: relative" v-if="!item.hide">
+                @{{ item.habit }}
+                <div style="position: absolute;right: -10px;top: -10px;" v-if="editFlg" v-on:click="addDelete(index)">
+                    <img src="/images/icon_close2_nor@3x.png" style="width: 20px;"/>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -106,6 +112,11 @@
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
     <script type="text/javascript">
+
+
+        var pageConfig = {habit:{!! json_encode($habit) !!}}
+
+
         function buy()
         {
             var jsonData = JSON.stringify({ habbitRemark:$('.tare').val() });
@@ -127,7 +138,8 @@
                 el:'#app',
                 data:
                     {
-                        editFlg:false
+                        editFlg:false,
+                        habit:pageConfig.habit
                     },
                 created:function()
                 {
@@ -141,6 +153,12 @@
                         save()
                         {
                             this.editFlag = false;
+                        },
+                        addDelete(ind)
+                        {
+                            this.habit[ind].hide = true;
+                            console.log(this.habit);
+                            this.$forceUpdate();
                         }
                     }
             }
