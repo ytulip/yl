@@ -417,11 +417,12 @@ class PassportController extends Controller
         if ( $product->isCleanProduct() )
         {
             $myHabit = UserHabit2::where('user_id',Request::input('user_id'))->get();
+            return view('habbit_remark2')->with('habit',$myHabit->toArray());
         } else {
             $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+            return view('habbit_remark')->with('habit',$myHabit->toArray());
         }
 
-        return view('habbit_remark')->with('habit',$myHabit->toArray());
     }
 
     public function anyHabbitRemark2()

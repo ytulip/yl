@@ -21,6 +21,7 @@ use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
 use App\Model\UserHabit;
+use App\Model\UserHabit2;
 use App\Model\VipOrder;
 use App\Model\YlConfig;
 use App\Util\DealString;
@@ -202,6 +203,8 @@ class UserController extends Controller
             $order->remark = Request::input('remark');
 //            $order->service_time = Request::input('clean_service_time');
 //            $order->service_time = '';
+            /*新增remark*/
+            UserHabit2::addHabit($order->user_id,$order->remark);
 
 
             //处理预约时间
@@ -1315,6 +1318,18 @@ class UserController extends Controller
 
 
         $myHabit = UserHabit::where('user_id',Request::input('user_id'))->get();
+        return $this->jsonReturn(1,$myHabit->toArray());
+
+    }
+
+    public function anyUpdateHabit2()
+    {
+        $ids = Request::input('ids');
+
+        DB::delete("delete from user_habit2 where id in (".$ids .")");
+
+
+        $myHabit = UserHabit2::where('user_id',Request::input('user_id'))->get();
         return $this->jsonReturn(1,$myHabit->toArray());
 
     }
