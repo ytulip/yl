@@ -28,6 +28,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3 col-lg-3">
+                <div class="block-card">
+                    <p>详情封面</p>
+                    <a href="javascript:uploadCover3()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                    <a id="do_publish" style="margin-left: 36px;"><i class="fa fa-save" aria-hidden="true"></i></a>
+
+                    <div class="essay_img2">
+                        <img src="{{isset($product->cover_image2)?$product->cover_image2:'/imgsys/1.jpg'}}"/>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="block-card mt-32">
@@ -119,6 +132,11 @@
             $('input[name="images[]"]').click();
         }
 
+        function uploadCover3(){
+            pageConfig.uploadImgId = 3;
+            $('input[name="images[]"]').click();
+        }
+
 
         $('.edit-tmp-menu').click(function(){
             var editRow = $(this).parents('.edit-row');
@@ -186,9 +204,11 @@
                     success:function(data){
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
                         if(data.status) {
-                            if(pageConfig.uploadImgId){
+                            if(pageConfig.uploadImgId == 2){
                                 $('#food_img').attr('src',data.data[0]);
-                            } else {
+                            } if(pageConfig.uploadImgId == 3) {
+                                $('.essay_img2').find('img').attr('src', data.data[0]);
+                            }else {
                                 $('.essay_img').find('img').attr('src', data.data[0]);
                             }
                         } else {
