@@ -145,6 +145,12 @@
             width: 21px;
             height: 21px;
         }
+
+        .pre-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -171,7 +177,7 @@
                 </div>
             </div>
 
-            <div class="fs-14-fc-7E7E7E-r" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">
                     {{$product->food_desc}}
             </div>
 
@@ -188,9 +194,7 @@
                 </div>
             </div>
 
-            <div class="fs-14-fc-7E7E7E-r" style="margin-top: 14px;line-height: 18px;">
-                {{$product->food_desc}}
-            </div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;line-height: 18px;">{{$product->fit_indi}}</div>
         </div>
 
         <div class="cus-row cus-row-v-m" style="margin-bottom: 14px;">
