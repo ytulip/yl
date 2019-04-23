@@ -14,6 +14,7 @@ use App\Model\Period;
 use App\Model\Product;
 use App\Model\UserAddress;
 use App\Model\UserHabit;
+use App\Model\UserHabit2;
 use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
