@@ -18,7 +18,7 @@
                     width = maxWidth;
                 }
                 //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
-                var rem = width * 100 / designWidth;
+                var rem = width * 16 / designWidth;
                 //兼容UC开始
                 rootStyle="html{font-size:"+rem+'px !important}';
                 rootItem = document.getElementById('rootsize') || document.createElement("style");
@@ -55,15 +55,11 @@
                     doc.body.style.fontSize = "16px";
                 }, false);
             }
-        })(640, 640);
+        })(350, 370);
     </script>
 @stop
 @section('style')
     <style>
-
-        /*<!-- 使用rem -->*/
-
-
         html,body{
             background-color: #f9f9fb;
         }
@@ -165,7 +161,7 @@
             color: #ffffff !important;
             line-height: 28px !important;
             opacity: 1;
-            padding: 0 7px;
+            padding: 0 6px;
             position: relative;
         }
 
@@ -212,28 +208,27 @@
             word-break: break-all;
         }
 
-        .fs-16-fc-212229-m{
-            font-size: .16rem;
-            line-height: .16rem;
+
+
+
+        #cal-day{}
+        #cal-day .fs-16-fc-212229-m{font-size: 1rem}
+        #cal-day .chosen{
+            background: #C50081;
+            border-radius: 1rem;
+            /*height: 28px;*/
+            /*width: 28px;*/
+            display: inline-block;
+            color: #ffffff !important;
+            line-height: 1.75rem !important;
+            opacity: 1;
+            width: 1.81rem;
+            position: relative;
         }
 
-        .fs-18-fc-212229-m
-        {
-            font-size: .18rem;
-            line-height: .18rem;
+        .chosen-tomo{
+            width: 3rem !important;
         }
-
-        .fs-14-fc-7E7E7E-r{
-            font-size: .14rem;
-            line-height: .14rem;
-        }
-
-        .fs-16-fc-080808-r
-        {
-            font-size: .16rem;
-            line-height: .16rem;
-        }
-
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -336,7 +331,7 @@
 
 
             <div style="padding-left: 16px;margin-bottom: 16px;">
-                <img src="/images/icon_close3_nor@3x.png" style="width: .24rem;height: .24rem;" v-on:click="closeCalderSwitch">
+                <img src="/images/icon_close3_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
             </div>
 
 
@@ -363,12 +358,12 @@
                 </div>
 
                 <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">单次</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">周(7日)</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">月(30日)</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">单次</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">周(7日)</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">月(30日)</span></div>
                 </div>
 
-                <div class="t-al-c" style="margin-top: .40rem;">
+                <div class="t-al-c" style="margin-top: 40px;">
                     <div class="cus-row">
                         <div class="cus-row-col-3 v-a-m t-al-l">
                             <span class="fs-16-fc-212229-m op3">@{{prveMonth}}</span>
@@ -390,7 +385,7 @@
                             <span class="fs-16-fc-212229-m op3">@{{nextMonth}}</span>
                         </div>
                     </div>
-                    <div class="cus-row" style="margin-top: .22rem;">
+                    <div class="cus-row" style="margin-top: 22px;">
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">日</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">一</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">二</span></div>
@@ -400,21 +395,21 @@
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">六</span></div>
                     </div>
 
-                    <div>
-                    <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: .22rem;">
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen,begin:(beginStr == data[item][0].ymd)}" v-on:click="setBegin(data[item][0].day)">@{{(calCurrent && (data[item][0].day == currentDate))?'明天':data[item][0].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen,begin:(beginStr == data[item][1].ymd)}" v-on:click="setBegin(data[item][1].day)">@{{(calCurrent && (data[item][1].day == currentDate))?'明天':data[item][1].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen,begin:(beginStr == data[item][2].ymd)}" v-on:click="setBegin(data[item][2].day)">@{{(calCurrent && (data[item][2].day == currentDate))?'明天':data[item][2].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen,begin:(beginStr == data[item][3].ymd)}" v-on:click="setBegin(data[item][3].day)">@{{(calCurrent && (data[item][3].day == currentDate))?'明天':data[item][3].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen,begin:(beginStr == data[item][4].ymd)}" v-on:click="setBegin(data[item][4].day)">@{{(calCurrent && (data[item][4].day == currentDate))?'明天':data[item][4].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen,begin:(beginStr == data[item][5].ymd)}" v-on:click="setBegin(data[item][5].day)">@{{(calCurrent && (data[item][5].day == currentDate))?'明天':data[item][5].day}}</span></div>
-                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen,begin:(beginStr == data[item][6].ymd) }" v-on:click="setBegin(data[item][6].day)">@{{(calCurrent && (data[item][6].day == currentDate))?'明天':data[item][6].day}}</span></div>
+                    <div style="height: 180px;overflow: scroll;" id="cal-day">
+                    <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen,begin:(beginStr == data[item][0].ymd),'chosen-tomo':(data[item][0].chosen && (calCurrent && (data[item][0].day == currentDate)))}" v-on:click="setBegin(data[item][0].day)">@{{(calCurrent && (data[item][0].day == currentDate))?'明天':data[item][0].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen,begin:(beginStr == data[item][1].ymd),'chosen-tomo':(data[item][1].chosen && (calCurrent && (data[item][1].day == currentDate)))}" v-on:click="setBegin(data[item][1].day)">@{{(calCurrent && (data[item][1].day == currentDate))?'明天':data[item][1].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen,begin:(beginStr == data[item][2].ymd),'chosen-tomo':(data[item][2].chosen && (calCurrent && (data[item][2].day == currentDate)))}" v-on:click="setBegin(data[item][2].day)">@{{(calCurrent && (data[item][2].day == currentDate))?'明天':data[item][2].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen,begin:(beginStr == data[item][3].ymd),'chosen-tomo':(data[item][3].chosen && (calCurrent && (data[item][3].day == currentDate)))}" v-on:click="setBegin(data[item][3].day)">@{{(calCurrent && (data[item][3].day == currentDate))?'明天':data[item][3].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen,begin:(beginStr == data[item][4].ymd),'chosen-tomo':(data[item][4].chosen && (calCurrent && (data[item][4].day == currentDate)))}" v-on:click="setBegin(data[item][4].day)">@{{(calCurrent && (data[item][4].day == currentDate))?'明天':data[item][4].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen,begin:(beginStr == data[item][5].ymd),'chosen-tomo':(data[item][5].chosen && (calCurrent && (data[item][5].day == currentDate)))}" v-on:click="setBegin(data[item][5].day)">@{{(calCurrent && (data[item][5].day == currentDate))?'明天':data[item][5].day}}</span></div>
+                        <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen,begin:(beginStr == data[item][6].ymd) ,'chosen-tomo':(data[item][6].chosen && (calCurrent && (data[item][6].day == currentDate)))}" v-on:click="setBegin(data[item][6].day)">@{{(calCurrent && (data[item][6].day == currentDate))?'明天':data[item][6].day}}</span></div>
                     </div>
 
                     </div>
                 </div>
 
-                <div style="margin-top: .26rem;">
+                <div style="margin-top: 26px;">
                     <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;" v-if="canSend">@{{confirmText}}</a>
                     <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;" v-else>请选择起送日期</a>
                 </div>
@@ -424,7 +419,7 @@
 
     </div>
 
-    <footer class="fix-bottom" style="background-color: #ffffff;padding: .14rem;border-top:.5px solid #EBE9E9 ;">
+    <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
         <a class="yl_btn1 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">购买</a>
     </footer>
 
