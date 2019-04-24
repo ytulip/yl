@@ -18,11 +18,7 @@ class SmsTemplate extends Enum
     private static function tmpConfig()
     {
         return [
-            'register_sms'=>['template_code'=>'SMS_126890093'],
-            'password_sms'=>['template_code'=>'SMS_126875684'],
-            'withdraw_sms'=>['template_code'=>'SMS_126865728'],
-            'modify_phone_sms'=>['template_code'=>'SMS_126866180'],
-            'deliver_sms'=>['template_code'=>'SMS_133960721']
+            'register_sms'=>['template_code'=>'SMS_164275279'],
         ];
     }
 
@@ -47,7 +43,7 @@ class SmsTemplate extends Enum
         $request->setPhoneNumbers($mobile);
 
         // 必填，设置签名名称，应严格按"签名名称"填写，请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/sign
-        $request->setSignName("三膳善");
+        $request->setSignName("花甲服务");
 
         // 必填，设置模板CODE，应严格按"模板CODE"填写, 请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/template
         $request->setTemplateCode($this->tmpValue('template_code'));
