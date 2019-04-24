@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-    <title>支付结果</title>
+    <title>开通会员</title>
 @stop
 @section('style')
     <style>
