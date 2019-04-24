@@ -273,7 +273,7 @@
                     </div>
                 </div>
 
-                <div style="margin:26px 0;border: 1px solid #e1e1e1;"></div>
+                <div style="margin:26px 0;border: .5px solid #e1e1e1;"></div>
 
                 <div style="">
                     <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限七日内 节假日暂不供应</span>
