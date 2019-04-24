@@ -1440,6 +1440,7 @@ class IndexController extends Controller
     }
 
     public function anyFoodTask(){
+
         return view('admin.segment.food_task');
     }
 

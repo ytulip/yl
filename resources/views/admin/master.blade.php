@@ -23,6 +23,7 @@
     <!-- //lined-icons -->
     <style>
 
+        * { touch-action: pan-y; }
         #menu-academico-sub{display: none;}
         .menu-fa{display: none;}
         .sidebar-collapsed .menu-fa{display: inline-block;}
