@@ -3,7 +3,9 @@
     <style>
         #edui1{width:100%!important;}
         .essay_img{position: absolute;top:50%;right: 40px;width: 60px;height: 60px;border-radius: 8px;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow: hidden;}
+        .essay_img2{position: absolute;top:50%;right: 40px;width: 60px;height: 60px;border-radius: 8px;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow: hidden;}
         .essay_img img{width: 60px;height: 60px;border-radius: 8px;}
+        .essay_img2 img{width: 60px;height: 60px;border-radius: 8px;}
     </style>
 @stop
 @section('left_content')
