@@ -198,7 +198,7 @@ class User extends Model
 
     public function isVip()
     {
-        if( date('Y-m-d',$this->expire_time) > date('Y-m-d') )
+        if( date('Y-m-d',strtotime($this->expire_time)) > date('Y-m-d') )
         {
             return true;
         } else {
