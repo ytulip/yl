@@ -965,7 +965,10 @@ class UserController extends Controller
 
     public function anyUserCenter()
     {
-        return $this->jsonReturn(1,['user'=>User::find(Auth::id())]);
+
+        $user = User::find(Auth::id());
+
+        return $this->jsonReturn(1,['user'=>$user,'is_vip'=>$user->isVip()]);
     }
 
     /**
