@@ -216,6 +216,24 @@
             font-size: .16rem;
             line-height: .16rem;
         }
+
+        .fs-18-fc-212229-m
+        {
+            font-size: .18rem;
+            line-height: .18rem;
+        }
+
+        .fs-14-fc-7E7E7E-r{
+            font-size: .14rem;
+            line-height: .14rem;
+        }
+
+        .fs-16-fc-080808-r
+        {
+            font-size: .16rem;
+            line-height: .16rem;
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -318,7 +336,7 @@
 
 
             <div style="padding-left: 16px;margin-bottom: 16px;">
-                <img src="/images/icon_close3_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
+                <img src="/images/icon_close3_nor@3x.png" style="width: .24rem;height: .24rem;" v-on:click="closeCalderSwitch">
             </div>
 
 
@@ -345,12 +363,12 @@
                 </div>
 
                 <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">单次</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">周(7日)</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">月(30日)</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">单次</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">周(7日)</span></div>
+                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: .36rem;padding: 0 .24rem;">月(30日)</span></div>
                 </div>
 
-                <div class="t-al-c" style="margin-top: 40px;">
+                <div class="t-al-c" style="margin-top: .40rem;">
                     <div class="cus-row">
                         <div class="cus-row-col-3 v-a-m t-al-l">
                             <span class="fs-16-fc-212229-m op3">@{{prveMonth}}</span>
@@ -372,7 +390,7 @@
                             <span class="fs-16-fc-212229-m op3">@{{nextMonth}}</span>
                         </div>
                     </div>
-                    <div class="cus-row" style="margin-top: 22px;">
+                    <div class="cus-row" style="margin-top: .22rem;">
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">日</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">一</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">二</span></div>
@@ -382,8 +400,8 @@
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">六</span></div>
                     </div>
 
-                    <div style="height: 180px;overflow: scroll;">
-                    <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
+                    <div>
+                    <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: .22rem;">
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen,begin:(beginStr == data[item][0].ymd)}" v-on:click="setBegin(data[item][0].day)">@{{(calCurrent && (data[item][0].day == currentDate))?'明天':data[item][0].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen,begin:(beginStr == data[item][1].ymd)}" v-on:click="setBegin(data[item][1].day)">@{{(calCurrent && (data[item][1].day == currentDate))?'明天':data[item][1].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen,begin:(beginStr == data[item][2].ymd)}" v-on:click="setBegin(data[item][2].day)">@{{(calCurrent && (data[item][2].day == currentDate))?'明天':data[item][2].day}}</span></div>
@@ -396,7 +414,7 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 26px;">
+                <div style="margin-top: .26rem;">
                     <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;" v-if="canSend">@{{confirmText}}</a>
                     <a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;" v-else>请选择起送日期</a>
                 </div>
@@ -406,7 +424,7 @@
 
     </div>
 
-    <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+    <footer class="fix-bottom" style="background-color: #ffffff;padding: .14rem;border-top:.5px solid #EBE9E9 ;">
         <a class="yl_btn1 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">购买</a>
     </footer>
 
