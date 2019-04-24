@@ -184,7 +184,7 @@
                 return true;
             },
             data:function(){
-                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),sub_desc:$("textarea[name='sub_desc']").val(),context:$("textarea[name='context']").val(),context_deliver:$("textarea[name='context_deliver']").val(),context_server:$("textarea[name='context_server']").val(),common_ques:$("textarea[name='common_ques']").val()};
+                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),sub_desc:$("textarea[name='sub_desc']").val(),context:$("textarea[name='context']").val(),context_deliver:$("textarea[name='context_deliver']").val(),context_server:$("textarea[name='context_server']").val(),common_ques:$("textarea[name='common_ques']").val(),cover_image2:$('.essay_img2').find('img').attr('src')};
             },
             callback:function (el,val)
             {
