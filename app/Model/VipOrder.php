@@ -10,6 +10,18 @@ class VipOrder extends Model
     public $table = 'vip_order';
 
 
+
+    public function vipName()
+    {
+        if ( $this->buy_type == 1 || $this->buy_type == 2 )
+        {
+            return 'A会员';
+        }else
+        {
+            return 'B会员';
+        }
+    }
+
     /**
      * 发放优惠券动作
      */

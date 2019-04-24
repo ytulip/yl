@@ -1172,6 +1172,9 @@ class UserController extends Controller
             $vipOrder = VipOrder::where('user_id',$user->id)->where('pay_status',1)->orderBy('id','desc')->first();
 
 
+            $data['vip_type_text'] =  $vipOrder->vipName();
+
+
 
             //点餐服务
             $foodTotal = Coupon::where('refer_id',$vipOrder->id)->whereIn('coupon_type',[4,5,6])->count();
