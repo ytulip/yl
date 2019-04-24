@@ -144,7 +144,7 @@
 @stop
 @section('container')
     <div>
-        <img src="{{ env('IMAGE_HOST') . $product->cover_image}}" style="width: 100%;"/>
+        <img src="{{ env('IMAGE_HOST') . $product->cover_image2}}" style="width: 100%;"/>
     </div>
 
     <div style="padding: 0 16px;">
