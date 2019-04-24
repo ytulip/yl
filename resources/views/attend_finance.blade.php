@@ -173,6 +173,16 @@
             opacity: 0.4;
         }
 
+        .huajia-icon
+        {
+            width: 16px;
+            height: 16px;
+            background-image:url('/images/logo_small_nor@3x.png');
+            background-size: 16px 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
@@ -184,8 +194,8 @@
         </div>
 
 
-        <div class="common-panel-24-16">
-            <div class="fs-18-fc-000000-m">花甲金融顾问 ：张志国</div>
+        <div class="common-panel-24-16 m-t-24">
+            <div class="fs-18-fc-000000-m"><span class="huajia-icon"></span><span class="in-bl-v-m" style="margin-left: 10px;">花甲金融顾问 ：张志国</span></div>
             <div class="fs-14-fc-7E7E7E-r m-t-16">
                 高级经济师，毕业于南开大学国际金融专业，研究生学历，经济学硕士。现任中国中信集团有限公司执行董事。
             </div>
