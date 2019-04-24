@@ -439,6 +439,12 @@ class PassportController extends Controller
         return view('pay_success')->with('order',$order);
     }
 
+    public function anyPaySuccessVip()
+    {
+        $user = \App\Model\User::find(Request::input('openid'));
+        return view('pay_success_vip');
+    }
+
 
     public function anyRandom()
     {
