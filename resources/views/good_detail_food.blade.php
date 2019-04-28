@@ -63,6 +63,12 @@
         html,body{
             background-color: #f9f9fb;
         }
+
+        body.modal-open {
+            position: fixed;
+            width: 100%;
+        }
+
         .low-alert{position: fixed;left:0;right: 0;bottom: 90px;text-align: center;}
         .item-opr span{line-height: 40px;display: inline-block;}
         .show-img{width: 100%;border-radius: 12px;}
@@ -256,6 +262,11 @@
             </div>
 
             <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
 
 
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
@@ -432,6 +443,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
     <script type="text/javascript">
 
+        var ModalHelper = (function(bodyCls) {
+            var scrollTop;
+            return {
+                afterOpen: function() {
+                    scrollTop = document.scrollingElement.scrollTop;
+                    document.body.classList.add(bodyCls);
+                    document.body.style.top = -scrollTop + 'px';
+                },
+                beforeClose: function() {
+                    document.body.classList.remove(bodyCls);
+                    // scrollTop lost after set position:fixed, restore it back.
+                    document.scrollingElement.scrollTop = scrollTop;
+                }
+            };
+        })('modal-open');
+
+
         var pageConfig = {
             product_id: {{$product->id}},
             openid:"{{\Illuminate\Support\Facades\Request::input('openid')}}",
@@ -501,6 +529,9 @@
            created:function(){
 
                $('.dpn').removeClass('dpn');
+               document.getElementById('calder').addEventListener('touchmove', function (event) {
+                   event.preventDefault();
+               });
 
                let fullDay = new Date(this.year,this.month,0).getDate();
                let startWeek = new Date(this.year,this.month - 1,1).getDay();
@@ -521,11 +552,13 @@
                {
                    closeCalderSwitch:function()
                    {
+                       ModalHelper.beforeClose();
                        this.calderSwitch = false;
                    },
                    openCalderSwitch:function()
                    {
                        this.calderSwitch = true;
+                       ModalHelper.afterOpen();
                    },
                    deQuantity:function () {
                        if( this.quantity > 1)

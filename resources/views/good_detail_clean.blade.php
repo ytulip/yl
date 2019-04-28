@@ -213,22 +213,22 @@
         </div>
 
 
-        <div class="m-t-24" style="background: #FFFFFF;
-    box-shadow: 0 2px 6px 0 #E7E9F0;
-    border-radius: 5px;padding:24px;transform: translateY(-24px);" onclick="commonQue()">
-            <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-1 t-a-l">
-                    <div class="red-v-l"></div>
-                </div>
-                <div class="cus-row-col-8">
-                    <span class="fs-18-fc-000000-m">常见问题</span>
-                </div>
-                <div class="cus-row-col-3 t-al-r">
-                    <span class="next-icon"></span>
-                </div>
-            </div>
+        {{--<div class="m-t-24" style="background: #FFFFFF;--}}
+    {{--box-shadow: 0 2px 6px 0 #E7E9F0;--}}
+    {{--border-radius: 5px;padding:24px;transform: translateY(-24px);" onclick="commonQue()">--}}
+            {{--<div class="cus-row cus-row-v-m">--}}
+                {{--<div class="cus-row-col-1 t-a-l">--}}
+                    {{--<div class="red-v-l"></div>--}}
+                {{--</div>--}}
+                {{--<div class="cus-row-col-8">--}}
+                    {{--<span class="fs-18-fc-000000-m">常见问题</span>--}}
+                {{--</div>--}}
+                {{--<div class="cus-row-col-3 t-al-r">--}}
+                    {{--<span class="next-icon"></span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
-        </div>
+        {{--</div>--}}
 
         <div style="margin-bottom: 100px;"></div>
 
