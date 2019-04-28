@@ -138,13 +138,13 @@
 
                 <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a href="/admin/index/good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
                     <ul id="menu-academico-sub" >
-                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">购餐服务</a></li>
+                    <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-bill">购餐服务</a></li>
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/orders">保洁服务</a></li>
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/finance-user">金融服务</a></li>
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">体检服务</a></li>
                     </ul>
                     <div class="sub-menu">
-                    <a href="/admin/index/total-finance">购餐服务</a>
+                    <a href="/admin/index/food-bill">购餐服务</a>
                     <a href="/admin/index/orders">保洁服务</a>
                     <a href="/admin/index/finance-user">金融服务</a>
                     <a href="/admin/index/withdraw">体检服务</a>

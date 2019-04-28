@@ -20,6 +20,7 @@ use App\Model\Period;
 use App\Model\Product;
 use App\Model\ProductAttr;
 use App\Model\SignRecord;
+use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
@@ -60,23 +61,7 @@ class IndexController extends Controller
 
     public function getTotalFinance()
     {
-        //提现支出
-        $withdraw = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_WITHDRAW_AGREE])->sum('price');
-        $withdrawCount = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_WITHDRAW_AGREE])->count();
-
-        //开发支出
-        $directIndirect = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_DIRECT, CashStream::CASH_TYPE_BENEFIT_INDIRECT])->sum('price');
-        $directIndirectCount = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_DIRECT, CashStream::CASH_TYPE_BENEFIT_INDIRECT])->count();
-
-        //辅导分红
-        $upSuper = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP, CashStream::CASH_TYPE_BENEFIT_SUPER])->sum('price');
-        $upSuperCount = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP, CashStream::CASH_TYPE_BENEFIT_SUPER])->count();
-
-
-        $totalStatical = new TotalStatical();
-        $totalStatical->init();
-
-        return view('admin.total_finance')->with('withdraw', $withdraw)->with('directIndirect', $directIndirect)->with('upSuper', $upSuper)->with('withdrawCount', $withdrawCount)->with('directIndirectCount', $directIndirectCount)->with('upSuperCount', $upSuperCount)->with('totalStatical', $totalStatical);
+        return view('admin.total_finance');
     }
 
     public function getMembers()
@@ -1416,6 +1401,34 @@ class IndexController extends Controller
         $query = Product::where('type',2);
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.food_manager')->with('paginate', $paginate);
+    }
+
+
+    public function anyFoodBill()
+    {
+        return view('admin.foodbill');
+    }
+
+
+    /**
+     * 根据日期获得
+     */
+    public function anyFoodBillByDay()
+    {
+        $list = SubFoodOrders::where('date',date('Y-m-d'))->leftJoin('orders','orders.id','=','sub_food_orders.order_id')->selectRaw('orders.*,sub_food_orders.id as sub_id,status,type')->get();
+        return $this->jsonReturn(1,$list);
+    }
+
+
+    /**
+     * 设置为已送达
+     */
+    public function anyDoDeliver()
+    {
+        $subFoodOrder = SubFoodOrders::find(Request::input('id'));
+        $subFoodOrder->status = 2;
+        $subFoodOrder->save();
+        return $this->jsonReturn(1);
     }
 
 
