@@ -262,11 +262,6 @@
             </div>
 
             <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
 
 
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
