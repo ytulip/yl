@@ -360,7 +360,7 @@
                 <div style="margin:26px 0;border: .5px solid #e1e1e1;"></div>
 
                 <div style="">
-                    <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限14日内</span>
+                    <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">预定开始时间限14日内</span>
                 </div>
 
                 <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
@@ -471,7 +471,6 @@
         {
             if( type == 1)
             {
-                // console.log();
                 location.href = "/passport/menu?product_id="+pageConfig.product_id+"&dates=" + pageConfig.thisWeekList;
             } else
             {
@@ -531,7 +530,6 @@
                let fullDay = new Date(this.year,this.month,0).getDate();
                let startWeek = new Date(this.year,this.month - 1,1).getDay();
                this.currentDay = new Date();
-               // this.startDay = this.currentDay;
                this.chosenDay = this.startDay;
 
 
@@ -539,7 +537,6 @@
                this.month = this.currentDay.getMonth() + 1;
                this.currentDate = this.currentDay.getDate() + 1;
 
-               // console.log('currentDate:' + this.currentDate);
 
                this.updateCalder();
            },
@@ -583,6 +580,22 @@
                        {
                            return;
                        }
+
+
+                       //如果大于30选起送，那起送无效
+                       var date1 = new Date();
+                       var date2 = new Date(date1);
+                       date2.setDate(date1.getDate() + 30);
+
+                       // console.log(date2.Format('yyyy-MM-dd'));
+                       // console.log(tmpStartDay.Format("yyyy-MM-dd"));
+                       if( tmpStartDay > date2)
+                       {
+                           mAlert('起送日期须在30天以内');
+                           return;
+                       }
+
+
 
 
 
@@ -633,8 +646,6 @@
                        let currTmp = new Date(this.year,this.month - 1 + direction,1);
                        this.year = currTmp.getFullYear();
                        this.month = currTmp.getMonth() + 1;
-//                console.log(currTmp.getFullYear());
-//                console.log(currTmp.getMonth + 1);
 
                        this.updateCalder();
 
@@ -643,9 +654,6 @@
                    {
                        let fullDay = new Date(this.year,this.month,0).getDate();
                        let startWeek = new Date(this.year,this.month - 1,1).getDay();
-
-                       // console.log(fullDay);
-                       // console.log(startWeek);
 
                        let tmpData =  [
                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
@@ -662,17 +670,10 @@
                            let mo  = parseInt((i+startWeek) / 7);
                            let mod = (i+startWeek)%7;
 
-                           // console.log(mo);
-                           // console.log(mod);
 
                            //周六、周日不可点击
                            tmpData[mo][mod].day = i+1;
                            tmpData[mo][mod].ymd = this.year + '-' + (this.month) + '-' + (i+1);
-
-                           // if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
-                           // {
-                           //     tmpData[mo][mod].forbiddenChosen = true;
-                           // }
 
 
                            if((new Date(this.year,this.month - 1,i + 1) < this.currentDay))
@@ -680,17 +681,13 @@
                                tmpData[mo][mod].forbiddenChosen = true;
                            }
 
-                           //设置为选中
-                           // console.log('選中的日期');
-                           // console.log(this.chosenDays);
+
                            if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1).toString()) !== -1 ) {
                                tmpData[mo][mod].chosen = true;
                            }
                        }
 
                        this.data = tmpData;
-                       console.log('渲染日历');
-                       console.log(JSON.stringify(this.data));
                        this.$forceUpdate();
 
                    },
@@ -701,7 +698,6 @@
                        // this.closeCalderSwitch();
 
                        var url = "/pages/fillfoodbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid + '&tabIndex=' + this.tabIndex + '&quantity=' + this.quantity + '&startDay=' + this.startDay.Format('yyyy-MM-dd');
-                       console.log(url);
                        wx.miniProgram.navigateTo(
                            {
                                url: url
@@ -770,7 +766,6 @@
                    {
                        if( this.startDay )
                        {
-                           console.log('起送日期:' + this.startDay.Format('yyyy-M-d'));
                            return this.startDay.Format('yyyy-M-d');
                        }else
                        {
