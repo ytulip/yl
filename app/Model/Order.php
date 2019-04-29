@@ -416,4 +416,18 @@ class Order extends Model
     }
 
 
+    /**
+     * 折扣系数
+     */
+    public static function saleOff($tabIndex)
+    {
+        if( $tabIndex == 1)
+        {
+            return 1;
+        } else {
+            return 0.8;
+        }
+    }
+
+
 }

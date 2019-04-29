@@ -227,8 +227,8 @@ class UserController extends Controller
             $order->product_name = $product->product_name;
             $order->quantity = Request::input('quantity');
 //            $order->product_attr_id = $productAttr->id;
-            $order->need_pay = $product->price;
-            $order->origin_pay = $product->price * $order->quantity * Order::getDaysByType(Request::input('tabIndex'));
+//            $order->need_pay = $product->price;
+            $order->origin_pay = $product->price * $order->quantity * Order::getDaysByType(Request::input('tabIndex')) * Order::saleOff(Request::input('tabIndex'));
             $order->user_id = $user->id;
             $order->remark = Request::input('remark');
 
@@ -278,6 +278,16 @@ class UserController extends Controller
                 $subFoodOrders->order_id = $order->id;
                 $subFoodOrders->date = $carbon->format('Y-m-d');
                 $subFoodOrders->status = 0;
+                $subFoodOrders->type = 1;
+                $carbon->addDay(1);
+                $subFoodOrders->save();
+
+
+                $subFoodOrders  = new SubFoodOrders();
+                $subFoodOrders->order_id = $order->id;
+                $subFoodOrders->date = $carbon->format('Y-m-d');
+                $subFoodOrders->status = 0;
+                $subFoodOrders->type = 2;
                 $carbon->addDay(1);
                 $subFoodOrders->save();
             }
@@ -331,6 +341,15 @@ class UserController extends Controller
         }
 
 
+        //减去优惠券张数
+
+        if( $product->isCleanProduct() )
+        {
+
+        } else {
+            $order->need_pay = $product->price * ($order->quantity * Order::getDaysByType(Request::input('tabIndex')) - count($couponIds)) * Order::saleOff(Request::input('tabIndex'));
+            $order->save();
+        }
 
 
         //调起微信支付
