@@ -106,6 +106,9 @@ class UserController extends Controller
         }else if( $type == 1 )
         {
             $user->real_name = Request::input('real_name');
+        }else if( $type == 4 )
+        {
+            $user->age = Request::input('age');
         }
 
         $user->save();
