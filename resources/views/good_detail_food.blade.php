@@ -365,8 +365,21 @@
 
                 <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
                     <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">单次</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">周(7日)</span></div>
-                    <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">月(30日)</span></div>
+                    <div class="in-bl" style="position:relative;background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)">
+                        <span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">周(7日)</span>
+
+                        <div style="position: absolute;top: -14px;left: 70px;z-index: 9999;">
+                            <img src="/images/icon_8_nor@3x.png" style="width: 37px;"/>
+                        </div>
+
+                    </div>
+                    <div class="in-bl" style="position:relative;background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)">
+                        <span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">月(30日)</span>
+
+                        <div style="position: absolute;top: -14px;left: 70px;">
+                            <img src="/images/icon_8_nor@3x.png" style="width: 37px;"/>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="t-al-c" style="margin-top: 40px;">
