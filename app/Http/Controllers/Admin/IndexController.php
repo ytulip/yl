@@ -64,198 +64,6 @@ class IndexController extends Controller
         return view('admin.total_finance');
     }
 
-    public function getMembers()
-    {
-        $query = DB::table('users')->orderBy('id', 'desc')->where('vip_level', 2)->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', 'like', '%' . Request::input('keyword') . '%')->orWhere('phone', 'like', '%' . Request::input('keyword') . '%');
-            }
-        });
-
-        Kit::compareBelowZeroQuery($query,array_only(Request::all(),['charge']));
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $tempArray = array($item->id, $item->real_name, \App\Model\User::levelText($item->vip_level), $item->phone, $item->id_card, $item->get_remark,$item->created_at);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('会员ID', '姓名', '身份等级', '手机号码', '身份证号码','报单/复购/活动标记' ,'注册时间'),
-                'data' => $dataList,
-                'name' => 'tixian',
-                'format_text_array' => [0, 0, 0, 1, 1, 0]
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.members')->with('paginate', $paginate);
-    }
-
-    public function getActivityMembers()
-    {
-        $query = User::where('activity_pay', 1)->orderBy('id', 'desc')->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', 'like', '%' . Request::input('keyword') . '%')->orWhere('phone', 'like', '%' . Request::input('keyword') . '%');
-            }
-        });
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-
-            foreach ($list as $key => $item) {
-
-                $order = $item->getActivityPayedOrder();
-                $recommendId = '';
-                $recommendPhone = '';
-                $recommendName = '';
-                if( $order instanceof  Order)
-                {
-                    $recommendUser = User::find($order->immediate_user_id);
-                    if( $recommendUser instanceof  User)
-                    {
-                        $recommendId = $recommendUser->id;
-                        $recommendPhone = $recommendUser->phone;
-                        $recommendName = $recommendUser->real_name;
-                    }
-                }
-
-                $tempArray = array($item->id, $item->real_name, \App\Model\User::levelText($item->vip_level), $item->phone, $item->id_card, $recommendId,$recommendPhone,$recommendName,$item->do_mark,$item->get_remark, $item->created_at);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('会员ID', '姓名', '身份等级', '手机号码', '身份证号码', '活动推荐人ID','活动推荐人手机号','活动推荐人姓名','活动会员备注','报单/复购/活动标记','注册时间'),
-                'data' => $dataList,
-                'name' => 'tixian',
-                'format_text_array' => [0, 0, 0, 1, 1, 0]
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-
-        foreach ($paginate as $key=>$val)
-        {
-            $paginate[$key]->recommendId = '';
-            $paginate[$key]->recommendPhone = '';
-            $paginate[$key]->recommendName = '';
-
-            $order = $val->getActivityPayedOrder();
-            if( $order instanceof  Order)
-            {
-                $recommendUser = User::find($order->immediate_user_id);
-                if( $recommendUser instanceof  User)
-                {
-                    $paginate[$key]->recommendId = $recommendUser->id;
-                    $paginate[$key]->recommendPhone = $recommendUser->phone;
-                    $paginate[$key]->recommendName = $recommendUser->real_name;
-                }
-            }
-
-        }
-
-        return view('admin.activity_members')->with('paginate', $paginate);
-    }
-
-    public function getAngleMembers()
-    {
-        $query = User::where('vip_level', User::LEVEL_VIP)->orderBy('id', 'desc')->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', 'like', '%' . Request::input('keyword') . '%')->orWhere('phone', 'like', '%' . Request::input('keyword') . '%');
-            }
-        });
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-
-            foreach ($list as $key => $item) {
-
-                $tempArray = array($item->id, $item->real_name, \App\Model\User::levelText($item->vip_level), $item->phone, $item->id_card, $item->created_at);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('会员ID', '姓名', '身份等级', '手机号码', '身份证号码','注册时间'),
-                'data' => $dataList,
-                'name' => 'tianshihuiyuan'
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-
-        foreach ($paginate as $key=>$val)
-        {
-            $paginate[$key]->recommendId = '';
-            $paginate[$key]->recommendPhone = '';
-            $paginate[$key]->recommendName = '';
-
-            $order = $val->getActivityPayedOrder();
-            if( $order instanceof  Order)
-            {
-                $recommendUser = User::find($order->immediate_user_id);
-                if( $recommendUser instanceof  User)
-                {
-                    $paginate[$key]->recommendId = $recommendUser->id;
-                    $paginate[$key]->recommendPhone = $recommendUser->phone;
-                    $paginate[$key]->recommendName = $recommendUser->real_name;
-                }
-            }
-
-        }
-
-        return view('admin.angle_members')->with('paginate', $paginate);
-    }
-
-    public function getSubMemberList()
-    {
-        $query = DB::table('users')->orderBy('id', 'desc')->where(function ($query) {
-            $query->where('parent_id', Request::input('user_id'))->orWhere('indirect_id', Request::input('user_id'));
-        })->where(function ($query) {
-            if (Request::input('sub_type') == 1) {
-                $query->where('parent_id', Request::input('user_id'));
-            } else if (Request::input('sub_type') == 2) {
-                $query->where('indirect_id', Request::input('user_id'));
-            };
-
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', Request::input('keyword'))->orWhere('phone', Request::input('keyword'));
-            }
-
-
-        });
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.sub_member_list')->with('paginate', $paginate);
-    }
-
-    public function getMemberDetail()
-    {
-        $userId = Request::input('user_id');
-        $user = User::find($userId);
-        if (!$user) {
-            dd('用户不存在');
-        }
-
-        $order = $user->hasTakePartInActivity();
-        $signQuantity = 0;
-        if ($order) {
-            $signQuantity = $order->sign_quantity ? $order->sign_quantity : $signQuantity;
-        }
-
-        return view('admin.member_detail')->with('user', $user)->with('relationMap', $user->relationMap())->with('staticalCashStream', $user->staticalCashStream())->with('signQuantity', $signQuantity);
-    }
 
     public function getOrders()
     {
@@ -320,53 +128,6 @@ class IndexController extends Controller
     }
 
 
-    public function postSetGetStatus()
-    {
-        $orderId = Request::input('order_id');
-        $targetStatus = Request::input('status');
-        $order = MonthGetGood::find($orderId);
-        if (!$order) {
-            return $this->jsonReturn(0, '订单不存在');
-        }
-
-        if ($targetStatus == Order::ORDER_STATUS_SELF_GOT && $order->get_status == Order::ORDER_STATUS_WAIT_SELF_GET) {
-            $order->get_status = $targetStatus;
-
-
-        } else if ($targetStatus == Order::ORDER_STATUS_DELIVERED && $order->get_status == Order::ORDER_STATUS_WAIT_DELIVER) {
-            $order->get_status = $targetStatus;
-
-            $deliverArray = json_decode(Request::input('deliver_array'));
-            if (!is_array($deliverArray)) {
-                return $this->jsonReturn(0, '物流信息输入有误');
-            }
-            $order->deliver_array = Request::input('deliver_array');
-
-            foreach ($deliverArray as $item) {
-                //            //物流信息
-//            //发送物流通知短信
-                $smsTemplate = new SmsTemplate(SmsTemplate::DELIVER_SMS);
-                $smsTemplate->sendSms(User::find($order->user_id)->phone, ['company' => $item->deliver_company_name, 'billno' => $item->deliver_number]);
-            }
-
-//            $order->deliver_company_name = Request::input('deliver_company_name');
-//            $order->deliver_number = Request::input('deliver_number');
-//
-//            //物流信息
-//            //发送物流通知短信
-//            $smsTemplate = new SmsTemplate(SmsTemplate::DELIVER_SMS);
-//            $smsTemplate->sendSms(User::find($order->user_id)->phone,['company'=>$order->deliver_company_name,'billno'=>$order->deliver_number]);
-
-
-        } else {
-            return $this->jsonReturn(0, '状态异常');
-        }
-
-        $order->save();
-        return $this->jsonReturn(1);
-    }
-
-
     public function postSetOrderStatus()
     {
         $orderId = Request::input('order_id');
@@ -397,60 +158,6 @@ class IndexController extends Controller
 
         $order->save();
         return $this->jsonReturn(1);
-    }
-
-    public function getWithdraw()
-    {
-        $query = DB::table('cash_stream')->orderBy('cash_stream.id', 'desc')->leftJoin('users', 'user_id', '=', 'users.id')->where('cash_type', CashStream::CASH_TYPE_WITHDRAW)->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', 'like', '%' . Request::input('keyword') . '%')->orWhere('phone', 'like', '%' . Request::input('keyword') . '%');
-            }
-        })->selectRaw('*,cash_stream.created_at as withdraw_created_at,cash_stream.id as withdraw_id');
-
-        CommKit::betweenTime($query, 'cash_stream.created_at');
-        CommKit::equalQuery($query,array_only(Request::all(),['withdraw_deal_status']));
-
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $tempArray = array($item->withdraw_created_at, $item->real_name, $item->phone, number_format($item->price, 2), \App\Model\CashStream::withdrawTypeText($item->withdraw_type), $item->withdraw_bank, $item->withdraw_account, \App\Model\CashStream::withdrawStatusText($item->withdraw_deal_status),$item->remark);
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('申请时间', '申请人姓名', '联系方式', '申请金额', '提现方式', '提现银行', '提现账号', '处理状态','原因备注'),
-                'data' => $dataList,
-                'name' => 'tixian'
-            );
-            DownloadExcel::publicDownloadExcel($data,true);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.withdraw')->with('paginate', $paginate)->with('withdrawInfo', TotalStatical::withdrawInfo());
-    }
-
-
-    public function getWithdrawDetail()
-    {
-        $withdraw = CashStream::where('id', Request::input('withdraw_id'))->where('cash_type', CashStream::CASH_TYPE_WITHDRAW)->first();
-        if (!$withdraw) {
-            dd('记录不存在');
-        }
-        return view('admin.withdraw_detail')->with('withdraw', $withdraw)->with('user', User::find($withdraw->user_id));
-    }
-
-    public function getDirectInDirect()
-    {
-        return view('admin.direct_indirect');
-    }
-
-    public function getUpSuper()
-    {
-        return view('admin.up_super');
     }
 
 
@@ -1226,60 +933,6 @@ class IndexController extends Controller
         return $this->jsonReturn(1);
     }
 
-    /**
-     * 系统所有用户搜索
-     */
-    public function anyUsers()
-    {
-
-        $query = User::orderBy('id', 'desc')->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('real_name', 'like', '%' . Request::input('keyword') . '%')->orWhere('phone', 'like', '%' . Request::input('keyword') . '%');
-            }
-        });
-
-        if( Request::input('activity_turn') )
-        {
-            $activityUserId = Order::where('buy_type',Order::BUY_TYPE_ACTIVITY)->where('pay_status',1)->lists('user_id');
-            $turnUserId = CashStream::where('cash_type',CashStream::CASH_TYPE_ACTIVITY_WITHDRAW)->whereNotIn('withdraw_deal_status',[2])->lists('user_id');
-            $query->whereIn('id',$activityUserId)->whereNotIn('id',$turnUserId);
-        }
-
-        $getStatus = Request::input('get_status');
-        switch ($getStatus)
-        {
-            case '1':
-                Kit::compareBelowZeroQuery($query,['get_good'=>1]);
-                break;
-            case '2':
-                Kit::compareBelowZeroQuery($query,['re_get_good'=>1]);
-                break;
-            case '3':
-                Kit::compareBelowZeroQuery($query,['activity_get_good'=>1]);
-                break;
-        }
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $tempArray = array($item->id, $item->real_name, \App\Model\User::levelText($item->vip_level), $item->phone, $item->id_card, $item->get_good,$item->re_get_good,$item->activity_get_good,($item->needToTurn()?'是':'否'));
-                array_push($dataList, $tempArray);
-            }
-
-
-            $data = array(
-                'title' => array('会员ID', '姓名', '身份等级', '手机号码', '身份证号码', '报单','提货','活动','未退款'),
-                'data' => $dataList,
-                'name' => 'tixian'
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.users')->with('paginate', $paginate);
-    }
 
 
     public function anyGetRemark()
@@ -1291,10 +944,6 @@ class IndexController extends Controller
 
         $signRecord->get_remark = Request::input('get_remark');
         $signRecord->save();
-
-//        Message::addSignComment($signRecord->id);
-
-        //发送评论消息
 
         return $this->jsonReturn(1);
     }
@@ -1310,50 +959,7 @@ class IndexController extends Controller
         $signRecord->do_mark = Request::input('mark');
         $signRecord->save();
 
-//        Message::addSignComment($signRecord->id);
-
-        //发送评论消息
-
         return $this->jsonReturn(1);
-    }
-
-    /**
-     * 变更上级
-     */
-    public function getChangeFather()
-    {
-        $userId = Request::input('user_id');
-        $fatherId = Request::input('father_id');
-
-        $user = User::find($userId);
-        $father = User::find($fatherId);
-
-        if( !($user instanceof  User) ){
-            echo $userId . '不存在';
-            exit;
-        }
-
-        echo '用户' . $user->real_name . '的上级为' . User::tryGetRealName($user->parent_id,'???') . '上上为' . User::tryGetRealName($user->indirect_id,'????') . '<br/>';
-
-        if( !($father instanceof  User) ){
-            echo $fatherId . '父级不存在';
-            exit;
-        }
-
-        //判断是否存在关联信息
-        $count = User::whereIn('parent_id',[$userId])->orWhereIn('indirect_id',[$userId])->count();
-        if( $count )
-        {
-            echo '有'.$count.'条关联数据';
-            exit;
-        }
-
-        $user->parent_id = $father->id;
-        $user->indirect_id = $father->parent_id;
-        $user->save();
-
-        echo '用户' . $user->real_name . '的上级调整为' . User::tryGetRealName($user->parent_id,'???') . '上上级调整为' . User::tryGetRealName($user->indirect_id,'????');
-        exit;
     }
 
 
@@ -1372,6 +978,21 @@ class IndexController extends Controller
 
 
         return view('admin.clean_bill')->with('paginate', $paginate);
+    }
+
+
+    public function getCleanBillByDay()
+    {
+        return view('admin.cleanbill');
+    }
+
+
+    /**
+     * 根据日期获得
+     */
+    public function postCleanBillByDay()
+    {
+
     }
 
 

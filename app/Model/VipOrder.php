@@ -34,27 +34,31 @@ class VipOrder extends Model
         {
             $foodCount = 90;
             $foodTypeText = 'A餐';
-            $cleanCount = '';
+            $normalClean = 6;
+            $deepClean = 3;
             $healthCount = '';
             $financeCount = 4;
         } else if ( $this->buy_type == 2)
         {
             $foodCount = 180;
             $foodTypeText = 'B餐';
-            $cleanCount = '';
+            $normalClean = 12;
+            $deepClean = 6;
             $healthCount = '';
             $financeCount = 4;
         } else if ( $this->buy_type == 3)
         {
             $foodCount = 90;
             $foodTypeText = 'A餐';
-            $cleanCount = '';
+            $normalClean = 6;
+            $deepClean = 3;
             $healthCount = '';
             $financeCount = 4;
         } else {
             $foodCount = 180;
             $foodTypeText = 'B餐';
-            $cleanCount = '';
+            $normalClean = 6;
+            $deepClean = 3;
             $healthCount = '';
             $financeCount = 4;
         }
@@ -73,12 +77,11 @@ class VipOrder extends Model
             $coupon->refer_id = $this->id;
             $coupon->status = 1;
             $coupon->save();
-
         }
 
 
         //每一个保洁服务送3张代金券
-        for ($i = 0; $i < 3; $i++ )
+        for ($i = 0; $i < $normalClean; $i++ )
         {
             $coupon = new Coupon();
             $coupon->coupon_type = 1;
@@ -88,8 +91,10 @@ class VipOrder extends Model
             $coupon->refer_id = $this->id;
             $coupon->status = 1;
             $coupon->save();
+        }
 
-
+        for ($i = 0; $i < $deepClean; $i++ )
+        {
             $coupon = new Coupon();
             $coupon->coupon_type = 2;
             $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
@@ -98,35 +103,8 @@ class VipOrder extends Model
             $coupon->refer_id = $this->id;
             $coupon->status = 1;
             $coupon->save();
-
-
-            $coupon = new Coupon();
-            $coupon->coupon_type = 3;
-            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
-            $coupon->type_text = '开荒保洁';
-            $coupon->user_id = $this->user_id;
-            $coupon->refer_id = $this->id;
-            $coupon->status = 1;
-            $coupon->save();
-
         }
 
         return true;
-
-//        for ($i = 0; $i < $cleanCount; $i++ )
-//        {
-//            $coupon = new Coupon();
-//        }
-//
-//        for ($i = 0; $i < $financeCount; $i++ )
-//        {
-//            $coupon = new Coupon();
-//        }
-
-//        for ($i = 0; $i < $foodCount; $i++ )
-//        {
-//            $coupon = new Coupon();
-//        }
-
     }
 }
