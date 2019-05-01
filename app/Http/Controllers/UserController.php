@@ -286,13 +286,15 @@ class UserController extends Controller
                 $subFoodOrders->save();
 
 
-                $subFoodOrders  = new SubFoodOrders();
-                $subFoodOrders->order_id = $order->id;
-                $subFoodOrders->date = $carbon->format('Y-m-d');
-                $subFoodOrders->status = 0;
-                $subFoodOrders->type = 2;
-                $carbon->addDay(1);
-                $subFoodOrders->save();
+                if( !in_array($product->id,[6])) {
+                    $subFoodOrders = new SubFoodOrders();
+                    $subFoodOrders->order_id = $order->id;
+                    $subFoodOrders->date = $carbon->format('Y-m-d');
+                    $subFoodOrders->status = 0;
+                    $subFoodOrders->type = 2;
+                    $carbon->addDay(1);
+                    $subFoodOrders->save();
+                }
             }
         }
 
