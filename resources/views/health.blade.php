@@ -132,6 +132,13 @@
             width: 21px;
             height: 21px;
         }
+
+        @if( \Illuminate\Support\Facades\Request::input('isIpx'))
+            .fix-bottom
+        {
+            padding-bottom:48px !important;;
+        }
+        @endif
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop

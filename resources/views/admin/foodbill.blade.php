@@ -58,7 +58,7 @@
                 <div class="col-md-1 col-lg-1">@{{item['remark']}}</div>
                 <div class="col-md-1 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-1 col-lg-1"></div>
-                <div class="col-md-1 col-lg-1"></div>
+                <div class="col-md-1 col-lg-1"><a class="deliver" @click="print(item.sub_id)">出单</a></div>
                 <div class="col-md-1 col-lg-1"><a class="deliver" @click="doDeliver(item.sub_id)">确认送达</a></div>
             </div>
 

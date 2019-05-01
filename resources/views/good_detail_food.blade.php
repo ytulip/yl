@@ -235,6 +235,18 @@
         .chosen-tomo{
             width: 3rem !important;
         }
+
+
+        .isIpx{
+            padding-bottom: 48px !important;
+        }
+
+        @if( \Illuminate\Support\Facades\Request::input('isIpx'))
+            .fix-bottom
+        {
+            padding-bottom:48px !important;;
+        }
+        @endif
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
 @stop
@@ -342,7 +354,7 @@
 
 
 
-            <div style="padding: 26px 16px 6px; background-color: #ffffff;border-top-left-radius: 16px;border-top-right-radius: 16px;">
+            <div style="padding: 26px 16px 6px; background-color: #ffffff;border-top-left-radius: 16px;border-top-right-radius: 16px;" @if( \Illuminate\Support\Facades\Request::input('isIpx')) class="isIpx" @endif>
 
 
                 <div class="cus-row ">
