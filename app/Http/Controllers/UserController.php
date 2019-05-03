@@ -819,23 +819,6 @@ class UserController extends Controller
     }
 
 
-    public function getMonthIncome()
-    {
-        $user = User::getCurrentUser();
-//        var_dump($user->monthIncomeDetail());
-//        exit;
-        return view('month_income')->with('user',$user)->with('monthIncomeDetail',$user->monthIncomeDetail());
-    }
-
-    public function getUpSuperRecord()
-    {
-        return view('up_super_record')->with('list',$this->user->upAndSuperList());
-    }
-
-    public function getDirectIndirectRecord()
-    {
-        return view('direct_indirect_record')->with('list',$this->user->directAndIndirectList());
-    }
 
     /**
      * 账单
@@ -1401,6 +1384,16 @@ class UserController extends Controller
         $randomGet->status = 2;
         $randomGet->save();
 
+        return $this->jsonReturn(1);
+    }
+
+
+    public function anyNameage()
+    {
+        $user = User::where(Auth::id());
+        $user->age = Request::input('age');
+        $user->real_name = Request::input('name');
+        $user->save();
         return $this->jsonReturn(1);
     }
 
