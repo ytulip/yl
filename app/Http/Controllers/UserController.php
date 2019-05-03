@@ -1398,6 +1398,9 @@ class UserController extends Controller
             $coupon->save();
         }
 
+        $randomGet->status = 2;
+        $randomGet->save();
+
         return $this->jsonReturn(1);
     }
 
