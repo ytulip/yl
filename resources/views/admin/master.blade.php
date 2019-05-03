@@ -208,6 +208,7 @@
                     {{--</div>--}}
                 {{--</li>--}}
                 <li @if(!\App\Util\AdminAuth::hasPower(9)) class="dpn" @endif><a href="/admin/index/power"><i class="fa fa-tachometer menu-fa"></i> <span>管理员列表</span><div class="clearfix"></div></a></li>
+                <li @if(!\App\Util\AdminAuth::hasPower(9)) class="dpn" @endif><a href="/admin/index/invited"><i class="fa fa-tachometer menu-fa"></i> <span>邀请码管理</span><div class="clearfix"></div></a></li>
             </ul>
         </div>
     </div>

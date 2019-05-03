@@ -19,6 +19,8 @@ use App\Model\Order;
 use App\Model\Period;
 use App\Model\Product;
 use App\Model\ProductAttr;
+use App\Model\RandomGet;
+use App\Model\RandomPool;
 use App\Model\SignRecord;
 use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
@@ -1027,7 +1029,23 @@ class IndexController extends Controller
 
     public function anyFoodBill()
     {
-        return view('admin.foodbill');
+
+        /**
+         * 三种菜谱当天的菜单
+         */
+        //A餐
+
+
+        //B餐
+
+        //C餐
+        $foodMenu = [
+            ['productId'=>4,'menu'=>[FoodMenu::getMenuArr(4,date('Y-m-d'),1),FoodMenu::getMenuArr(4,date('Y-m-d'),2)]],
+            ['productId'=>5,'menu'=>[FoodMenu::getMenuArr(5,date('Y-m-d'),1),FoodMenu::getMenuArr(5,date('Y-m-d'),2)]],
+            ['productId'=>6,'menu'=>[FoodMenu::getMenuArr(6,date('Y-m-d'),1)]]
+        ];
+
+        return view('admin.foodbill')->with('food_menu',$foodMenu);
     }
 
 
@@ -1238,5 +1256,37 @@ class IndexController extends Controller
         return view('admin.banner_detail')->with('banner',$banner);
     }
     /* this is end*/
+
+
+    public function anyInvited()
+    {
+        $paginate = DB::table('random_get')->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.invited')->with('paginate', $paginate);
+    }
+
+    /**
+     * 生成邀请码
+     */
+    public function anyMakeInvited()
+    {
+        set_time_limit(360);
+
+        $productId = Request::input('product_id');
+        $quantity = Request::input('quantity');
+
+        $loops = Request::input('loops');
+
+        for( $i = 0; $i < $loops ; $i++)
+        {
+            $invitedCode = RandomPool::make();
+            $randomGet = new RandomGet();
+            $randomGet->product_id = $productId;
+            $randomGet->code = $invitedCode;
+            $randomGet->quantity = $quantity;
+            $randomGet->save();
+        }
+
+        return $this->jsonReturn(1);
+    }
 
 }

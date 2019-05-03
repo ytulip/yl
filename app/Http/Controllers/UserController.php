@@ -16,6 +16,7 @@ use App\Model\Neighborhood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
+use App\Model\RandomGet;
 use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
@@ -1362,6 +1363,42 @@ class UserController extends Controller
         $myHabit = UserHabit2::where('user_id',Request::input('user_id'))->get();
         return $this->jsonReturn(1,$myHabit->toArray());
 
+    }
+
+    /**
+     * 兑换邀请码
+     */
+    public function anyChangeInvited()
+    {
+        $invitedCode = Request::input('invited_code');
+
+        $randomGet = RandomGet::where('code',$invitedCode)->first();
+        if( !$randomGet instanceof  RandomGet )
+        {
+            return $this->jsonReturn(0,'兑换码不存在');
+        }
+
+        if ( $randomGet->status != 1 )
+        {
+            return $this->jsonReturn(0,'该兑换码已被使用');
+        }
+
+
+        $product = Product::find($randomGet->product_id);
+
+        for($i = 0; $i < $randomGet->quantity; $i++)
+        {
+            $coupon = new Coupon();
+            $coupon->user_id = Auth::id();
+            $coupon->coupon_type = $randomGet->product_id;
+            $coupon->status = 1;
+            $coupon->type_text = $product->product_name;
+            $coupon->price = $product->price;
+            $coupon->refer_code = $randomGet->code;
+            $coupon->save();
+        }
+
+        return $this->jsonReturn(1);
     }
 
 

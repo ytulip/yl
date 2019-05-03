@@ -11,9 +11,14 @@ class RandomPool extends Model
 {
     public $table = 'random_pool';
 
-    public static function make($count = 1000000)
+    public static function make()
     {
-        for ($i = 0;$i < $count;$i++) {
+        $count = 1;
+        $flag = true;
+        $invitedCode = '';
+        while($flag)
+        {
+
             $invitedCode = DealString::random(7, 'number_letter');
             $res = DB::table('random_pool')->where('code', $invitedCode)->first();
             if ($res) {
@@ -24,11 +29,10 @@ class RandomPool extends Model
             $randomPool = new RandomPool();
             $randomPool->code = $invitedCode;
             $randomPool->save();
-
-            Logger::info($randomPool->id,'random_pool');
+            $flag = false;
         }
 
-        Logger::info('执行结束');
+        return $invitedCode;
     }
 
     public static function random()
