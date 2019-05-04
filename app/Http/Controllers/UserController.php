@@ -284,7 +284,6 @@ class UserController extends Controller
                 $subFoodOrders->status = 0;
                 $subFoodOrders->type = 1;
                 $subFoodOrders->product_id  = $product->id;
-                $carbon->addDay(1);
                 $subFoodOrders->save();
 
 
@@ -297,6 +296,8 @@ class UserController extends Controller
                     $subFoodOrders->product_id  = $product->id;
                     $subFoodOrders->save();
                 }
+
+                $carbon->addDay(1);
             }
         }
 
