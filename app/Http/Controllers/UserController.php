@@ -1390,7 +1390,7 @@ class UserController extends Controller
 
     public function anyNameage()
     {
-        $user = User::where(Auth::id());
+        $user = User::find(Auth::id());
         $user->age = Request::input('age');
         $user->real_name = Request::input('name');
         $user->save();
