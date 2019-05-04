@@ -38,7 +38,7 @@ class IndexController extends Controller
             }
         }
 
-        return $this->jsonReturn(1,['banners'=>$banner,'vip'=>$vip]);
+        return $this->jsonReturn(1,['banners'=>$banner,'vip'=>$vip,'user'=>$user]);
     }
 
 
