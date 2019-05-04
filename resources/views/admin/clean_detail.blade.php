@@ -51,7 +51,16 @@
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <p class="sm-tag-text">价格</p>
-                    <p class="text-desc-decoration">李海波</p>
+                    <p class="text-desc-decoration">{{$product->price}}</p>
+                </div>
+            </div>
+
+            <div class="row m-t-10">
+                <div class="col-md-12 col-lg-12">
+                    <p class="sm-tag-text">列表简介</p>
+                    <p class="text-desc-decoration">
+                        <textarea name="sub_desc" style="width: 100%;height: 60px;">{{$product->desc}}</textarea>
+                    </p>
                 </div>
             </div>
 

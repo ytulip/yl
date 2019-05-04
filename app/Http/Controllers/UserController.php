@@ -283,6 +283,7 @@ class UserController extends Controller
                 $subFoodOrders->date = $carbon->format('Y-m-d');
                 $subFoodOrders->status = 0;
                 $subFoodOrders->type = 1;
+                $subFoodOrders->product_id  = $product->id;
                 $carbon->addDay(1);
                 $subFoodOrders->save();
 
@@ -293,7 +294,7 @@ class UserController extends Controller
                     $subFoodOrders->date = $carbon->format('Y-m-d');
                     $subFoodOrders->status = 0;
                     $subFoodOrders->type = 2;
-                    $carbon->addDay(1);
+                    $subFoodOrders->product_id  = $product->id;
                     $subFoodOrders->save();
                 }
             }

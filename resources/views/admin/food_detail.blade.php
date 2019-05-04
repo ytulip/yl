@@ -52,7 +52,17 @@
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <p class="sm-tag-text">价格</p>
-                    <p class="text-desc-decoration">李海波</p>
+                    <p class="text-desc-decoration">{{$product->price}}</p>
+                </div>
+            </div>
+
+
+            <div class="row m-t-10">
+                <div class="col-md-12 col-lg-12">
+                    <p class="sm-tag-text">列表简介</p>
+                    <p class="text-desc-decoration">
+                        <textarea name="sub_desc" style="width: 100%;height: 60px;">{{$product->sub_desc}}</textarea>
+                    </p>
                 </div>
             </div>
 
@@ -98,7 +108,9 @@
                 <div class="row">
                     <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}"></div>
                     <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}"></div>
-                    <div class="col-md-2 col-lg-2"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
+                    <div class="col-md-2 col-lg-2">
+                        {{($item->type==1)?'午餐':'晚餐'}}
+                    </div>
                     <div class="col-md-3 col-lg-3">
                         <img src="{{$item->cover_img}}" style="width: 120px;height: 120px;"/>
                     </div>
@@ -107,7 +119,13 @@
 
 
             <div class="row edit-row">
-                <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="date"></div>
+                <div class="col-md-3 col-lg-3">
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control" size="16" type="text" value="{{\Illuminate\Support\Facades\Request::input('start_time')}}" name="date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    {{--<input class="form-control no-border-input bt-line-1" value="" name="date">--}}
+                </div>
                 <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="foods"></div>
                 <div class="col-md-2 col-lg-2">
                     <select name="type">
