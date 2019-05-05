@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Log\Facades\Logger;
 use App\Model\Admin;
 use App\Model\Banner;
+use App\Model\Book;
 use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\FinanceClass;
@@ -1010,7 +1011,7 @@ class IndexController extends Controller
          */
         $product = Product::activeFinance();
 
-        $query = FinanceUser::orderBy('finance_user.id','desc')->leftJoin('users','users.id','=','finance_user.user_id')->selectRaw('finance_user.*,users.phone,users.real_name');
+        $query = Book::orderBy('books.id','desc')->leftJoin('users','users.id','=','books.user_id')->leftJoin('book_finance_count','book_finance_count.user_id','=','books.user_id')->selectRaw('books.*,users.phone,users.real_name,count')->where('product_id',$product->id);
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
 
@@ -1294,6 +1295,27 @@ class IndexController extends Controller
         }
 
         return $this->jsonReturn(1);
+    }
+
+
+    /**
+     *
+     */
+    public function getHealthBill()
+    {
+        $foodMenu = [
+            ['productId'=>4,'menu'=>[FoodMenu::getMenuArr(4,date('Y-m-d'),1),FoodMenu::getMenuArr(4,date('Y-m-d'),2)]],
+            ['productId'=>5,'menu'=>[FoodMenu::getMenuArr(5,date('Y-m-d'),1),FoodMenu::getMenuArr(5,date('Y-m-d'),2)]],
+            ['productId'=>6,'menu'=>[FoodMenu::getMenuArr(6,date('Y-m-d'),1)]]
+        ];
+
+        return view('admin.health_bill')->with('food_menu',$foodMenu);
+    }
+
+    public function postHealthBill()
+    {
+        $list = Book::where('product_id',25)->get();
+        return $this->jsonReturn(1,$list);
     }
 
 }

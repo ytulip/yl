@@ -112,7 +112,7 @@
                     <a href="/admin/index/food-bill">购餐服务</a>
                     <a href="/admin/index/clean-bill-by-day">保洁服务</a>
                     <a href="/admin/index/finance-user">金融服务</a>
-                    <a href="/admin/index/withdraw">体检服务</a>
+                    <a href="/admin/index/health-bill">体检服务</a>
                     </div>
 
                 </li>
