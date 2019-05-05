@@ -20,6 +20,7 @@
     <!-- //jQuery -->
     <!-- lined-icons -->
     <link rel="stylesheet" href="/admin/css/icon-font.min.css" type='text/css' />
+    <link rel="stylesheet" href="/css/style.css"/>
     <!-- //lined-icons -->
     <style>
 

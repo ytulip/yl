@@ -1003,11 +1003,18 @@ class IndexController extends Controller
      */
     public function anyFinanceUser()
     {
+
+
+        /**
+         * 当前的金融产品
+         */
+        $product = Product::activeFinance();
+
         $query = FinanceUser::orderBy('finance_user.id','desc')->leftJoin('users','users.id','=','finance_user.user_id')->selectRaw('finance_user.*,users.phone,users.real_name');
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
 
-        return view('admin.finance_user')->with('paginate', $paginate);
+        return view('admin.finance_user')->with('product',$product)->with('paginate', $paginate);
     }
 
 

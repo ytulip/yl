@@ -1,14 +1,15 @@
 @extends('admin.master',['headerTitle'=>'概况'])
 @section('left_content')
 
-    <div class="">
+    <div class="block-card mt-32">
         <div class="info-vue">
-            <div class="row">
-                <div class="col-md-3 col-lg-3 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">助餐订单</span></div>
-                <div class="col-md-3 col-lg-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 2) }" v-on:click="setTab(2)">保洁订单</span></div>
-                <div class="col-md-3 col-lg-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 3) }" v-on:click="setTab(3)">金融服务</span></div>
-                <div class="col-md-3 col-lg-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 3) }" v-on:click="setTab(4)">体检服务</span></div>
-            </div>
+
+            <ul class="nav nav-tabs">
+                <li role="presentation" v-bind:class="{active:(tabIndex == 1)}" @click="setTab(1)"><a href="#">助餐订单</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 2)}" @click="setTab(2)"><a href="#">保洁订单</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 3)}" @click="setTab(3)"><a href="#">金融服务</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 4)}" @click="setTab(4)"><a href="#">体检服务</a></li>
+            </ul>
 
 
             <div>

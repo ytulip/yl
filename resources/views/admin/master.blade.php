@@ -76,41 +76,6 @@
             <div class="col-md-6 col-lg-6">{!! $headerTitle !!}</div>
             <div class="col-md-3 col-lg-3">&nbsp;</div>
             <div class="col-md-3 col-lg-3">
-                <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_message_wrap"><i class="fa fa-envelope" style="margin-left: 40px;"></i>
-
-                    <div style="position: absolute;width: 420px;z-index: 99;right:0;" id="admin_message_panel">
-                        <div style="line-height: 50px;background-color: #485465;padding: 0 10px;color:#ffffff;">消息中心</div>
-                        <div class="message-list" style="background-color: #ffffff;">
-                            @foreach(\App\Model\Message::messageSummary() as $key=>$val)
-                                <div class="message-item" style="padding: 10px;border: 1px solid #e0e0e0;">
-                                <div class="row" style="line-height: 14px;">
-                                <div class="col-md-3 col-lg-3 font-color2-12"><span >{{$val->title}}</span></div>
-                                <div class="col-md-5 col-lg-5"></div>
-                                <div class="col-md-4 col-lg-4 font-color2-12">{{date('Y.m.d H.i',strtotime($val->created_at))}}</div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-12 col-lg-12">
-                                <div style="font-size: 14px;line-height: 24px;">{{$val->content}}</div>
-                                </div>
-                                </div>
-                                </div>
-                                @endforeach
-                            {{--<div class="message-item" style="padding: 10px;border: 1px solid #e0e0e0;">--}}
-                                {{--<div class="row" style="line-height: 14px;">--}}
-                                    {{--<div class="col-md-3 col-lg-3 font-color2-12"><span >购买提醒</span></div>--}}
-                                    {{--<div class="col-md-5 col-lg-5"></div>--}}
-                                    {{--<div class="col-md-4 col-lg-4 font-color2-12">2017.12.19 19.20</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-md-12 col-lg-12">--}}
-                                    {{--<div style="font-size: 14px;line-height: 24px;">张三(137xxxx2345)邀请高级会员,购买120盒</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        </div>
-                        <div style="line-height: 50px;background-color: #a8b7c5;text-align: center;">查看更多</div>
-                    </div>
-                </div>
                 <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap"><i  style="margin-left: 40px;position: relative;" class="fa fa-user"></i>
 
                     <ul style="position: absolute;z-index: 99;right:0;border:1px solid rgb(233, 233, 234);" id="admin_user_panel">
