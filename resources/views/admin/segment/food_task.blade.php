@@ -15,7 +15,7 @@
     <div style="background-color: #ffffff;">
 
         <div class="t-al-r" style="padding: 12px;">
-            <a><i class="fa fa-print"></i>打印</a>
+               <a><i class="fa fa-print"></i>打印</a>
         </div>
 
         <div class="cus-row item-row cus-row-v-m" style="padding: 12px;">

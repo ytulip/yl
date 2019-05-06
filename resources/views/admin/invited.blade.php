@@ -68,8 +68,8 @@
                     <div class="col-md-2 col-lg-2">{{\App\Model\Product::find($item->product_id)->product_name}}</div>
                     <div class="col-md-2 col-lg-2">{{\App\Model\Product::find($item->product_id)->product_name}}</div>
                     <div class="col-md-2 col-lg-2">{{($item->status == 1)?'否':'是'}}</div>
-                    <div class="col-md-1 col-lg-1"></div>
-                    <div class="col-md-1 col-lg-1"></div>
+                    <div class="col-md-1 col-lg-1">{{$item->user_id?\App\Util\Kit::dateFormatDay($item->updated_at):''}}</div>
+                    <div class="col-md-1 col-lg-1">{{$item->user_id?\App\Model\User::find($item->user_id)->real_name:''}}</div>
                 </div>
             @endforeach
         </div>
