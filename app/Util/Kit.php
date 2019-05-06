@@ -139,7 +139,7 @@ class Kit
 
     public static function workno($id)
     {
-        return 1 . sprintf("%04d", $id);
+        return 1 . sprintf("%05d", $id);
     }
 
 

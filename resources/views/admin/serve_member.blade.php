@@ -33,6 +33,7 @@
                 <li role="presentation" v-bind:class="{active:(tabIndex == 1)}" @click="setTab(1)"><a href="#">社区经理</a></li>
                 <li role="presentation" v-bind:class="{active:(tabIndex == 2)}" @click="setTab(2)"><a href="#">服务人员</a></li>
                 <li role="presentation" v-bind:class="{active:(tabIndex == 3)}" @click="setTab(3)"><a href="#">金融讲师</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 4)}" @click="setTab(4)"><a href="#">销售人员</a></li>
             </ul>
 
             <div style="margin-top: 26px;">
@@ -72,6 +73,7 @@
                                     <option value="1">社区经理</option>
                                     <option value="2">服务人员</option>
                                     <option value="3">金融讲师</option>
+                                    <option value="4">销售人员</option>
                                 </select>
                             </div>
                         </div>
@@ -200,6 +202,7 @@
                             var tmpList1 = [];
                             var tmpList2 = [];
                             var tmpList3 = [];
+                            var tmpList4 = [];
 
 
                             for( var i=0; i < this.list.length ; i++)
@@ -213,6 +216,9 @@
                                 }else if( this.list[i].type == 3 )
                                 {
                                     tmpList3.push(this.list[i]);
+                                }else if(this.list[i].type == 4)
+                                {
+                                    tmpList4.push(this.list[i]);
                                 }
                             }
 

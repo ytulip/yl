@@ -26,9 +26,13 @@
         </div>
 
 
-        <div class="fs-16-fc-4A4A4A-r t-al-c" style="position: fixed;left:0;right: 0;bottom: 32px;" onclick="serve()">
+        <div class="fs-16-fc-4A4A4A-r t-al-c" style="position: fixed;left:0;right: 0;bottom: 32px;" onclick="serve()" id="serve">
             花甲服务人
         </div>
+
+        {{--<div class="fs-16-fc-4A4A4A-r t-al-c" style="position: fixed;left:0;right: 0;bottom: 32px;" id="">--}}
+            {{--已提交 花甲服务人--}}
+        {{--</div>--}}
 
 
 
@@ -70,11 +74,19 @@
 
         function doYuyue()
         {
-            $('.dpn').removeClass('dpn');
+            console.log($('#serve').attr('attr_lock') );
+            if ( $('#serve').attr('attr_lock') ) {
+                return;
+
+            }            $('.dpn').removeClass('dpn');
         }
 
         function serve()
         {
+            if ( $('#serve').attr('attr_lock') ) {
+                return;
+
+            }
             $('.dpn').removeClass('dpn');
         }
 
@@ -93,6 +105,9 @@
                 if( data.status )
                 {
                     $('.layer-shadow').addClass('dpn');
+                    $('#serve').html('已提交 花甲服务人');
+                    $('#serve').attr('attr_lock',1);
+
                 } else
                 {
                     mAlert(data.desc);

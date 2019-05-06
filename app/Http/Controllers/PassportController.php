@@ -647,7 +647,7 @@ class PassportController extends Controller
             return $this->jsonReturn(0,'服务人已填写');
         }
 
-        $member = ServeUser::where('id',Kit::workno(Request::input('work_no')))->where('type',4)->first();
+        $member = ServeUser::where('id',Kit::worknoToId(Request::input('work_no')))->where('type',4)->first();
 
         if( !($member instanceof  ServeUser) )
         {
