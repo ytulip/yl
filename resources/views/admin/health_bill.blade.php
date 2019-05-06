@@ -53,7 +53,27 @@
                 <div class="col-md-2 col-lg-2">@{{item['created_at']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-2 col-lg-2"></div>
-                <div class="col-md-2 col-lg-2"><a class="deliver" @click="doDeliver(item.id)">处理</a></div>
+                <div class="col-md-2 col-lg-2"><a class="deliver" @click="edit(item)">编辑地址</a>&nbsp;&nbsp;<a class="deliver" @click="doDeliver(item.id)">处理</a></div>
+            </div>
+
+
+            <div style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel" v-if="layer_flag">
+                <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 640px;">
+                    <h4>接送地址</h4>
+                    <form id="data_form">
+
+                        <div class="row mb-12">
+                            <div class="col-md-12 col-lg-12">
+                                <input class="form-control" name="new_user_id_card" v-model="layer_address"/>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="addPerson">确认</button>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="closeLayer">取消</button>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -73,7 +93,10 @@
                 data:
                     {
                         tabIndex:1,
-                        list:''
+                        list:'',
+                        layer_flag:'',
+                        layer_address:'',
+                        id:''
                     },
                 created:function()
                 {
@@ -81,6 +104,12 @@
                 },
                 methods:
                     {
+                        edit(obj)
+                        {
+                            this.layer_address = obj.address?obj.address:'';
+                            this.id = obj.id;
+                            this.layer_flag = true;
+                        },
                         print(obj)
                         {
                             OpenPreview(obj);
@@ -97,6 +126,11 @@
                                 _self.pageInit();
                             },'json');
                         },
+                        editAddress(obj)
+                        {
+                            // console.log(obj.id);
+                            // console.log(obj.address);
+                        },
                         pageInit()
                         {
                             var _self = this;
@@ -104,6 +138,28 @@
                                 if ( data.status )
                                 {
                                     _self.list = data.data;
+                                }
+                            },'json');
+                        },
+                        closeLayer()
+                        {
+                            this.layer_flag = false;
+                        },
+                        addPerson()
+                        {
+
+                            if(!this.layer_address)
+                            {
+                                mAlert('地址不能为空');
+                                return;
+                            }
+
+                            var _self = this;
+                            $.post('/admin/index/book-address',{id:this.id,address:this.layer_address},function(data){
+                                if ( data.status )
+                                {
+                                    _self.layer_flag = false;
+                                    _self.pageInit();
                                 }
                             },'json');
                         }

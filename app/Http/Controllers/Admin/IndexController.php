@@ -1375,4 +1375,17 @@ class IndexController extends Controller
 
     }
 
+
+    /**
+     *
+     */
+    public function anyBookAddress()
+    {
+        $book = Book::find(Request::input('id'));
+        $book->address = Request::input('address');
+        $book->save();
+
+        return $this->jsonReturn(1);
+    }
+
 }
