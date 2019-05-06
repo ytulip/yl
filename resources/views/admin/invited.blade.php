@@ -54,18 +54,22 @@
         <div class="block-card">
             <div class="row paginate-list-row">
                 <div class="col-md-2 col-lg-2">兑换码</div>
-                <div class="col-md-3 col-lg-3">生产时间</div>
+                <div class="col-md-2 col-lg-2">生产时间</div>
+                <div class="col-md-2 col-lg-2">类型</div>
+                <div class="col-md-2 col-lg-2">数量</div>
                 <div class="col-md-2 col-lg-2">是否已兑换</div>
-                <div class="col-md-3 col-lg-3">兑换时间</div>
-                <div class="col-md-2 col-lg-2">兑换用户</div>
+                <div class="col-md-1 col-lg-1">兑换时间</div>
+                <div class="col-md-1 col-lg-1">兑换用户</div>
             </div>
             @foreach($paginate as $item)
                 <div class="row paginate-list-row">
                     <div class="col-md-2 col-lg-2">{{$item->code}}</div>
-                    <div class="col-md-3 col-lg-3">{{$item->created_at}}</div>
+                    <div class="col-md-2 col-lg-2">{{$item->created_at}}</div>
+                    <div class="col-md-2 col-lg-2">{{\App\Model\Product::find($item->product_id)->product_name}}</div>
+                    <div class="col-md-2 col-lg-2">{{\App\Model\Product::find($item->product_id)->product_name}}</div>
                     <div class="col-md-2 col-lg-2">{{($item->status == 1)?'否':'是'}}</div>
-                    <div class="col-md-3 col-lg-3"></div>
-                    <div class="col-md-2 col-lg-2"></div>
+                    <div class="col-md-1 col-lg-1"></div>
+                    <div class="col-md-1 col-lg-1"></div>
                 </div>
             @endforeach
         </div>
