@@ -133,6 +133,8 @@
             height: 21px;
         }
 
+        .dpn{display: none;}
+
         @if( \Illuminate\Support\Facades\Request::input('isIpx'))
             .fix-bottom
         {
@@ -185,9 +187,30 @@
         </footer>
     @else
         <footer class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-            <a class="yl_btn1 m-t-20" id="next_step" style="margin-top: 0;display: block;">立即预约</a>
+            <a class="yl_btn1 m-t-20" id="next_step" href="javascript:doYuyue()" style="margin-top: 0;display: block;">立即预约</a>
         </footer>
     @endif
+
+
+    <div class="layer-shadow dpn">
+        <div class="layer-center" style="padding: 24px;">
+
+            <div class="t-al-c fs-16-fc-000000-m">提示</div>
+
+            <div class="f-f-m t-al-c">
+                <div class="fs-16-fc-7E7E7E-r" style="margin-top: 14px;" >确定预约体检？随后陪护人员将联系您</div>
+            </div>
+
+            <div class="cus-row" style="margin-top: 24px;">
+                <div class="cus-row-col-6">
+                    <a class="yl_btn1 btn-none" href="javascript:cancelLayer()">取消</a>
+                </div>
+                <div class="cus-row-col-6">
+                    <a class="yl_btn1" href="javascript:nextStep()">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @stop
 
@@ -205,9 +228,27 @@
 
 
 
+        function cancelLayer() {
+            $('.layer-shadow').addClass('dpn');
+        }
+
+        function doYuyue()
+        {
+            $('.dpn').removeClass('dpn');
+        }
+
+        function nextStep()
+        {
+            $('.layer-shadow').addClass('dpn');
+            $.get('/index/book-health',{product_id:pageConfig.product_id,user_id:pageConfig.user_id},function(data){
+                $('#next_step').remove();
+                $('footer').append('<a class="yl_btn1 m-t-20 btn-gray" style="margin-top: 0;display: block;">已预约</a>');
+            },'json');
+        }
+
         $(function () {
             new SubmitButton({
-                selectorStr:"#next_step",
+                selectorStr:"#next_step1",
                 url:'/index/book-health',
                 data:function()
                 {
@@ -225,247 +266,6 @@
 
 
 
-        var calderVue = new Vue({
-            el:"#calder_vue",
-            data:{
-                quantity:1,
-                year:2019,
-                month:1,
-                data:[
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-                ],
-                s:'12',
-                lines:[0,1,2,3,4,5],
-                tabIndex:1,
-                currentDay:'',
-                startDay:'',
-                calderSwitch:false,
-                chosenDay:'',
-                chosenType:''
-            },
-            created:function(){
-                let fullDay = new Date(this.year,this.month,0).getDate();
-                let startWeek = new Date(this.year,this.month - 1,1).getDay();
-                this.currentDay = new Date();
-                // this.startDay = this.currentDay;
-                this.chosenDay = this.startDay;
 
-
-                this.year = this.currentDay.getFullYear();
-                this.month = this.currentDay.getMonth() + 1;
-
-                this.updateCalder();
-            },
-            methods:
-                {
-                    closeCalderSwitch:function()
-                    {
-                        this.calderSwitch = false;
-                    },
-                    openCalderSwitch:function()
-                    {
-                        this.calderSwitch = true;
-                    },
-                    deQuantity:function () {
-                        if( this.quantity > 2)
-                        {
-                            this.quantity = this.quantity - 1;
-                        }
-                    },
-                    addQuantity:function(){
-                        this.quantity = this.quantity + 1;
-                    },
-                    setBegin:function(day)
-                    {
-                        let tmpStartDay = new Date(this.year,this.month - 1,day);
-
-                        let startWeek = new Date(this.year,this.month - 1,1).getDay();
-                        day = day - 1;
-                        let mo  = parseInt((startWeek + day) / 7);
-                        let mod = (day+startWeek)%7;
-
-                        if ( this.data[mo][mod].forbiddenChosen )
-                        {
-                            return;
-                        }
-
-
-                        if ( tmpStartDay == this.startDay)
-                        {
-                            return;
-                        }
-
-
-
-                        for(let i = 0 ;i < 35;i++)
-                        {
-                            let mo2  = parseInt(i / 7);
-                            let mod2 = i % 7;
-
-                            if (this.data[mo2][mod2].chosen)
-                            {
-                                this.data[mo2][mod2].chosen = false;
-                            }
-                        }
-
-                        this.startDay = tmpStartDay;
-                        this.updateCalder()
-                    },
-                    setTab:function(index){
-                        this.tabIndex = index;
-
-                        this.updateCalder();
-                    },
-                    getDateArr:function(startDay,n)
-                    {
-                        let conFlag = true;
-                        let arr = [startDay.toString()];
-                        let beginDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate());
-                        while(conFlag)
-                        {
-                            //
-                            beginDay = new Date(beginDay.getFullYear(),beginDay.getMonth(),beginDay.getDate() + 1);
-                            if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
-                            {
-                                continue;
-                            }
-
-                            arr.push(beginDay.toString());
-
-                            if( arr.length > (n - 1))
-                            {
-                                conFlag = false;
-                            }
-                        }
-                        return arr;
-                    },
-                    monthGo:function(direction)
-                    {
-                        let currTmp = new Date(this.year,this.month - 1 + direction,1);
-                        this.year = currTmp.getFullYear();
-                        this.month = currTmp.getMonth() + 1;
-//                console.log(currTmp.getFullYear());
-//                console.log(currTmp.getMonth + 1);
-
-                        this.updateCalder();
-
-                    },
-                    updateCalder:function()
-                    {
-                        let fullDay = new Date(this.year,this.month,0).getDate();
-                        let startWeek = new Date(this.year,this.month - 1,1).getDay();
-
-                        // console.log(fullDay);
-                        // console.log(startWeek);
-
-                        let tmpData =  [
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                            [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-
-                        ];
-
-                        for(let i = 0;i<fullDay;i++)
-                        {
-                            let mo  = parseInt((i+startWeek) / 7);
-                            let mod = (i+startWeek)%7;
-
-                            // console.log(mo);
-                            // console.log(mod);
-
-                            //周六、周日不可点击
-                            tmpData[mo][mod].day = i+1;
-
-                            if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
-                            {
-                                tmpData[mo][mod].forbiddenChosen = true;
-                            }
-
-                            //设置为选中
-                            // console.log('選中的日期');
-                            // console.log(this.chosenDays);
-                            if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1).toString()) !== -1 ) {
-                                tmpData[mo][mod].chosen = true;
-                            }
-                        }
-
-                        this.data = tmpData;
-                        console.log('渲染日历');
-                        console.log(JSON.stringify(this.data));
-                        this.$forceUpdate();
-
-                    },
-                    setChosenDay:function () {
-
-                        // this.chosenDay = this.startDay;
-                        // this.chosenType = this.tabIndex;
-                        // this.closeCalderSwitch();
-
-                        var url = "/pages/fillfoodbill/main?product_id=" + pageConfig.product_id +"&openid=" + pageConfig.openid + '&tabIndex=' + this.tabIndex + '&quantity=' + this.quantity + '&startDay=' + this.startDay.Format('yyyy-MM-dd');
-                        console.log(url);
-                        wx.miniProgram.navigateTo(
-                            {
-                                url: url
-                            });
-                    },
-                },
-            computed:
-                {
-                    prveMonth:function()
-                    {
-//                        return (this.month - 1) + '月';
-                        return (new Date(this.year,this.month - 2).getMonth() + 1) + '月';
-                    },
-                    currentMonth:function()
-                    {
-                        return this.year + '年' + this.month + '月';
-                    },
-                    nextMonth:function()
-                    {
-                        return (new Date(this.year,this.month).getMonth() + 1) + '月';
-                    },
-                    canSend:function()
-                    {
-                        if( this.startDay )
-                        {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    },
-                    chosenDays:function()
-                    {
-                        if ( this.startDay > this.currentDay )
-                        {
-                            if( this.tabIndex == 1 )
-                            {
-                                return [this.startDay.toString()];
-                            } else if( this.tabIndex == 2)
-                            {
-                                return this.getDateArr(this.startDay,5);
-                            } else {
-                                return this.getDateArr(this.startDay,22);
-                            }
-                        } else
-                        {
-                            return [];
-                        }
-                    },
-                    confirmText:function()
-                    {
-                        var daysArr = [1,5,22]
-                        return this.quantity + '人份 ' + daysArr[this.tabIndex - 1] +'天';
-                    }
-                }
-
-        });
     </script>
 @stop

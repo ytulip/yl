@@ -265,8 +265,12 @@
 
         <div class="layer-shadow dpn" v-if="layerFlag">
             <div class="layer-center" style="padding: 24px;">
+
+
+                <div class="t-al-c fs-16-fc-000000-m">提示</div>
+
                 <div class="f-f-m t-al-c">
-                    <div class="fs-18-fc-2E3133" style="padding: 20px 0;" >预约@{{timeList[tabIndex].text}}的金融服务?</div>
+                    <div class="fs-16-fc-7E7E7E-r" style="margin-top: 14px;" >预约@{{timeList[tabIndex].text}}的金融服务?</div>
                 </div>
 
                 <div class="cus-row" style="margin-top: 34px;">
