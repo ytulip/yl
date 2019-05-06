@@ -1384,6 +1384,7 @@ class UserController extends Controller
         }
 
         $randomGet->status = 2;
+        $randomGet->user_id = Auth::id();
         $randomGet->save();
 
         return $this->jsonReturn(1);
