@@ -12,9 +12,11 @@ use App\Model\InvitedCodes;
 use App\Model\Order;
 use App\Model\Period;
 use App\Model\Product;
+use App\Model\ServeUser;
 use App\Model\UserAddress;
 use App\Model\UserHabit;
 use App\Model\UserHabit2;
+use App\Model\VipOrder;
 use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
@@ -628,5 +630,33 @@ class PassportController extends Controller
     public function anyCommonQues()
     {
         return view('common_ques')->with('product',Product::find(Request::input('product_id')));
+    }
+
+
+    public function anyServeMember()
+    {
+        $vipOrder = VipOrder::find(Request::input('id'));
+
+        if( !($vipOrder instanceof  VipOrder) )
+        {
+            return $this->jsonReturn(0,'订单不存在');
+        }
+
+        if( $vipOrder->serve_member )
+        {
+            return $this->jsonReturn(0,'服务人已填写');
+        }
+
+        $member = ServeUser::where('id',Kit::workno(Request::input('work_no')))->where('type',4)->first();
+
+        if( !($member instanceof  ServeUser) )
+        {
+            return $this->jsonReturn(0,'无效工号');
+        }
+
+        $vipOrder->serve_member = $member->id;
+        $vipOrder->save();
+
+        return $this->jsonReturn(1);
     }
 }

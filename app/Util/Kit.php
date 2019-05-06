@@ -141,4 +141,10 @@ class Kit
     {
         return 1 . sprintf("%04d", $id);
     }
+
+
+    public static function worknoToId($workNo)
+    {
+        return $workNo % 100000;
+    }
 }

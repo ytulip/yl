@@ -168,7 +168,7 @@ class UserController extends Controller
         $payOrder = \WxPayApi::unifiedOrder($input);
         $tools = new \JsApiPay();
         $jsApiParameters = $tools->GetJsApiParameters($payOrder);
-        return $this->jsonReturn(1,$jsApiParameters);
+        return $this->jsonReturn($order->id,$jsApiParameters);
     }
 
     /**

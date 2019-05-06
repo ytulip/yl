@@ -26,12 +26,80 @@
         </div>
 
 
+        <div class="fs-16-fc-4A4A4A-r t-al-c" style="position: fixed;left:0;right: 0;bottom: 32px;" onclick="serve()">
+            花甲服务人
+        </div>
+
+
+
+        <div class="layer-shadow dpn">
+            <div class="layer-center" style="padding: 24px;">
+
+                <div class="f-f-m t-al-c" style="border-bottom:  1px solid #E1E1E1;">
+                    <input class="fs-18-fc-2E3133-m t-al-c" style="padding: 20px 0;width: 100%;border: none;box-sizing: border-box;background: #F9F9FB;" placeholder="输入6位工号" name="workno"/>
+                </div>
+
+                <div class="cus-row" style="margin-top: 24px;">
+                    <div class="cus-row-col-6">
+                        <a class="yl_btn1 btn-none" href="javascript:cancelLayer()">取消</a>
+                    </div>
+                    <div class="cus-row-col-6">
+                        <a class="yl_btn1" href="javascript:nextStep()">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @stop
 
 @section('script')
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script>
+
+
+
+        var pageConfig =
+            {
+                id:'{{\Illuminate\Support\Facades\Request::input('id')}}'
+            }
+
+        function cancelLayer() {
+            $('.layer-shadow').addClass('dpn');
+        }
+
+        function doYuyue()
+        {
+            $('.dpn').removeClass('dpn');
+        }
+
+        function serve()
+        {
+            $('.dpn').removeClass('dpn');
+        }
+
+
+        function nextStep()
+        {
+
+            var workNo = $("input[name='workno']").val();
+            if( !workNo )
+            {
+                mAlert('请输入工号');
+                return;
+            }
+
+            $.get('/passport/serve-member',{id:pageConfig.id,work_no:workNo},function(data){
+                if( data.status )
+                {
+                    $('.layer-shadow').addClass('dpn');
+                } else
+                {
+                    mAlert(data.desc);
+                }
+            },'json');
+        }
+
         function goHome()
         {
             wx.miniProgram.switchTab({
