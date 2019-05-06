@@ -1379,13 +1379,13 @@ class UserController extends Controller
             $coupon->status = 1;
             $coupon->type_text = $product->product_name;
             $coupon->price = $product->price;
+            $coupon->expire_at = Carbon::now()->addDays(30)->format('Y-m-d');
             $coupon->refer_code = $randomGet->code;
             $coupon->save();
         }
 
         $randomGet->status = 2;
         $randomGet->user_id = Auth::id();
-        $randomGet->expire_at = Carbon::now()->addDays(30)->format('Y-m-d');
         $randomGet->save();
 
         return $this->jsonReturn(1);
