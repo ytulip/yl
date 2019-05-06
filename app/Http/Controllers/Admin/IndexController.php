@@ -1123,7 +1123,7 @@ class IndexController extends Controller
 
     public function anyFoodTask(){
 
-        return view('admin.segment.food_task');
+        return view('admin.segment.food_task')->with('date',Request::input('date',date('Y-m-d')));
     }
 
 
