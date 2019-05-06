@@ -135,4 +135,10 @@ class Kit
         $arr = [2,2.5,3,3.5,4,4.5,5,5.5,6];
         return $arr[$ind - 1];
     }
+
+
+    public static function workno($id)
+    {
+        return 1 . sprintf("%04d", $id);
+    }
 }

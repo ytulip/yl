@@ -1,4 +1,4 @@
-@extends('admin.master',['headerTitle'=>'任务管理 <span class="title-gap">></span>助餐服务' ])
+@extends('admin.master',['headerTitle'=>'任务管理 <span class="title-gap">></span>体检服务' ])
 @section('style')
     <style>
         .nav-tabs a
@@ -53,7 +53,7 @@
                 <div class="col-md-2 col-lg-2">@{{item['created_at']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-2 col-lg-2"></div>
-                <div class="col-md-2 col-lg-2"><a class="deliver" @click="doDeliver(item.sub_id)">处理</a></div>
+                <div class="col-md-2 col-lg-2"><a class="deliver" @click="doDeliver(item.id)">处理</a></div>
             </div>
 
         </div>
@@ -92,7 +92,7 @@
                         doDeliver(id)
                         {
                             var _self = this;
-                            $.get('/admin/index/do-deliver',{id:id},function(data)
+                            $.get('/admin/index/do-health',{id:id},function(data)
                             {
                                 _self.pageInit();
                             },'json');

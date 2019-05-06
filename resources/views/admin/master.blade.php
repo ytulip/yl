@@ -138,14 +138,14 @@
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-manager">保洁服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员服务</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">社区服务</a></li>
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/power">服务人员管理</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/serve-member">服务人员管理</a></li>
                     </ul>
                     <div class="sub-menu">
                         <a href="/admin/index/food-manager">助餐服务</a>
                         <a href="/admin/index/clean-manager">保洁服务</a>
                         <a href="/admin/index/get-good">会员服务</a>
                         <a href="/admin/index/get-good">社区服务</a>
-                        <a href="/admin/index/power">服务人员管理</a>
+                        <a href="/admin/index/serve-member">服务人员管理</a>
                     </div>
 
                 </li>

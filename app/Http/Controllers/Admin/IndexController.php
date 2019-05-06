@@ -22,6 +22,7 @@ use App\Model\Product;
 use App\Model\ProductAttr;
 use App\Model\RandomGet;
 use App\Model\RandomPool;
+use App\Model\ServeUser;
 use App\Model\SignRecord;
 use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
@@ -809,13 +810,34 @@ class IndexController extends Controller
     }
 
     /**
-     * 管理员列表
-     */
+ * 管理员列表
+ */
     public function getPower()
     {
         $query = Admin::orderBy('id', 'desc');
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.power')->with('paginate', $paginate);;
+        return view('admin.power')->with('paginate', $paginate);
+    }
+
+
+
+    /**
+     * 管理员列表
+     */
+    public function getServeMember()
+    {
+        return view('admin.serve_member');
+    }
+
+
+    public function anyServeMemberList()
+    {
+        $list = ServeUser::where('status',1)->get();
+        for($i =0 ; $i < count($list); $i++ )
+        {
+            $list[$i]['work_no'] = Kit::workno($list[$i]->id);
+        }
+        return $this->jsonReturn(1,$list);
     }
 
     /**
@@ -1316,6 +1338,41 @@ class IndexController extends Controller
     {
         $list = Book::where('product_id',25)->get();
         return $this->jsonReturn(1,$list);
+    }
+
+
+    /**
+     * 健康
+     */
+    public function anyDoHealth()
+    {
+        $subFoodOrder = Book::find(Request::input('id'));
+        $subFoodOrder->status = 2;
+        $subFoodOrder->save();
+        return $this->jsonReturn(1);
+    }
+
+
+    public function anyAddOrModifyServeMember()
+    {
+        if( $id = Request::input('id') )
+        {
+            $serveMember = ServeUser::find($id);
+        } else
+        {
+            $serveMember = new ServeUser();
+        }
+
+
+        $serveMember->real_name = Request::input('real_name');
+        $serveMember->type = Request::input('type');
+        $serveMember->id_card = Request::input('id_card');
+        $serveMember->mobile = Request::input('mobile');
+        $serveMember->status = 1;
+
+        $serveMember->save();
+        return $this->jsonReturn(1);
+
     }
 
 }
