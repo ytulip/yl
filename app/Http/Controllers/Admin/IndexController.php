@@ -1331,7 +1331,10 @@ class IndexController extends Controller
             ['productId'=>6,'menu'=>[FoodMenu::getMenuArr(6,date('Y-m-d'),1)]]
         ];
 
-        return view('admin.health_bill')->with('food_menu',$foodMenu);
+        //服务人员列表
+        $users = ServeUser::where('status',1)->where('type',2)->get();
+
+        return view('admin.health_bill')->with('food_menu',$foodMenu)->with('serveUser',$users->toJson());
     }
 
     public function postHealthBill()

@@ -76,6 +76,36 @@
                 </div>
             </div>
 
+
+
+            <div style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel" v-if="layer_flag2">
+                <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 640px;">
+                    <h4>体检服务</h4>
+                    <form id="data_form">
+
+                        <div class="row mb-12">
+                            <div class="col-md-12 col-lg-12">
+                                <input class="form-control" name="new_user_id_card" v-model="layer_address"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-12">
+                            <div class="col-md-12 col-lg-12">
+                                <select class="form-control" name="new_user_id_card">
+                                    <option :value="item.id" v-for="item in serveUser">@{{ item.real_name }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="addPerson">确认</button>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="closeLayer">取消</button>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 @stop
@@ -87,6 +117,12 @@
     <script>
 
 
+        var pageConfig =
+            {
+                serveUser:{!! $serveUser !!}
+            }
+
+
         new Vue(
             {
                 el:"#app",
@@ -95,11 +131,15 @@
                         tabIndex:1,
                         list:'',
                         layer_flag:'',
+                        layer_flag2:'',
                         layer_address:'',
-                        id:''
+                        id:'',
+                        serveUser:''
                     },
                 created:function()
                 {
+                    this.serveUser = pageConfig.serveUser;
+                    console.log(this.serveUser);
                     this.pageInit();
                 },
                 methods:
@@ -120,11 +160,12 @@
                         },
                         doDeliver(id)
                         {
-                            var _self = this;
-                            $.get('/admin/index/do-health',{id:id},function(data)
-                            {
-                                _self.pageInit();
-                            },'json');
+                            this.layer_flag2 = true;
+                            //var _self = this;
+                            // $.get('/admin/index/do-health',{id:id},function(data)
+                            // {
+                            //     _self.pageInit();
+                            // },'json');
                         },
                         editAddress(obj)
                         {

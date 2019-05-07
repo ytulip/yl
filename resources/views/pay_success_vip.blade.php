@@ -37,7 +37,7 @@
 
 
         <div class="layer-shadow dpn">
-            <div class="layer-center" style="padding: 24px;">
+            <div class="layer-top" style="padding: 24px;">
 
                 <div class="f-f-m t-al-c" style="border-bottom:  1px solid #E1E1E1;">
                     <input class="fs-18-fc-2E3133-m t-al-c" style="padding: 20px 0;width: 100%;border: none;box-sizing: border-box;background: #F9F9FB;" placeholder="输入6位工号" name="workno"/>
