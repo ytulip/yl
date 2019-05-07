@@ -269,7 +269,7 @@
                 </div>
 
                 <div class="cus-row-col-4 t-al-r">
-                    <span class="fs-14-fc-c50081-m" style="font-size: 12px;">￥</span><span class="fs-14-fc-c50081-m">{{$product->price}}</span>
+                    <span class="fs-14-fc-c50081-m" style="font-size: 12px;">￥</span><span class="fs-18-fc-c50081-m">{{$product->price}}</span>
                 </div>
             </div>
 
