@@ -80,7 +80,7 @@
             </div>
             <div class="cus-row-col-6 t-al-r">
                 <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg">保存</span>
-                <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-if="!editFlg && activeHabit">编辑</span>
+                <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-if="activeHabit">编辑</span>
             </div>
         </div>
 
@@ -182,6 +182,7 @@
                             }
 
                             var _self = this;
+                            this.$forceUpdate();
                             $.post('/user/update-habit',{ids:ids.join(',')},function(data){
 
                             },'json');
@@ -219,6 +220,7 @@
                     activeHabit:function()
                     {
                         var flag = false;
+
                         for( var i = 0; i < this.habit.length; i++ )
                         {
                             if( !this.habit[i].hide )
@@ -227,6 +229,8 @@
                                 break;
                             }
                         }
+
+                        console.log('habitt:' + flag);
 
                         return flag;
                     }
