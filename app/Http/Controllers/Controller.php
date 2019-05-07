@@ -48,7 +48,7 @@ abstract class Controller extends BaseController
     {
         if($flag)
         {
-            return json_encode(['status'=>1,'data'=>$val],JSON_UNESCAPED_UNICODE);
+            return json_encode(['status'=>$flag,'data'=>$val],JSON_UNESCAPED_UNICODE);
         }
         return json_encode(['status'=>0,'desc'=>$val],JSON_UNESCAPED_UNICODE);
     }
