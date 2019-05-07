@@ -102,7 +102,7 @@ class PassportController extends Controller
 
             //送一张A餐优惠券
             $coupon = new Coupon();
-            $coupon->user_id = Auth::id();
+            $coupon->user_id = $user->id;
             $coupon->coupon_type = 4;
             $coupon->status = 1;
             $coupon->type_text = $product->product_name;
