@@ -80,7 +80,7 @@
             </div>
             <div class="cus-row-col-6 t-al-r">
                 <span class="fs-14-fc-c50081-m" v-on:click="save" v-if="editFlg">保存</span>
-                <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-else>编辑</span>
+                <span class="fs-14-fc-7E7E7E-m" v-on:click="edit" v-if="!editFlg && habit.length">编辑</span>
             </div>
         </div>
 
