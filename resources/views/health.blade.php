@@ -152,8 +152,8 @@
 
 
         <div class="common-panel-24-16">
-            <div class="fs-18-fc-000000-m">体检机构 ：爱康国宾体检中心</div>
-            <div class="fs-14-fc-7E7E7E-r m-t-16">
+            <div class="fs-18-fc-000000-m"><span class="huajia-icon"></span><span class="in-bl-v-m" style="margin-left: 10px;">体检机构 ：爱康国宾体检中心</span></div>
+            <div class="fs-14-fc-7E7E7E-r m-t-16" style="line-height: 20px;">
                 爱康集团（iKang Healthcare Group）依托旗下健康医疗服务中心、IT技术平台和强大的客户服务体系，每年为数百万客户提供健康体检、疾病检测、齿科服务、私人医生、职场医疗、疫苗接种、抗衰老等健康管理服务。
             </div>
         </div>
