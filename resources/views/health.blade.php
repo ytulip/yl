@@ -135,6 +135,17 @@
 
         .dpn{display: none;}
 
+
+        .huajia-icon
+        {
+            width: 16px;
+            height: 16px;
+            background-image:url('/images/logo_small_nor@3x.png');
+            background-size: 16px 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
         @if( \Illuminate\Support\Facades\Request::input('isIpx'))
             .fix-bottom
         {
