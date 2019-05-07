@@ -303,8 +303,8 @@
         <div  style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box" onclick="goMenuDetail(1)">
 
 
-            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
-                <img src="{{$thisWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>
+            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;background-image: url({{$thisWeek->cover_img}});background-size: cover;background-position: center center;background-repeat: no-repeat;">
+                {{--<img src="{{$thisWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>--}}
             </div>
 
 
@@ -323,8 +323,8 @@
         <div  style="overflow: hidden;position: relative;margin-bottom: 200px;padding-left: 84px;box-sizing: border-box;" onclick="goMenuDetail(2)">
 
 
-            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;">
-                <img src="{{$nextWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>
+            <div style="position: absolute;width: 120px;height: 120px;border-radius: 4px;top:18px;left: 0;background-image: url({{$nextWeek->cover_img}});background-size: cover;background-position: center center;background-repeat: no-repeat;">
+                {{--<img src="{{$nextWeek->cover_img}}" class="slide-image" style="width: 100%;height: 100%;"/>--}}
             </div>
 
 
