@@ -977,8 +977,10 @@ class UserController extends Controller
     {
 
         $user = User::find(Auth::id());
+        //获得用户代金券数量
+        $count = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','>=',date('Y-m-d'))->orderBy('expire_at','asc')->count();
 
-        return $this->jsonReturn(1,['user'=>$user,'is_vip'=>$user->isVip()]);
+        return $this->jsonReturn(1,['user'=>$user,'is_vip'=>$user->isVip(),'couponCount'=>$count]);
     }
 
     /**
