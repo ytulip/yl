@@ -241,6 +241,13 @@
             padding-bottom: 48px !important;
         }
 
+        .rotate180
+        {
+            transform: rotate(180deg);
+        }
+
+        .show-hight{height: 60px;}
+
         @if( \Illuminate\Support\Facades\Request::input('isIpx'))
             .fix-bottom
         {
@@ -273,7 +280,11 @@
                 </div>
             </div>
 
-            <div class="fs-14-fc-7E7E7E-r pre-text" style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;">{{$product->food_desc}}</div>
+            <div class="fs-14-fc-7E7E7E-r pre-text show-hight" id='food_desc' style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;overflow: hidden;">{{$product->food_desc}}</div>
+
+            <div class="" style="cursor: pointer;margin-bottom: 22px;" onclick="showMore()" data-show id="show_line">
+                <img src="/images/icon_next_nor copy 2@3x.png" class="in-bl-v-m" width="16px;"/> <span class="in-bl v-a-m fs-18-fc-000000-m" style="font-size: 16px !important;">展开</span>
+            </div>
 
 
             {{--<iframe src="/passport/good-detail?product_id={{$product->id}}&index=0" frameborder="0" scrolling="no" style="width: 100%"></iframe>--}}
@@ -462,6 +473,28 @@
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
     <script type="text/javascript">
+
+
+
+
+
+        function showMore()
+        {
+            if ( $('#show_line').attr('data-show') )
+            {
+                $('#show_line').attr('data-show','');
+                $('#food_desc').addClass('show-hight');
+                $('#show_line img').removeClass('rotate180');
+                $('#show_line span').html('展开');
+            } else
+            {
+                $('#show_line').attr('data-show',1);
+                $('#show_line img').addClass('rotate180');
+                $('#food_desc').removeClass('show-hight');
+                $('#show_line span').html('收起');
+            }
+        }
+
 
         var ModalHelper = (function(bodyCls) {
             var scrollTop;
