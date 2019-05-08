@@ -249,6 +249,12 @@ class UserController extends Controller
             $order->service_start_time = Request::input('service_start_time');
 
 
+            //判断是不是vip
+            if ( $user->isVip() )
+            {
+                $order->is_vip = 1;
+            }
+
 
         }
 
