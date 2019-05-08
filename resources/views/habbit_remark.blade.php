@@ -80,7 +80,7 @@
 
     <!--轮播-->
     <div class="p16 dpn" id="app">
-        <textarea class="tare" placeholder="输入口味、偏好要求等" v-model="habitText"></textarea>
+        <textarea class="tare" placeholder="输入口味、偏好要求等" v-model="habitText" style="background: #FFFFFF;box-shadow: 0 2px 6px 0 #E7E9F0;border-radius: 5px;width: 100%;height: 144px;box-sizing: border-box;"></textarea>
 
         <div class="cus-row m-t-24 cus-row-v-m">
             <div class="cus-row-col-6">
