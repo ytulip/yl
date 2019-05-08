@@ -426,7 +426,7 @@
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">六</span></div>
                     </div>
 
-                    <div style="height: 210px;overflow: scroll;" id="cal-day">
+                    <div style="height: 195px;overflow: scroll;" id="cal-day">
                     <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen,begin:(beginStr == data[item][0].ymd),'chosen-tomo':(data[item][0].chosen && (calCurrent && (data[item][0].day == currentDate)))}" v-on:click="setBegin(data[item][0].day)">@{{(calCurrent && (data[item][0].day == currentDate))?'明天':data[item][0].day}}</span></div>
                         <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen,begin:(beginStr == data[item][1].ymd),'chosen-tomo':(data[item][1].chosen && (calCurrent && (data[item][1].day == currentDate)))}" v-on:click="setBegin(data[item][1].day)">@{{(calCurrent && (data[item][1].day == currentDate))?'明天':data[item][1].day}}</span></div>
