@@ -203,6 +203,32 @@ class PassportController extends Controller
         return view('admin.login');
     }
 
+    public function getFinanceLogin()
+    {
+        return view('finance.login');
+    }
+
+
+    public function postFinanceLogin()
+    {
+        $this->validate(Request::all(), [
+            'phone' => 'required',
+            'register_sms_code' => 'required'
+        ]);
+
+
+        if (Cache::get('register_sms_code' . Request::input('phone')) != (Request::input('phone') . '_' . Request::input('register_sms_code'))) {
+            return $this->jsonReturn(0, '验证码错误');
+        }
+
+
+        //当前的金融讲师
+        Product::activeFinance();
+
+
+
+    }
+
 
     public function postAdminLogin()
     {

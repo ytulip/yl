@@ -246,7 +246,7 @@
             transform: rotate(180deg);
         }
 
-        .show-hight{height: 60px;}
+        .show-hight{height: 55px;}
 
         @if( \Illuminate\Support\Facades\Request::input('isIpx'))
             .fix-bottom
@@ -283,7 +283,7 @@
             <div class="fs-14-fc-7E7E7E-r pre-text show-hight" id='food_desc' style="margin-top: 14px;margin-bottom: 22px;line-height: 18px;overflow: hidden;">{{$product->food_desc}}</div>
 
             <div class="" style="cursor: pointer;margin-bottom: 22px;" onclick="showMore()" data-show id="show_line">
-                <img src="/images/icon_next_nor copy 2@3x.png" class="in-bl-v-m" width="16px;"/> <span class="in-bl v-a-m fs-18-fc-000000-m" style="font-size: 16px !important;">展开</span>
+                <img src="/images/icon_next_nor copy 2@3x.png" class="in-bl-v-m" width="16px;"/> <span class="in-bl v-a-m fs-18-fc-000000-r" style="font-size: 16px !important;">展开</span>
             </div>
 
 
