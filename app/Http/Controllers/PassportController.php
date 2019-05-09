@@ -21,6 +21,7 @@ use App\Model\YlConfig;
 use App\Util\AdminAuth;
 use App\Util\Curl;
 use App\Util\DownloadExcel;
+use App\Util\FinanceAuth;
 use App\Util\FoodTime;
 use App\Util\Kit;
 use App\Util\SmsTemplate;
@@ -221,12 +222,20 @@ class PassportController extends Controller
             return $this->jsonReturn(0, '验证码错误');
         }
 
-
         //当前的金融讲师
-        Product::activeFinance();
+        $product = Product::activeFinance();
 
 
+        $serveUser = ServeUser::find($product->owner_id);
 
+        if( $serveUser->mobile != Request::input('phone') )
+        {
+            return $this->jsonReturn(0, '抱歉，当前没有您的课程');
+        }
+
+        FinanceAuth::attempt(Request::input('phone'));
+
+        return $this->jsonReturn(1);
     }
 
 

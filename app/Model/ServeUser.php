@@ -9,4 +9,5 @@ use Illuminate\Support\Facades\DB;
 
 class ServeUser extends Model
 {
+
 }

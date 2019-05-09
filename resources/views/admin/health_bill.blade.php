@@ -91,7 +91,7 @@
 
                         <div class="row mb-12">
                             <div class="col-md-12 col-lg-12">
-                                <select class="form-control" name="new_user_id_card">
+                                <select class="form-control" name="new_user_id_card" v-model="serveId">
                                     <option :value="item.id" v-for="item in serveUser">@{{ item.real_name }}</option>
                                 </select>
                             </div>
@@ -99,7 +99,7 @@
 
                     </form>
                     <div>
-                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="addPerson">确认</button>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="dealBill">确认</button>
                         <button type="button" class="btn btn-success col-gray-btn mt-32" @click="closeLayer">取消</button>
                     </div>
                 </div>
@@ -134,7 +134,8 @@
                         layer_flag2:'',
                         layer_address:'',
                         id:'',
-                        serveUser:''
+                        serveUser:'',
+                        serveId:''
                     },
                 created:function()
                 {
@@ -160,6 +161,7 @@
                         },
                         doDeliver(id)
                         {
+                            this.id = id;
                             this.layer_flag2 = true;
                             //var _self = this;
                             // $.get('/admin/index/do-health',{id:id},function(data)
@@ -171,6 +173,23 @@
                         {
                             // console.log(obj.id);
                             // console.log(obj.address);
+                        },
+                        dealBill()
+                        {
+
+                            if( !this.serveId )
+                            {
+                                mAlert('请选择服务人员');
+                                return;
+                            }
+
+                            //服务人员
+                            var _self = this;
+                            $.get('/admin/index/do-health',{id:this.id,serve_id:this.serve_id},function(data)
+                            {
+                                _self.closeLayer();
+                                _self.pageInit();
+                            },'json');
                         },
                         pageInit()
                         {
@@ -185,6 +204,7 @@
                         closeLayer()
                         {
                             this.layer_flag = false;
+                            this.layer_flag2 = false;
                         },
                         addPerson()
                         {

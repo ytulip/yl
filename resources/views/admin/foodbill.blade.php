@@ -46,7 +46,7 @@
                 <div class="col-md-1 col-lg-2">配送地址</div>
                 <div class="col-md-1 col-lg-1">详情</div>
                 <div class="col-md-1 col-lg-1">出单</div>
-                <div class="col-md-1 col-lg-1">送达</div>
+                <div class="col-md-1 col-lg-1">@{{tabIndex == 1?'送达':'备注'}}</div>
             </div>
 
             <div class="row paginate-list-row" v-for="(item,index) in currentList">
@@ -59,7 +59,10 @@
                 <div class="col-md-1 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-1 col-lg-1"></div>
                 <div class="col-md-1 col-lg-1"><a class="deliver" @click="print(item)">出单</a></div>
-                <div class="col-md-1 col-lg-1"><a class="deliver" @click="doDeliver(item.sub_id)">确认送达</a></div>
+                <div class="col-md-1 col-lg-1">
+                    <a class="deliver" @click="doDeliver(item.sub_id)" v-if="tabIndex == 1">确认送达</a>
+                    <a class="deliver" @click="doRemark(item.sub_id)" v-else>填写备注</a>
+                </div>
             </div>
 
         </div>

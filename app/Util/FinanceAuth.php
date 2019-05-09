@@ -6,7 +6,7 @@ use App\Model\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class AdminAuth
+class FinanceAuth
 {
     public static function attempt($phone){
         Session::push('finance', $phone);

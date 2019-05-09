@@ -1351,6 +1351,7 @@ class IndexController extends Controller
     {
         $subFoodOrder = Book::find(Request::input('id'));
         $subFoodOrder->status = 2;
+        $subFoodOrder->serve_id = Request::input('serve_id');
         $subFoodOrder->save();
         return $this->jsonReturn(1);
     }
