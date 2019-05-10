@@ -40,9 +40,9 @@ use Illuminate\Support\Facades\Request;
 
 class IndexController extends Controller
 {
-    public function getHome()
+    public function getIndex()
     {
-        return view('admin.index');
+        return view('public_index');
     }
 
     public function getPreview()
