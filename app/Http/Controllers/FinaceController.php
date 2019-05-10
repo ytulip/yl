@@ -77,7 +77,7 @@ class FinaceController extends Controller
 
             }
             $user->expire_time= $expireMonth->format('Y-m-d');
-            $user->health_count = 4;
+            $user->health_count = 1;
 
 
             /**
