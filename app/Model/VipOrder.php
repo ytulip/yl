@@ -70,7 +70,7 @@ class VipOrder extends Model
         for ($i = 0; $i < $foodCount; $i++ )
         {
             $coupon = new Coupon();
-            $coupon->coupon_type = ($this->buy_type > 2)?5:4;
+            $coupon->coupon_type = ( $this->buy_type > 2 )?5:4;
             $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
             $coupon->type_text = $foodTypeText;
             $coupon->user_id = $this->user_id;
