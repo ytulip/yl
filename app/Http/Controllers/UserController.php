@@ -335,6 +335,11 @@ class UserController extends Controller
                 }
 
 
+                $order->pay_status = 1;
+                $order->pay_time = date('Y-m-d H:i:s');
+                $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+                $order->save();
+
                 //标识全部已由优惠券抵扣，无需再支付
                 return $this->jsonReturn(1, 333);
             }
