@@ -26,7 +26,7 @@ Route::controller('/passport','PassportController');
 Route::controller('/index','IndexController');
 Route::controller('/activity','ActivityController');
 Route::controller('/jump','JumpController');
-Route::controller('/finance','FinanceClass\IndexController');
+Route::controller('/finance-class','FinanceClass\IndexController');
 
 Route::group(['middleware' => ['auth.check']], function()
 {

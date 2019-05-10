@@ -38,4 +38,12 @@
     </div>
 
 
+    <div class="row paginate-list-row">
+        <div class="col-md-2 col-lg-2">{{$product->period_no}}</div>
+        <div class="col-md-2 col-lg-2">{{\App\Util\Kit::dateFormat2($product->start_time)}} - {{\App\Util\Kit::dateFormat2($product->end_time)}}</div>
+        <div class="col-md-2 col-lg-2">{{\App\Model\ServeUser::find($product->owner_id)->real_name}}</div>
+        <div class="col-md-2 col-lg-2">{{\App\Model\Book::where('product_id',$product->id)->count()}}</div>
+        <div class="col-md-3 col-lg-3">{{$product->context_deliver}}</div>
+        <div class="col-md-1 col-lg-1"> <a class="deliver" href="javascript:goParentHref('/admin/index/finance-user')">点击查看</a></div>
+    </div>
 @stop

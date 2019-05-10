@@ -383,8 +383,8 @@
             },
             callback:function(obj,data){
                 if(data.status){
-                    // location.href = '/admin/index/total';
-                    console.log('OK');
+                    location.href = '/finance-class/index';
+                    // console.log('OK');
                 } else {
                     mAlert(data.desc);
                 }

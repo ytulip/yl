@@ -65,6 +65,26 @@
                 </div>
             </div>
 
+
+            <div style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel" v-if="layer_flag">
+                <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 640px;">
+                    <h4>填写备注</h4>
+                    <form id="data_form">
+
+                        <div class="row mb-12">
+                            <div class="col-md-12 col-lg-12">
+                                <input class="form-control" name="new_user_id_card" v-model="layer_remark"/>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="addPerson">确认</button>
+                        <button type="button" class="btn btn-success col-gray-btn mt-32" @click="closeLayer">取消</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @stop
@@ -290,7 +310,10 @@
                 data:
                     {
                         tabIndex:1,
-                        list:''
+                        list:'',
+                        layer_flag:'',
+                        layer_remark:'',
+                        id:''
                     },
                 created:function()
                 {
@@ -298,6 +321,34 @@
                 },
                 methods:
                     {
+                        doRemark(id)
+                        {
+                            this.id = id;
+                            this.layer_remark = '';
+                            this.layer_flag = true;
+                        },
+                        addPerson()
+                        {
+
+                            if(!this.layer_remark)
+                            {
+                                mAlert('备注不能为空');
+                                return;
+                            }
+
+                            var _self = this;
+                            $.post('/admin/index/foodbill-remark',{id:this.id,remark:this.layer_remark},function(data){
+                                if ( data.status )
+                                {
+                                    _self.layer_flag = false;
+                                    _self.pageInit();
+                                }
+                            },'json');
+                        },
+                        closeLayer()
+                        {
+                            this.layer_flag = false;
+                        },
                         print(obj)
                         {
                             OpenPreview(obj);

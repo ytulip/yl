@@ -101,7 +101,7 @@
             <ul id="menu" >
                 <li @if(!\App\Util\AdminAuth::hasPower(1)) class="dpn" @endif><a href="/admin/index/total"><i class="fa fa-tachometer menu-fa"></i> <span>首页</span><div class="clearfix"></div></a></li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a href="/admin/index/good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
                     <ul id="menu-academico-sub" >
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-bill">购餐服务</a></li>
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-bill-by-day">保洁服务</a></li>
@@ -198,6 +198,7 @@
 
         toggle = !toggle;
     });
+
 </script>
 <!--js -->
 <script src="/admin/js/jquery.nicescroll.js"></script>
