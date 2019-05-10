@@ -43,7 +43,35 @@ class IndexController extends Controller
     public function getIndex()
     {
 //        return view('admin.index');
-        return view('admin.');
+        /**
+         * 当前的金融产品
+         */
+        $product = Product::activeFinance();
+        $query = Book::orderBy('books.id','desc')->leftJoin('users','users.id','=','books.user_id')->leftJoin('book_finance_count','book_finance_count.user_id','=','books.user_id')->selectRaw('books.*,users.phone,users.real_name,count')->where('product_id',$product->id);
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('finance.finance_user')->with('product',$product)->with('paginate', $paginate);
+    }
+
+
+    public function anyFill()
+    {
+        return view('finance.fill');
+    }
+
+
+    public function anyWenjuan()
+    {
+        return view('finance.wenjuan');
+    }
+
+    public function anySave()
+    {
+        $book = Book::find(Request::input('id'));
+        $book->answer = Request::input('answer');
+        $book->score_type = Request::input('score_type');
+        $book->save();
+
+        return $this->jsonReturn(1);
     }
 
 }

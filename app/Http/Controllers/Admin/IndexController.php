@@ -69,67 +69,8 @@ class IndexController extends Controller
     }
 
 
-    public function getOrders()
-    {
-
-        //
-        $orderStatical = new OrderStatical();
-
-        $query = Order::orderBy('pay_time', 'desc')->where('pay_status', 1)->leftJoin('users', 'user_id', '=', 'users.id')->selectRaw('*,orders.id as order_id');
-
-        CommKit::equalQuery($query, ['order_status' => Request::input('order_status')]);
-
-        //开始时间
-        if (Request::input('start_time')) {
-            $query->where('pay_time', '>=', Request::input('start_time'));
-        }
-
-        if (Request::input('end_time')) {
-            $endTime = Request::input('end_time');
-            $query->where('pay_time', '<', date('Y-m-d', strtotime("$endTime +1 day")));
-        }
-
-        if (Request::input('download')) {
-            $list = $query->get();
-            $dataList = array();
-            foreach ($list as $key => $item) {
-                $user = User::find($item->immediate_user_id);
-                $immediateUserId = $item->immediate_user_id;
-                $immediateUserRealName = '';
-                $immediateUserIdCard = '';
-
-                if ($user instanceof User) {
-                    $immediateUserRealName = $user->real_name;
-                    $immediateUserIdCard = $user->id_card;
-                }
-
-                $tempArray = array($item->order_id, $item->pay_time, $item->real_name, $item->phone, $item->quantity, $item->need_pay, $item->buyTypeText(), $immediateUserId, $immediateUserRealName, $immediateUserIdCard);
-                array_push($dataList, $tempArray);
-            }
 
 
-            $data = array(
-                'title' => array('订单编号', '购买时间', '购买人姓名', '联系方式', '购买数量', '购买价格', '购买类型', '直接开发者ID', '直接开发者姓名', '直接开发者手机号'),
-                'data' => $dataList,
-                'name' => 'tixian'
-            );
-            DownloadExcel::publicDownloadExcel($data);
-            return;
-        }
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.orders')->with('paginate', $paginate)->with('orderStatical', $orderStatical)->with('attrPercent', ['attr1_count' => $orderStatical->countValidOrder([1]), 'attr2_count' => $orderStatical->countValidOrder([2]), 'attr1' => ProductAttr::find(1), 'attr2' => ProductAttr::find(2)]);
-    }
-
-    public function getOrderDetail()
-    {
-        $orderId = Request::input('order_id');
-        $order = Order::find($orderId);
-        if (!$order) {
-            dd('订单不存在');
-        }
-        return view('admin.order_detail')->with('order', $order)->with('direct', User::find($order->immediate_user_id))->with('productAttr', ProductAttr::find($order->product_attr_id))->with('orderCash', $order->cashInfo())->with('invitedCode', $order->invitedCodeInfo());
-    }
 
 
     public function postSetOrderStatus()
@@ -473,155 +414,6 @@ class IndexController extends Controller
     public function getNewOrder()
     {
         return view('admin.new_order');
-    }
-
-    public function postNewOrder()
-    {
-        $this->validate(Request::all(), [
-            'user_id' => 'required',
-            'product_attr_id' => 'required',
-            'immediate_phone' => 'required|exists:users,phone',
-//            'deliver_type'=>'required',
-//            'self_get_deliver_address'=>'exists:user_address,address_id',
-//            'mine_deliver_address'=>'exists:user_address,address_id'
-        ]);
-
-        $indirectUser = User::find(Request::input('user_id'));
-        if ($indirectUser->vip_level != User::LEVEL_MASTER) {
-            return $this->jsonReturn(0, '成为高级会员才能提单');
-        }
-
-        $immediateUser = User::where('phone', Request::input('immediate_phone'))->first();
-
-        $productAttr = ProductAttr::find(Request::input('product_attr_id'));
-
-
-//        if( Deliver::DELIVER_HOME == Request::input('deliver_type') ) {
-//            $address = UserAddress::find(Request::input('mine_deliver_address'));
-//        } else {
-//            $address = UserAddress::find(Request::input('self_get_deliver_address'));
-//        }
-
-        //生产订单
-        $order = new Order();
-        $order->user_id = $indirectUser->id;
-        $order->immediate_user_id = $immediateUser->id;
-        $order->product_id = $productAttr->product_id;
-        $order->product_attr_id = $productAttr->id;
-        $order->need_pay = 0;
-//        $order->address = $address->pct_code_name . $address->address;
-//        $order->address_name = $address->address_name;
-//        $order->address_phone = $address->mobile;
-//        $order->deliver_type = Request::input('deliver_type');
-        $order->pay_status = 1;
-        $order->order_status = Order::ORDER_STATUS_ADMIN_BUY;
-        $order->pay_type = Order::PAY_ADMIN;
-        $order->pay_time = date('Y-m-d H:i:s');
-
-        $order->save();
-
-
-        //支付订单逻辑
-        InvitedCodes::makeRecord($order->id);
-
-        return $this->jsonReturn(1, $order->id);
-    }
-
-    public function anyGetUserByName()
-    {
-        $res = User::where('real_name', Request::input('real_name'))->get();
-        if (!$res) {
-            $res = [];
-        }
-
-        foreach ($res as $key => $val) {
-            $upUser = User::find($val->parent_id);
-            $superUser = User::find($val->indirect_id);
-
-            $res[$key]->vip_level_text = User::levelText($val->vip_level);
-            $res[$key]->up_phone = isset($upUser->phone) ? $upUser->phone : '';
-            $res[$key]->up_real_name = isset($upUser->real_name) ? $upUser->real_name : '';
-
-
-            $res[$key]->super_phone = isset($superUser->phone) ? $superUser->phone : '';
-            $res[$key]->super_real_name = isset($superUser->real_name) ? $superUser->real_name : '';
-        }
-
-        return $this->jsonReturn(1, $res);
-    }
-
-    public function getInvitedCode()
-    {
-        $order = Order::find(Request::input('order_id'));
-        return view('admin.invited_code')->with('order', $order);
-    }
-
-
-    public function getUpSuperRecord()
-    {
-        $userId = Request::input('user_id');
-        $user = User::find($userId);
-        if (!$user) {
-            dd('用户不存在');
-        }
-
-        $query = CashStream::where('user_id', $user->id)->whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP, CashStream::CASH_TYPE_BENEFIT_SUPER]);
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-
-        foreach ($paginate as $key => $val) {
-            $tempUser = User::find($val->refer_user_id);
-            if ($tempUser) {
-                $paginate[$key]->user_model = $tempUser;
-            } else {
-                $paginate[$key]->user_model = (object)[
-                    "real_name" => "未注册",
-                    "phone" => "未注册",
-                    "created_at" => "未注册"
-                ];
-            }
-        }
-
-        return view('admin.up_super_record')->with('paginate', $paginate)->with('user', $user);
-    }
-
-    public function getUpSuperRecordAll()
-    {
-        //开发支出
-        $direct = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP])->where('pay_status', '>', 0)->sum('price');
-        $directCount = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP])->where('pay_status', '>', 0)->count();
-
-
-        $indirect = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_SUPER])->where('pay_status', '>', 0)->sum('price');
-        $indirectCount = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_SUPER])->where('pay_status', '>', 0)->count();
-
-
-        $query = CashStream::whereIn('cash_type', [CashStream::CASH_TYPE_BENEFIT_UP, CashStream::CASH_TYPE_BENEFIT_SUPER])->leftJoin('users', 'users.id', '=', 'cash_stream.user_id')->leftJoin('users as b', 'b.id', '=', 'cash_stream.refer_user_id')->where('pay_status', '>', 0)->orderBy('cash_stream.id', 'desc')->selectRaw('cash_stream.*,users.real_name,b.real_name as refer_real_name');
-
-        $query->where(function ($query) {
-            if (Request::input('keyword') != '') {
-                $query->where('users.real_name', Request::input('keyword'))->orWhere('b.real_name', Request::input('keyword'));
-            }
-        });
-
-        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-
-        foreach ($paginate as $key => $val) {
-//            $tempUser = User::find($val->refer_user_id);
-//            $ownerUser = User::find($val->user_id);
-//            if($tempUser) {
-//                $paginate[$key]->user_model = $tempUser;
-//                $paginate[$key]->owner_user_model = $ownerUser;
-//            }else{
-//                $paginate[$key]->user_model = (object)[
-//                    "real_name"=>"未注册",
-//                    "phone"=>"未注册",
-//                    "created_at"=>"未注册"
-//                ];
-//            }
-        }
-
-        return view('admin.up_super_record_all')->with('paginate', $paginate)->with('up', $direct)->with('upCount', $directCount)->with('super', $indirect)->with('superCount', $indirectCount);
     }
 
 
@@ -1022,6 +814,19 @@ class IndexController extends Controller
 
 
     /**
+     * 送餐备注
+     */
+    public function anyFoodbillRemark()
+    {
+        $subFoodOrder = SubFoodOrders::find(Request::input('id'));
+//        $subFoodOrder = SubFoodOrders::find(Request::input('id'));
+        $subFoodOrder->remark = Request::input('remark');
+        $subFoodOrder->save();
+        return $this->jsonReturn(1);
+    }
+
+
+    /**
      * 参见金融服务的用户列表
      */
     public function anyFinanceUser()
@@ -1118,7 +923,8 @@ class IndexController extends Controller
     }
 
     public function anyFinanceTask(){
-        return view('admin.segment.finance_task');
+        $product = Product::activeFinance();
+        return view('admin.segment.finance_task')->with('product',$product);
     }
 
     public function anyFoodTask(){

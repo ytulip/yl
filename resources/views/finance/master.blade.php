@@ -20,10 +20,10 @@
     <!-- //jQuery -->
     <!-- lined-icons -->
     <link rel="stylesheet" href="/admin/css/icon-font.min.css" type='text/css' />
-    <link rel="stylesheet" href="/css/style.css"/>
     <!-- //lined-icons -->
     <style>
 
+        * { touch-action: pan-y; }
         #menu-academico-sub{display: none;}
         .menu-fa{display: none;}
         .sidebar-collapsed .menu-fa{display: inline-block;}
@@ -52,15 +52,58 @@
         }
 
         #admin_user_wrap:hover #admin_user_panel{display: block;}
+
+        .active-iframe{
+            display: block !important;
+        }
+
+
+        .sidebar-menu{
+            overflow-y: scroll;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {display:none}
     </style>
     @section('style')
-    @show
+        @show
 </head>
 <body>
-<div>
-    @section('segment_content')
+<div class="page-container">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="mother-grid-inner">
+        <div class="row header-title">
+            <div class="col-md-6 col-lg-6">{!! $headerTitle !!}</div>
+            <div class="col-md-3 col-lg-3">&nbsp;</div>
+            <div class="col-md-3 col-lg-3">
+                <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap"><i  style="margin-left: 40px;position: relative;" class="fa fa-user"></i>
 
-        @show
+                    <ul style="position: absolute;z-index: 99;right:0;border:1px solid rgb(233, 233, 234);" id="admin_user_panel">
+                        <li><a href="/passport/admin-login-out">退出登录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @section('left_content')
+
+            @show
+        </div>
+        <div style="margin-bottom: 45px;"></div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo1">
+            <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>
+        </header>
+        <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+        <div class="menu">
+            <ul id="menu" >
+                <li><a href="/finance-class/index"><i class="fa fa-tachometer menu-fa"></i> <span>金融课堂</span><div class="clearfix"></div></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
 <script>
     var toggle = true;
@@ -81,11 +124,6 @@
 
         toggle = !toggle;
     });
-
-    function goParentHref(url)
-    {
-        parent.location.href = url;
-    }
 </script>
 <!--js -->
 <script src="/admin/js/jquery.nicescroll.js"></script>
@@ -123,6 +161,6 @@
     }
 </script>
 @section('script')
-@show
+    @show
 </body>
 </html>
