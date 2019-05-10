@@ -41,7 +41,7 @@ class VipOrder extends Model
         } else if ( $this->buy_type == 2)
         {
             $foodCount = 180;
-            $foodTypeText = 'B餐';
+            $foodTypeText = 'A餐';
             $normalClean = 12;
             $deepClean = 6;
             $healthCount = '';
@@ -49,7 +49,7 @@ class VipOrder extends Model
         } else if ( $this->buy_type == 3)
         {
             $foodCount = 90;
-            $foodTypeText = 'A餐';
+            $foodTypeText = 'B餐';
             $normalClean = 6;
             $deepClean = 3;
             $healthCount = '';
