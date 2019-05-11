@@ -15,7 +15,7 @@ class DealString
         $config = array(
             'number'=>'1234567890',
             'letter'=>'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-            'number_letter'=>'abcdefghijklmnopqrstuvwxyz123456789',
+            'number_letter'=>'123456789',
             'string'=>'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789',
             'all'=>'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
         );
