@@ -247,15 +247,12 @@ class UserController extends Controller
             $order->lunch_service_time = Request::input('lunch_service');
             $order->dinner_service_time = Request::input('dinner_service');
             $order->service_start_time = Request::input('service_start_time');
+        }
 
-
-            //判断是不是vip
-            if ( $user->isVip() )
-            {
-                $order->is_vip = 1;
-            }
-
-
+        //判断是不是vip
+        if ( $user->isVip() )
+        {
+            $order->is_vip = 1;
         }
 
         //保存地址哟
