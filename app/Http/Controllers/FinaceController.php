@@ -89,6 +89,19 @@ class FinaceController extends Controller
         }
 
 
+
+
+        //TODO 处理订单
+        $order = Order::find($tradeNo);
+        $order->pay_status = 1;
+        $order->pay_time = date('Y-m-d H:i:s');
+        $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+        $order->save();
+        return "SUCCESS";
+
+
+
+
         //判断是否处理过
         $cashStream = CashStream::find($tradeNo);
 
