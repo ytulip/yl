@@ -33,7 +33,7 @@ class FinaceController extends Controller
 
 
 
-        if( strpos($tradeNo,'v') == 0 )
+        if( strpos($tradeNo,'v') === 0 )
         {
 
             $tradeNo = str_replace('v','',$tradeNo);
