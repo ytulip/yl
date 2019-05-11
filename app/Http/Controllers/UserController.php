@@ -200,7 +200,7 @@ class UserController extends Controller
 
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
-            $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
+//            $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
             $order->origin_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
             $order->quantity = Kit::cleanServiceTimeType($clean_service_time);
             $order->user_id = $user->id;
@@ -354,7 +354,10 @@ class UserController extends Controller
                     $coupon->save();
                 }
 
-                return $this->jsonReturn(1, 333);
+                if( $order->quantity == 2)
+                {
+                    return $this->jsonReturn(1, 333);
+                }
             }
 
         }
@@ -364,7 +367,8 @@ class UserController extends Controller
 
         if( $product->isCleanProduct() )
         {
-
+            $order->need_pay = $order->origin_pay - (count($couponIds)?(2 * $product->price):0);
+            $order->save();
         } else {
             $order->need_pay = $product->price * ($order->quantity * Order::getDaysByType(Request::input('tabIndex')) - count($couponIds)) * Order::saleOff(Request::input('tabIndex'));
             $order->save();
