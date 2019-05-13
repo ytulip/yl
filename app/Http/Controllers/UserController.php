@@ -986,6 +986,11 @@ class UserController extends Controller
         //获得用户代金券数量
         $count = Coupon::where('user_id',Auth::id())->where('status',1)->where('expire_at','>=',date('Y-m-d'))->orderBy('expire_at','asc')->count();
 
+
+        //改写age
+        $user->age = Carbon::parse($user->age)->diffInYears();
+
+
         return $this->jsonReturn(1,['user'=>$user,'is_vip'=>$user->isVip(),'couponCount'=>$count]);
     }
 
