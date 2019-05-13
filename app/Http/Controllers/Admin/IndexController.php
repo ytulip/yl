@@ -34,6 +34,7 @@ use App\Util\Kit;
 use App\Util\OrderStatical;
 use App\Util\SmsTemplate;
 use App\Util\TotalStatical;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
@@ -239,6 +240,7 @@ class IndexController extends Controller
 //        $product->context_server = Request::input('content_server');
         $product->food_desc = Request::input('food_desc');
         $product->fit_indi = Request::input('fit_indi');
+        $product->price = Request::input('price');
 
 
 
@@ -1196,6 +1198,21 @@ class IndexController extends Controller
         $book->save();
 
         return $this->jsonReturn(1);
+    }
+
+
+    /**
+     * 菜单
+     */
+    public function anyFoodMenu()
+    {
+
+        $low = Carbon::now()->subMonth()->format('Y-m-01');
+        $high = Carbon::now()->addMonth()->addMonth()->format('Y-m-01');
+
+        $list = FoodMenu::where('product_id',Request::input('product_id'))->orderBy('date','desc')->orderBy('type','asc')->where('date','<',$high)->where('date','>=',$low)->get();
+
+        return $this->jsonReturn(1,$list);
     }
 
 }

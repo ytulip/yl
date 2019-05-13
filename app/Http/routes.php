@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
 //    return R('welcome');
-    return \Illuminate\Support\Facades\Redirect::to('/user/index');
+    return \Illuminate\Support\Facades\Redirect::to('/passport/admin-login');
 });
 Route::get('hello',function(){
 //	return 'hello';

@@ -6,6 +6,31 @@
         .essay_img2{position: absolute;top:50%;right: 40px;width: 60px;height: 60px;border-radius: 8px;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow: hidden;}
         .essay_img img{width: 60px;height: 60px;border-radius: 8px;}
         .essay_img2 img{width: 60px;height: 60px;border-radius: 8px;}
+
+
+        .nav-tabs a
+        {
+            line-height: 32px !important;
+            padding: 0 8px !important;
+        }
+
+
+        .paginate-list-row {
+            padding-top: 0;
+            font-size: 14px;
+            border: 1px solid #EAEEF7;
+            background-color: #ffffff;
+            height: 35px;
+        }
+
+        .paginate-list-row div{
+            border-right: 1px solid #EAEEF7;
+            background-color: #ffffff;
+            height: 100%;
+            line-height: 35px;
+        }
+
+        .deliver{cursor: pointer;}
     </style>
 @stop
 @section('left_content')
@@ -50,9 +75,13 @@
             <h4 class="">价格和简介</h4>
 
             <div class="row">
-                <div class="col-md-3 col-lg-3">
+                <div class="col-md-4 col-lg-4">
                     <p class="sm-tag-text">价格</p>
-                    <p class="text-desc-decoration">{{$product->price}}</p>
+                    {{--<p class="text-desc-decoration">{{$product->price}}</p>--}}
+                    <div class="row">
+                        <div class="col-md-11 col-lg-11"><input class="form-control no-border-input" name="price" value="{{$product->price}}"/></div>
+                        <div class="col-md-1 col-lg-1"><a class="fl-r editor-pen-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a></div>
+                    </div>
                 </div>
             </div>
 
@@ -92,62 +121,92 @@
             
         </div>
 
+        <!--默认显示上个月，这个月，下个月的菜单-->
 
-        <div class="block-card mt-32">
-            <h3 class="">菜单编辑</h3>
+        <div class="block-card mt-32" id="menu_book">
 
-            <div class="row">
+            <h4 class="">菜单编辑</h4>
+
+            <div style="margin-top: 26px;">
+                <div class="t-al-r" style="">
+                    <a @click="add"><i class="fa fa-plus" style="margin-right: 12px;"></i>新增</a>
+                </div>
+            </div>
+
+            <div class="row paginate-list-row mt-32">
                 <div class="col-md-3 col-lg-3">日期</div>
                 <div class="col-md-3 col-lg-3">菜单</div>
-                <div class="col-md-2 col-lg-2">午餐/晚餐</div>
-                <div class="col-md-3 col-lg-3">餐图</div>
+                <div class="col-md-3 col-lg-3">类型</div>
+                <div class="col-md-3 col-lg-3">操作</div>
             </div>
 
 
-            @foreach($clWeekMenu as $item)
-                <div class="row">
-                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}"></div>
-                    <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}"></div>
-                    <div class="col-md-2 col-lg-2">
-                        {{($item->type==1)?'午餐':'晚餐'}}
-                    </div>
-                    <div class="col-md-3 col-lg-3">
-                        <img src="{{$item->cover_img}}" style="width: 120px;height: 120px;"/>
-                    </div>
-                </div>
-            @endforeach
+
+            <div class="row paginate-list-row" v-for="(item,index) in list">
+                <div class="col-md-3 col-lg-3">@{{item.date}}</div>
+                <div class="col-md-3 col-lg-3">@{{item.foods}}</div>
+                <div class="col-md-3 col-lg-3">@{{item.type?'午餐':'晚餐'}}</div>
+                <div class="col-md-3 col-lg-3">修改</div>
+            </div>
 
 
-            <div class="row edit-row">
-                <div class="col-md-3 col-lg-3">
-                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value="{{\Illuminate\Support\Facades\Request::input('start_time')}}" name="date" >
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
+
+
+            {{--<h3 class="">菜单编辑</h3>--}}
+
+            {{--<div class="row">--}}
+                {{--<div class="col-md-3 col-lg-3">日期</div>--}}
+                {{--<div class="col-md-3 col-lg-3">菜单</div>--}}
+                {{--<div class="col-md-2 col-lg-2">午餐/晚餐</div>--}}
+                {{--<div class="col-md-3 col-lg-3">餐图</div>--}}
+            {{--</div>--}}
+
+
+            {{--@foreach($clWeekMenu as $item)--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->date}}"></div>--}}
+                    {{--<div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="{{$item->foods}}"></div>--}}
+                    {{--<div class="col-md-2 col-lg-2">--}}
+                        {{--{{($item->type==1)?'午餐':'晚餐'}}--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-3 col-lg-3">--}}
+                        {{--<img src="{{$item->cover_img}}" style="width: 120px;height: 120px;"/>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--@endforeach--}}
+
+
+            {{--<div class="row edit-row">--}}
+                {{--<div class="col-md-3 col-lg-3">--}}
+                    {{--<div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">--}}
+                        {{--<input class="form-control" size="16" type="text" value="{{\Illuminate\Support\Facades\Request::input('start_time')}}" name="date" >--}}
+                        {{--<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>--}}
+                    {{--</div>--}}
                     {{--<input class="form-control no-border-input bt-line-1" value="" name="date">--}}
-                </div>
-                <div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="foods"></div>
-                <div class="col-md-2 col-lg-2">
-                    <select name="type">
-                        <option value="1">午餐</option>
-                        <option value="2">晚餐</option>
-                    </select>
-                </div>
-                <div class="col-md-3 col-lg-3">
-                    <img src=""  id="food_img" style="width: 120px;height: 120px;" onclick="uploadCover2()"/>
-                </div>
-                <div class="col-md-1 col-lg-1">
-                    <div class="btn btn-dark" id="edit_food_menu">新增</div>
-                </div>
-            </div>
+                {{--</div>--}}
+                {{--<div class="col-md-3 col-lg-3"><input class="form-control no-border-input bt-line-1" value="" name="foods"></div>--}}
+                {{--<div class="col-md-2 col-lg-2">--}}
+                    {{--<select name="type">--}}
+                        {{--<option value="1">午餐</option>--}}
+                        {{--<option value="2">晚餐</option>--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+                {{--<div class="col-md-3 col-lg-3">--}}
+                    {{--<img src=""  id="food_img" style="width: 120px;height: 120px;" onclick="uploadCover2()"/>--}}
+                {{--</div>--}}
+                {{--<div class="col-md-1 col-lg-1">--}}
+                    {{--<div class="btn btn-dark" id="edit_food_menu">新增</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             {{--<input type="hidden" id="edit_food_menu"/>--}}
         </div>
 
     </div>
 @stop
-
+<script src="/js/vue.js"></script>
 @section('script')
+
     <script>
 
         var pageConfig = {
@@ -155,6 +214,35 @@
             foodMenuTempData:{},
             uploadImgId:'',
         }
+
+        new Vue(
+            {
+                el:'#menu_book',
+                data:function()
+                {
+                    return {
+                        list:[],
+                    }
+                },
+                methods:
+                {
+                   pageInit()
+                   {
+                       var _self = this;
+                       $.get('/admin/index/food-menu',{product_id:pageConfig.product_id},function(data){
+                           if ( data.status )
+                           {
+                               _self.list = data.data;
+                           }
+                       },'json');
+                   }
+                },
+                created:function()
+                {
+                    this.pageInit();
+                }
+            }
+        );
 
 
         function uploadCover(){
@@ -217,7 +305,7 @@
                 return true;
             },
             data:function(){
-                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val(),cover_image2:$('.essay_img2').find('img').attr('src')};
+                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val(),cover_image2:$('.essay_img2').find('img').attr('src'),price:$('input[name="price"]').val()};
             },
             callback:function (el,val)
             {
