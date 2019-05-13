@@ -1000,8 +1000,6 @@ class UserController extends Controller
             $user->age = Carbon::parse($user->age)->diffInYears();
         }
 
-        $user->age = Carbon::parse($user->age)->diffInYears();
-
 
         return $this->jsonReturn(1,['user'=>$user,'is_vip'=>$user->isVip(),'couponCount'=>$count]);
     }
