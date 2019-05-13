@@ -995,8 +995,11 @@ class UserController extends Controller
 
         //改写age
 
+        $user->age_origin = '';
+
         if( strpos($user->age,'-') )
         {
+            $user->age_origin = $user->age;
             $user->age = Carbon::parse($user->age)->diffInYears();
         }
 
