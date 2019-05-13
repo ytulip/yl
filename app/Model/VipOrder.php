@@ -36,30 +36,30 @@ class VipOrder extends Model
             $foodTypeText = 'A餐';
             $normalClean = 6;
             $deepClean = 3;
-            $healthCount = '';
+            $healthCount = 1;
             $financeCount = 4;
         } else if ( $this->buy_type == 2)
         {
             $foodCount = 180;
-            $foodTypeText = 'B餐';
+            $foodTypeText = 'A餐';
             $normalClean = 12;
             $deepClean = 6;
-            $healthCount = '';
+            $healthCount = 1;
             $financeCount = 4;
         } else if ( $this->buy_type == 3)
         {
             $foodCount = 90;
-            $foodTypeText = 'A餐';
-            $normalClean = 6;
-            $deepClean = 3;
-            $healthCount = '';
-            $financeCount = 4;
-        } else {
-            $foodCount = 180;
             $foodTypeText = 'B餐';
             $normalClean = 6;
             $deepClean = 3;
             $healthCount = '';
+            $financeCount = 1;
+        } else {
+            $foodCount = 180;
+            $foodTypeText = 'B餐';
+            $normalClean = 12;
+            $deepClean = 3;
+            $healthCount = 1;
             $financeCount = 4;
         }
 
@@ -70,7 +70,7 @@ class VipOrder extends Model
         for ($i = 0; $i < $foodCount; $i++ )
         {
             $coupon = new Coupon();
-            $coupon->coupon_type = ($this->coupon_type > 2)?5:4;
+            $coupon->coupon_type = ( $this->buy_type > 2 )?5:4;
             $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
             $coupon->type_text = $foodTypeText;
             $coupon->user_id = $this->user_id;
@@ -93,17 +93,17 @@ class VipOrder extends Model
             $coupon->save();
         }
 
-        for ($i = 0; $i < $deepClean; $i++ )
-        {
-            $coupon = new Coupon();
-            $coupon->coupon_type = 2;
-            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
-            $coupon->type_text = '深度保洁';
-            $coupon->user_id = $this->user_id;
-            $coupon->refer_id = $this->id;
-            $coupon->status = 1;
-            $coupon->save();
-        }
+//        for ($i = 0; $i < $deepClean; $i++ )
+//        {
+//            $coupon = new Coupon();
+//            $coupon->coupon_type = 2;
+//            $coupon->expire_at = Carbon::now()->addDays($baseDay)->format('Y-m-d');
+//            $coupon->type_text = '深度保洁';
+//            $coupon->user_id = $this->user_id;
+//            $coupon->refer_id = $this->id;
+//            $coupon->status = 1;
+//            $coupon->save();
+//        }
 
         return true;
     }

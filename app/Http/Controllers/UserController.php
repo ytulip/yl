@@ -200,7 +200,7 @@ class UserController extends Controller
 
             $order->product_id = $product->id;
             $order->product_name = $product->product_name;
-            $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
+//            $order->need_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
             $order->origin_pay = $product->price * Kit::cleanServiceTimeType($clean_service_time);
             $order->quantity = Kit::cleanServiceTimeType($clean_service_time);
             $order->user_id = $user->id;
@@ -247,15 +247,12 @@ class UserController extends Controller
             $order->lunch_service_time = Request::input('lunch_service');
             $order->dinner_service_time = Request::input('dinner_service');
             $order->service_start_time = Request::input('service_start_time');
+        }
 
-
-            //判断是不是vip
-            if ( $user->isVip() )
-            {
-                $order->is_vip = 1;
-            }
-
-
+        //判断是不是vip
+        if ( $user->isVip() )
+        {
+            $order->is_vip = 1;
         }
 
         //保存地址哟
@@ -335,6 +332,11 @@ class UserController extends Controller
                 }
 
 
+                $order->pay_status = 1;
+                $order->pay_time = date('Y-m-d H:i:s');
+                $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+                $order->save();
+
                 //标识全部已由优惠券抵扣，无需再支付
                 return $this->jsonReturn(1, 333);
             }
@@ -349,7 +351,10 @@ class UserController extends Controller
                     $coupon->save();
                 }
 
-                return $this->jsonReturn(1, 333);
+                if( $order->quantity == 2)
+                {
+                    return $this->jsonReturn(1, 333);
+                }
             }
 
         }
@@ -359,7 +364,8 @@ class UserController extends Controller
 
         if( $product->isCleanProduct() )
         {
-
+            $order->need_pay = $order->origin_pay - (count($couponIds)?(2 * $product->price):0);
+            $order->save();
         } else {
             $order->need_pay = $product->price * ($order->quantity * Order::getDaysByType(Request::input('tabIndex')) - count($couponIds)) * Order::saleOff(Request::input('tabIndex'));
             $order->save();

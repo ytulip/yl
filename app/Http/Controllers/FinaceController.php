@@ -33,7 +33,7 @@ class FinaceController extends Controller
 
 
 
-        if( strpos($tradeNo,'v') == 0 )
+        if( strpos($tradeNo,'v') === 0 )
         {
 
             $tradeNo = str_replace('v','',$tradeNo);
@@ -51,33 +51,23 @@ class FinaceController extends Controller
 
             //购买会员的
             $user = User::find($vipOrder->user_id);
-            $month = (Request::input('type') == 1)?6:12;
+            $month = (in_array($vipOrder->buy_type,[1,3]))?3:6;
 
-            if( $expireDay = $user->vipExpireDay() )
+
+            $expireMonth = Carbon::parse(Carbon::now()->format('Y-m'));
+            $expireMonth->addMonths($month);
+            if( $expireMonth->daysInMonth < date('d') )
             {
-                $expireMonth = Carbon::parse(Carbon::parse($expireDay)->format('Y-m'));
-                //增加月份
-                $expireMonth->addMonths($month);
-                //把日期算上去？
-                $expireMonth->addDays( ($user->pay_day < $expireMonth->daysInMonth)?($user->pay_day - 1):($expireMonth->daysInMonth - 1));
-
-            } else
-            {
-                $expireMonth = Carbon::parse(Carbon::now()->format('Y-m'));
-                $expireMonth->addMonths($month);
-                if( $expireMonth->daysInMonth < date('d') )
-                {
-                    //到期日子没有今天的日子，那到期日就是他了
-                    $expireMonth->addDays($expireMonth->daysInMonth - 1);
-                } else {
-                    //到期日要减一天
-                    $expireMonth->addDays(date('d'))->subDay()->subDay();
-                }
-                $user->pay_day = (date('d') == 1)?31:(date('d') - 1);
-
+                //到期日子没有今天的日子，那到期日就是他了
+                $expireMonth->addDays($expireMonth->daysInMonth - 1);
+            } else {
+                //到期日要减一天
+                $expireMonth->addDays(date('d'))->subDay()->subDay();
             }
+            $user->pay_day = (date('d') == 1)?31:(date('d') - 1);
+
             $user->expire_time= $expireMonth->format('Y-m-d');
-            $user->health_count = 4;
+            $user->health_count = 1;
 
 
             /**
@@ -87,6 +77,19 @@ class FinaceController extends Controller
             $user->save();
             return "SUCCESS";
         }
+
+
+
+
+        //TODO 处理订单
+        $order = Order::find($tradeNo);
+        $order->pay_status = 1;
+        $order->pay_time = date('Y-m-d H:i:s');
+        $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+        $order->save();
+        return "SUCCESS";
+
+
 
 
         //判断是否处理过
