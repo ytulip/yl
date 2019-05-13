@@ -1419,7 +1419,12 @@ class UserController extends Controller
     {
         $user = User::find(Auth::id());
         $user->age = Request::input('age');
-        $user->real_name = Request::input('name');
+
+        if( Request::has('name'))
+        {
+            $user->real_name = Request::input('name');
+        }
+
         $user->save();
         return $this->jsonReturn(1);
     }
