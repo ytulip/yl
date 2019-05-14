@@ -891,7 +891,7 @@ class IndexController extends Controller
      */
     public function anyFoodBillByDay()
     {
-        $list = SubFoodOrders::where('date',date('Y-m-d'))->leftJoin('orders','orders.id','=','sub_food_orders.order_id')->selectRaw('orders.*,sub_food_orders.id as sub_id,status,type')->get();
+        $list = SubFoodOrders::where('date',date('Y-m-d'))->leftJoin('orders','orders.id','=','sub_food_orders.order_id')->selectRaw('orders.*,sub_food_orders.id as sub_id,status,type,has_print,sub_food_orders.remark as remark2')->get();
         return $this->jsonReturn(1,$list);
     }
 
@@ -1213,6 +1213,33 @@ class IndexController extends Controller
         $list = FoodMenu::where('product_id',Request::input('product_id'))->orderBy('date','desc')->orderBy('type','asc')->where('date','<',$high)->where('date','>=',$low)->get();
 
         return $this->jsonReturn(1,$list);
+    }
+
+    public function anySetPrint()
+    {
+        $order = SubFoodOrders::find(Request::input('id'));
+        if ( $order->has_print ) return $this->jsonReturn(1);
+
+        $order->has_print = 1;
+        $order->save();
+        return $this->jsonReturn(1);
+    }
+
+
+    /**
+     * 助餐订单
+     */
+    public function anyFoodOrder()
+    {
+        $query = Order::where('pay_status',1)->whereIn('product_id',[4,5,6])->orderBy('id','desc');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('food_order')->with('paginate', $paginate);
+    }
+
+
+    public function anyFoodOrderDetail()
+    {
+        return view('food_order_detail');
     }
 
 }

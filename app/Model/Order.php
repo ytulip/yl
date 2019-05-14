@@ -291,24 +291,20 @@ class Order extends Model
         return ($this->buy_type == 2)?true:false;
     }
 
-    public function buyTypeText()
+    public static function buyTypeText($days)
     {
         $text = '';
-        switch($this->buy_type)
+        switch($days)
         {
             case 1:
-                $text = '邀请新会员';
+                $text = '单次';
                 break;
-            case 2:
-                $text = '复购';
+            case 7:
+                $text = '包月';
                 break;
-            case 3:
-                $text = '活动';
+            case 30:
+                $text = '包周';
                 break;
-            case 4:
-                $text = '新用户报单';
-                break;
-                default;
         }
         return $text;
     }

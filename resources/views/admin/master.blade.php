@@ -116,22 +116,22 @@
                     </div>
 
                 </li>
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(3)) class="dpn" @endif><a href="/admin/index/activity-good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>订单管理</span><div class="clearfix"></div></a>
+                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(3)) class="dpn" @endif><a href="javascript:void(0);"><i class="fa fa-envelope nav_icon menu-fa"></i><span>订单管理</span><div class="clearfix"></div></a>
 
                     <ul id="menu-academico-sub" >
-                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/total-finance">助餐订单</a></li>
+                        <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-order">助餐订单</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-bill">保洁订单</a></li>
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/withdraw">会员订单</a></li>
                     </ul>
                     <div class="sub-menu">
-                        <a href="/admin/index/total-finance">助餐订单</a>
+                        <a href="/admin/index/food-order">助餐订单</a>
                         <a href="/admin/index/clean-bill">保洁订单</a>
                         <a href="/admin/index/get-good">会员订单</a>
                     </div>
 
                 </li>
 
-                <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="/admin/index/essays"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
+                <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="javascript:void(0)"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
 
                     <ul id="menu-academico-sub" >
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-manager">助餐服务</a></li>

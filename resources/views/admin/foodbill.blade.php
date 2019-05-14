@@ -58,7 +58,7 @@
                 <div class="col-md-1 col-lg-1">@{{item['remark']}}</div>
                 <div class="col-md-1 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-1 col-lg-1"></div>
-                <div class="col-md-1 col-lg-1"><a class="deliver" @click="print(item)">出单</a></div>
+                <div class="col-md-1 col-lg-1"><a class="deliver" @click="print(item)">@{{ item['has_print']?'已出单':'出单' }}</a></div>
                 <div class="col-md-1 col-lg-1">
                     <a class="deliver" @click="doDeliver(item.sub_id)" v-if="tabIndex == 1">确认送达</a>
                     <a class="deliver" @click="doRemark(item.sub_id)" v-else>填写备注</a>
@@ -115,9 +115,16 @@
             //LODOP.ADD_PRINT_RECT(10,18,324,392,0,1);
             var marinTop = 30;
 
+
+            LODOP.ADD_PRINT_IMAGE(marinTop,'2mm','12mm','12mm','<img src="http://yl.cc/images/3.png"/>');
+
             LODOP.ADD_PRINT_TEXT(marinTop,'2mm','50mm',54,"花甲生活服务");
             LODOP.SET_PRINT_STYLEA(0,"fontsize",14);
             //
+            marinTop += 80;
+
+            // LODOP.ADD_PRINT_IMAGE(marinTop,'2mm','12mm','12mm','<img src="http://yl.cc/images/3.png"/>');
+
 
             marinTop += 20;
             LODOP.ADD_PRINT_TEXT(marinTop,'2mm','50mm',54,"------------------");
@@ -351,6 +358,15 @@
                         },
                         print(obj)
                         {
+
+                            /**
+                             * 标识为已出单
+                             */
+                            var _self = this;
+                            $.get('/admin/index/set-print',{id:obj.sub_id},function(data){
+                                _self.pageInit();
+                            },'json');
+
                             OpenPreview(obj);
                         },
                         setTab(ind)

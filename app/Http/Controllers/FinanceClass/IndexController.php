@@ -61,7 +61,10 @@ class IndexController extends Controller
 
     public function anyWenjuan()
     {
-        return view('finance.wenjuan');
+        $book = Book::find(Request::input('id'));
+        $user = User::find($book->user_id);
+
+        return view('finance.wenjuan')->with('user',$user);
     }
 
     public function anySave()

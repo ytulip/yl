@@ -23,10 +23,10 @@
         <h1 class="t-al-c" style="padding: 30px;">个人理财客户风险评估问卷</h1>
 
         <div class="cus-row cus-row-v-m">
-            <div class="cus-row-col-3 t-al-c"><span>证件姓名:</span></div>
-            <div class="cus-row-col-3 t-al-c"><span>联系方式:</span></div>
-            <div class="cus-row-col-3 t-al-c"><span>证件类型:</span></div>
-            <div class="cus-row-col-3 t-al-c"><span>证件号码:</span></div>
+            <div class="cus-row-col-3 t-al-c"><span>证件姓名：{{$user->real_name}}</span></div>
+            <div class="cus-row-col-3 t-al-c"><span>联系方式：{{$user->phone}}</span></div>
+            <div class="cus-row-col-3 t-al-c"><span>证件类型：身份证</span></div>
+            <div class="cus-row-col-3 t-al-c"><span>证件号码：{{$user->id_card}}</span></div>
         </div>
 
 
