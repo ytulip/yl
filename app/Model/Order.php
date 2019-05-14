@@ -300,10 +300,10 @@ class Order extends Model
                 $text = '单次';
                 break;
             case 7:
-                $text = '包月';
+                $text = '包周';
                 break;
             case 30:
-                $text = '包周';
+                $text = '包月';
                 break;
         }
         return $text;
