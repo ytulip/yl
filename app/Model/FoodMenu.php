@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class FoodMenu extends Model
 {
 
+
+    protected $guarded = [];
+
     /**
      * @param $date
      * @param int $type 1表示午餐，2表示晚餐

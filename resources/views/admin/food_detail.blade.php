@@ -146,11 +146,58 @@
                 <div class="col-md-3 col-lg-3">@{{item.date}}</div>
                 <div class="col-md-3 col-lg-3">@{{item.foods}}</div>
                 <div class="col-md-3 col-lg-3">@{{item.type?'午餐':'晚餐'}}</div>
-                <div class="col-md-3 col-lg-3">修改</div>
+                <div class="col-md-3 col-lg-3"><a class="deliver" @click="edit(item)">修改</a></div>
             </div>
 
 
 
+
+            {{--<div style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel">--}}
+                {{--<div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 540px;">--}}
+                    {{--<h4>新增</h4>--}}
+                    {{--<form id="data_form">--}}
+                        {{--<div class="row mb-12">--}}
+                            {{--<div class="col-md-3 col-lg-3 t-al-r">日期:</div>--}}
+                            {{--<div class="col-md-9 col-lg-9">--}}
+                                {{--<div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">--}}
+                                {{--<input class="form-control" size="16" type="text" value="{{\Illuminate\Support\Facades\Request::input('start_time')}}" name="date" >--}}
+                                {{--<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>--}}
+                                {{--</div>--}}
+                                {{--<input class="form-control no-border-input bt-line-1" value="" name="date">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="row mb-12">--}}
+                            {{--<div class="col-md-3 col-lg-3 t-al-r">菜单:</div>--}}
+                            {{--<div class="col-md-9 col-lg-9">--}}
+                                {{--<input class="form-control" name="new_user_id_card" v-model="menu"/>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
+                        {{--<div class="row mb-12">--}}
+                            {{--<div class="col-md-3 col-lg-3 t-al-r">类型:</div>--}}
+                            {{--<div class="col-md-9 col-lg-9">--}}
+                                {{--<select class="form-control" v-model="type">--}}
+                                    {{--<option value="1">午餐</option>--}}
+                                    {{--<option value="2">晚餐</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
+
+                        {{--<div class="row mb-12">--}}
+                            {{--<div class="col-md-3 col-lg-3 t-al-r">图片:</div>--}}
+                            {{--<div class="col-md-9 col-lg-9">--}}
+                                {{--<input class="form-control" name="new_user_id_card" v-model="cover_img"/>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
+                    {{--</form>--}}
+                    {{--<div>--}}
+                        {{--<button type="button" class="btn btn-success col-gray-btn mt-32" @click="addPerson">确认</button>--}}
+                        {{--<button type="button" class="btn btn-success col-gray-btn mt-32" @click="closeLayer">取消</button>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             {{--<h3 class="">菜单编辑</h3>--}}
 
@@ -202,6 +249,64 @@
             {{--<input type="hidden" id="edit_food_menu"/>--}}
         </div>
 
+
+
+
+
+        <div class="dpn" style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel">
+            <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 540px;">
+                <h4>编辑/新增菜单</h4>
+                <form id="data_form">
+                    <div class="row mb-12">
+                        <div class="col-md-3 col-lg-3 t-al-r">日期:</div>
+                        <div class="col-md-9 col-lg-9">
+                            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input class="form-control" size="16" type="text" value="" name="date" >
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-12">
+                        <div class="col-md-3 col-lg-3 t-al-r">菜单:</div>
+                        <div class="col-md-9 col-lg-9">
+                            <input class="form-control" name="foods"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-12">
+                        <div class="col-md-3 col-lg-3 t-al-r">类型:</div>
+                        <div class="col-md-9 col-lg-9">
+                            <select class="form-control" name="type">
+                                <option value="1">午餐</option>
+                                <option value="2">晚餐</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-12">
+                        <div class="col-md-3 col-lg-3 t-al-r">图片:</div>
+                        <div class="col-md-9 col-lg-9" style="text-align: center;">
+                            <img  id="food_img" style="width: 80%" onclick="uploadCover2()"/>
+                            <input type="hidden" name="cover_img"/>
+                        </div>
+                    </div>
+
+                </form>
+                <div>
+                    <button type="button" class="btn btn-success col-gray-btn mt-32" id="edit_food_menu">确认</button>
+                    <button type="button" class="btn btn-success col-gray-btn mt-32" onclick="closeLayer()">取消</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
     </div>
 @stop
 <script src="/js/vue.js"></script>
@@ -215,13 +320,33 @@
             uploadImgId:'',
         }
 
-        new Vue(
+
+
+
+        function openLayer()
+        {
+            $('#add_member_panel').removeClass('dpn');
+        }
+
+
+        function closeLayer()
+        {
+            // alert(3);
+            $('#add_member_panel').addClass('dpn');
+        }
+
+        var listVue = new Vue(
             {
                 el:'#menu_book',
                 data:function()
                 {
                     return {
                         list:[],
+                        layer_flag:true,
+                        type:'',
+                        cover_img:'',
+                        menu:'',
+                        id:''
                     }
                 },
                 methods:
@@ -235,10 +360,62 @@
                                _self.list = data.data;
                            }
                        },'json');
-                   }
+                   },
+                    add()
+                    {
+                        this.id = '';
+                        $('input[name="date"]').val('');
+                        $('input[name="foods"]').val('');
+                        $('select[name="type"]').val('');
+                        $('input[name="cover_img"]').val('');
+                        $('#food_img').attr('src','');
+                        openLayer();
+                    },
+                    edit(obj)
+                    {
+
+
+                        $('input[name="date"]').val(obj.date);
+                        $('input[name="foods"]').val(obj.foods);
+                        $('select[name="type"]').val(obj.type);
+                        $('input[name="cover_img"]').val(obj.cover_img);
+                        $('#food_img').attr('src',obj.cover_img);
+
+                        openLayer();
+
+                        this.id = obj.id;
+                        // this.roleId =  obj.type;
+                        // this.layer_mobile =  obj.mobile;
+                        // this.layer_real_name =  obj.real_name;
+                        // this.layer_id_card =  obj.id_card;
+                        // this.layer_flag = true;
+
+
+
+
+                    },
+                    addPerson()
+                    {
+
+                    },
+                    closeLayer()
+                    {
+                        this.layer_flag = false;
+                        listVue.pageInit();
+                    }
                 },
                 created:function()
                 {
+                    $('.form_date').datetimepicker({
+                        language:  'zh-CN',
+                        weekStart: 1,
+                        todayBtn:  1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        minView: 2,
+                        forceParse: 0
+                    });
                     this.pageInit();
                 }
             }
@@ -279,21 +456,57 @@
             selectorStr:"#edit_food_menu",
             url:'/admin/index/edit-food-menu',
             prepositionJudge:function(){
+
+
+                /**
+                 * 校验
+                 */
+
+                if( !$('input[name="date"]').val() )
+                {
+                    mAlert('日期不能为空');
+                    return false;
+                }
+
+
+                if( !$('input[name="foods"]').val() )
+                {
+                    mAlert('菜单不能为空');
+                    return false;
+                }
+
+
+                if( !$('select[name="type"]').val() )
+                {
+                    mAlert('类型不能为空');
+                    return false;
+                }
+
+
+                if( !$('input[name="cover_img"]').val() )
+                {
+                    mAlert('图片不能为空');
+                    return false;
+                }
+
+
                 return true;
             },
             data:function(){
                 return {
                     product_id:pageConfig.product_id,
                     foods:$('input[name="foods"]').val(),
-                    cover_img:$('#food_img').attr('src'),
+                    cover_img:$('input[name="cover_img"]').val(),
                     type:$('select[name="type"]').val(),
                     date:$('input[name="date"]').val()
-
                 }
             },
             callback:function (el,val)
             {
-                location.reload();
+                // location.reload();
+                closeLayer();
+                listVue.pageInit();
+
             }
         });
 
@@ -329,6 +542,7 @@
                         if(data.status) {
                             if(pageConfig.uploadImgId == 2){
                                 $('#food_img').attr('src',data.data[0]);
+                                $('input[name="cover_img"]').val(data.data[0]);
                             } if(pageConfig.uploadImgId == 3) {
                                 $('.essay_img2').find('img').attr('src', data.data[0]);
                             }else {

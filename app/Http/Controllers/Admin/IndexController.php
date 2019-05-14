@@ -950,15 +950,18 @@ class IndexController extends Controller
      */
     public function anyEditFoodMenu()
     {
-        $id = Request::input('id');
-        if( !( $foodMenu = FoodMenu::find($id) ) )
-        {
-            $foodMenu = new FoodMenu();
-        }
+//        $id = Request::input('id');
+//        if( !( $foodMenu = FoodMenu::find($id) ) )
+//        {
+//            $foodMenu = new FoodMenu();
+//        }
 
-        $foodMenu->product_id = Request::input('product_id');
-        $foodMenu->date = Request::input('date');
-        $foodMenu->type = Request::input('type');
+
+        $foodMenu = FoodMenu::firstOrCreate(['product_id'=>Request::input('product_id'),'type'=>Request::input('type'),'date'=> Request::input('date')]);
+
+//        $foodMenu->product_id = Request::input('product_id');
+//        $foodMenu->date = Request::input('date');
+//        $foodMenu->type = Request::input('type');
         $foodMenu->foods = Request::input('foods');
         $foodMenu->cover_img = Request::input('cover_img');
         $foodMenu->save();
