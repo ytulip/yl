@@ -367,7 +367,7 @@
                         $('input[name="date"]').val('');
                         $('input[name="foods"]').val('');
                         $('select[name="type"]').val('');
-                        $('input[name="cover_img"]').val('');
+                        $('#add_member_panel input[name="cover_img"]').val('');
                         $('#food_img').attr('src','');
                         openLayer();
                     },
@@ -378,7 +378,7 @@
                         $('input[name="date"]').val(obj.date);
                         $('input[name="foods"]').val(obj.foods);
                         $('select[name="type"]').val(obj.type);
-                        $('input[name="cover_img"]').val(obj.cover_img);
+                        $('#add_member_panel input[name="cover_img"]').val(obj.cover_img);
                         $('#food_img').attr('src',obj.cover_img);
 
                         openLayer();
@@ -483,7 +483,7 @@
                 }
 
 
-                if( !$('input[name="cover_img"]').val() )
+                if( !$('#add_member_panel input[name="cover_img"]').val() )
                 {
                     mAlert('图片不能为空');
                     return false;
@@ -496,7 +496,7 @@
                 return {
                     product_id:pageConfig.product_id,
                     foods:$('input[name="foods"]').val(),
-                    cover_img:$('input[name="cover_img"]').val(),
+                    cover_img:$('#add_member_panel input[name="cover_img"]').val(),
                     type:$('select[name="type"]').val(),
                     date:$('input[name="date"]').val()
                 }
@@ -540,10 +540,13 @@
                     success:function(data){
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
                         if(data.status) {
+
+                            console.log(pageConfig.uploadImgId );
+
                             if(pageConfig.uploadImgId == 2){
                                 $('#food_img').attr('src',data.data[0]);
-                                $('input[name="cover_img"]').val(data.data[0]);
-                            } if(pageConfig.uploadImgId == 3) {
+                                $('#add_member_panel input[name="cover_img"]').val(data.data[0]);
+                            }else if(pageConfig.uploadImgId == 3) {
                                 $('.essay_img2').find('img').attr('src', data.data[0]);
                             }else {
                                 $('.essay_img').find('img').attr('src', data.data[0]);
