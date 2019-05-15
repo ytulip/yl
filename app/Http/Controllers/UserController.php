@@ -262,12 +262,12 @@ class UserController extends Controller
 
 
         //模拟支付
-        if(env('MOCK_PAY'))
-        {
-            $order->pay_status = 1;
-            $order->pay_time = date('Y-m-d H:i:s');
-            $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
-        }
+//        if(env('MOCK_PAY'))
+//        {
+//            $order->pay_status = 1;
+//            $order->pay_time = date('Y-m-d H:i:s');
+//            $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
+//        }
 
 
         $order->save();

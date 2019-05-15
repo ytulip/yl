@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Log\Facades\Logger;
 use App\Model\CashStream;
+use App\Model\Coupon;
 use App\Model\Deliver;
 use App\Model\InvitedCodes;
 use App\Model\Message;
@@ -87,6 +88,29 @@ class FinaceController extends Controller
         $order->pay_time = date('Y-m-d H:i:s');
         $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
         $order->save();
+
+
+
+        $couponIdsStr = $order->coupons;
+        if( $couponIdsStr )
+        {
+            $couponIds = explode(',',$couponIdsStr);
+        } else {
+            $couponIds = [];
+        }
+
+
+        /**
+         * 优惠券置为已使用
+         */
+        foreach ($couponIds as $couponId) {
+            $coupon = Coupon::find($couponId);
+            $coupon->order_id = $order->id;
+            $coupon->status = 2;
+            $coupon->save();
+        }
+
+
         return "SUCCESS";
 
 
