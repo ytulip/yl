@@ -1233,8 +1233,9 @@ class UserController extends Controller
 
 //            $data['foodId'] = in_array($vipOrder->buy_type,[1,2])?4:5;
             //理财咨询
-
-            //健康体检
+            $product = Product::activeFinance();
+            $product->start_time;
+            $data['nextFinance'] = Kit::dateFormat3($product->start_time);
         }
 
         return $this->jsonReturn(1,$data);
