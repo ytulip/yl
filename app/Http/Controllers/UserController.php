@@ -123,7 +123,7 @@ class UserController extends Controller
 
         $order = new VipOrder();
         $order->buy_type = Request::input('type');
-        $order->price = 1;
+        $order->price = VipOrder::typeGetPrice($order->buy_type);
         $order->user_id = Auth::id();
         $order->save();
 

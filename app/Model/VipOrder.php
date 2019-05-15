@@ -10,6 +10,23 @@ class VipOrder extends Model
     public $table = 'vip_order';
 
 
+    public static function typeGetPrice($type)
+    {
+        if( $type == 1){
+            return 3212;
+        }else if( $type == 2)
+        {
+            return 6424;
+        }else if( $type == 3)
+        {
+            return 3768;
+        }else if( $type == 4 )
+        {
+            return 7536;
+        }
+    }
+
+
 
     public function vipName()
     {
