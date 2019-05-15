@@ -161,7 +161,7 @@ class UserController extends Controller
         $input->SetOut_trade_no('v' . $order->id);//这个订单号是特殊的
         $input->SetTotal_fee($total_amount); //钱是以分计的
         $input->SetTime_start(date("YmdHis"));
-        $input->SetGoods_tag("花甲汇演");
+        $input->SetGoods_tag("花甲会员");
         $input->SetNotify_url(env('WECHAT_NOTIFY_URL'));
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openid);
