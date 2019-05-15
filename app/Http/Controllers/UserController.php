@@ -393,7 +393,7 @@ class UserController extends Controller
         if( env('PAY_TEST')) {
             $total_amount = 1;
         } else {
-            $total_amount = intval($order->needPay * 100);
+            $total_amount = intval($order->need_pay * 100);
         }
 
 
