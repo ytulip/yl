@@ -116,17 +116,15 @@
             var marinTop = 30;
 
 
-            LODOP.ADD_PRINT_IMAGE(marinTop,'2mm','12mm','12mm','<img src="http://yl.cc/images/3.png"/>');
+            LODOP.ADD_PRINT_IMAGE(marinTop,'2mm','12mm','12mm','<img src="/images/print_logo_1.png"/>');
 
-            LODOP.ADD_PRINT_TEXT(marinTop,'2mm','50mm',54,"花甲生活服务");
+            LODOP.ADD_PRINT_TEXT(marinTop + 9,'22mm','50mm',54,"生活服务");
             LODOP.SET_PRINT_STYLEA(0,"fontsize",14);
-            //
-            marinTop += 80;
 
             // LODOP.ADD_PRINT_IMAGE(marinTop,'2mm','12mm','12mm','<img src="http://yl.cc/images/3.png"/>');
 
 
-            marinTop += 20;
+            marinTop += 40;
             LODOP.ADD_PRINT_TEXT(marinTop,'2mm','50mm',54,"------------------");
             LODOP.SET_PRINT_STYLEA(0,"fontsize",14);
             // //
