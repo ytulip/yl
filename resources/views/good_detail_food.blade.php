@@ -640,10 +640,12 @@
                        }
 
 
+
                        //如果大于30选起送，那起送无效
                        var date1 = new Date();
                        var date2 = new Date(date1);
                        date2.setDate(date1.getDate() + 30);
+
 
                        // console.log(date2.Format('yyyy-MM-dd'));
                        // console.log(tmpStartDay.Format("yyyy-MM-dd"));
@@ -652,6 +654,17 @@
                            mAlert('起送日期须在30天以内');
                            return;
                        }
+
+                       //如果小于5/21起送无效
+                       var chosenStr = tmpStartDay.Format('yyyy-MM-dd');
+
+                       if( (chosenStr == '2019-05-17') || (chosenStr == '2019-05-18') || (chosenStr == '2019-05-19') || (chosenStr == '2019-05-20') )
+                       {
+                           mAlert('起送日期应大于2019-05-20');
+                           return;
+                       }
+
+
 
 
 
