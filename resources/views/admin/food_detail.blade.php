@@ -168,7 +168,7 @@
             <div class="row paginate-list-row" v-for="(item,index) in list">
                 <div class="col-md-3 col-lg-3">@{{item.date}}</div>
                 <div class="col-md-3 col-lg-3">@{{item.foods}}</div>
-                <div class="col-md-3 col-lg-3">@{{item.type?'午餐':'晚餐'}}</div>
+                <div class="col-md-3 col-lg-3">@{{(item.type == 1)?'午餐':'晚餐'}}</div>
                 <div class="col-md-3 col-lg-3"><a class="deliver" @click="edit(item)">修改</a></div>
             </div>
 
