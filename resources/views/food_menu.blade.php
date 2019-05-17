@@ -96,8 +96,10 @@
 
         <div class="swiper-container" id="swiper2">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{$res[$dates[0]]['lunch']->cover_img}}"/></div>
-                <div class="swiper-slide"><img src="{{$res[$dates[0]]['dinner']->cover_img}}"/></div>
+
+                @foreach($res[$dates[0]]['imgs'] as $item)
+                    <div class="swiper-slide"><img src="{{$item}}"/></div>
+                    @endforeach
             </div>
             <div class="swiper-pagination"></div><!--分页器。如果放置在swiper-container外面，需要自定义样式。-->
         </div>
@@ -182,7 +184,16 @@
                 // mySwiper.updateSlides();
                 imgSwiper.removeAllSlides();
                 // mySwiper.ad
-                imgSwiper.appendSlide([ '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['lunch'] ? pageConfig.dataJson[date]['lunch']['cover_img'] : '') + '"/></div>', '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['dinner'] ? pageConfig.dataJson[date]['dinner']['cover_img'] : '') + '"/></div>' ]);
+                // imgSwiper.appendSlide([ '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['lunch'] ? pageConfig.dataJson[date]['lunch']['cover_img'] : '') + '"/></div>', '<div class="swiper-slide"><img src="' + (pageConfig.dataJson[date]['dinner'] ? pageConfig.dataJson[date]['dinner']['cover_img'] : '') + '"/></div>' ]);
+
+                var imgsArr = [];
+                //循环添加item
+                for(  i =0, j = pageConfig.dataJson[date]['imgs'].length; i < j; i++ )
+                {
+                    imgsArr.push('<div class="swiper-slide"><img src="' + pageConfig.dataJson[date]['imgs'][i] + '"/></div>');
+                }
+
+                imgSwiper.appendSlide(imgsArr);
 
 
                 $('#lunch').html(pageConfig.dataJson[date]['lunch']['foods'] ? pageConfig.dataJson[date]['lunch']['foods'] : '');

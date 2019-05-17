@@ -580,6 +580,11 @@ class PassportController extends Controller
             $lunch = (Object)['cover_img'=>''];
             $dinner = (Object)['cover_img'=>''];
 
+
+            $imgs = [];
+
+
+
             foreach ( $foods as $food)
             {
                 if( $food->type == 1)
@@ -589,10 +594,20 @@ class PassportController extends Controller
                 {
                     $dinner = $food;
                 }
+
+                if( $food->img_list )
+                {
+                    $tmpArr = explode(',',$food->img_list);
+                    foreach ( $tmpArr as $item)
+                    {
+                        array_push($imgs,$item);
+                    }
+                }
             }
 
             $res[$date]['lunch'] = $lunch;
             $res[$date]['dinner'] = $dinner;
+            $res[$date]['imgs'] = $imgs;
         }
 
        return view('food_menu')->with('dates',$dates)->with('res',$res);
