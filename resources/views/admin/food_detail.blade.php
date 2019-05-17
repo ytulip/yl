@@ -31,6 +31,29 @@
         }
 
         .deliver{cursor: pointer;}
+
+
+        .add-work-list > div {
+            display: inline-block;
+            width: 50%;
+            height: 230px;
+            padding: 7px;
+            vertical-align: top;
+        }
+
+        .work-img-box {
+            width: 100%;
+            height: 80%;
+        }
+
+        .work-img-box img{width: 100%;height: 100%;}
+
+        .work-img-opr {
+            height: 20%;
+            display: table;
+            font-size: 16px;
+            width: 100%;
+        }
     </style>
 @stop
 @section('left_content')
@@ -286,9 +309,13 @@
 
                     <div class="row mb-12">
                         <div class="col-md-3 col-lg-3 t-al-r">图片:</div>
-                        <div class="col-md-9 col-lg-9" style="text-align: center;">
-                            <img  id="food_img" style="width: 80%" onclick="uploadCover2()"/>
-                            <input type="hidden" name="cover_img"/>
+                        <div class="col-md-9 col-lg-9" style="text-align: center;height: 360px;
+    overflow-y: scroll;">
+                            {{--<img  id="food_img" style="width: 80%" onclick="uploadCover2()"/>--}}
+                            {{--<input type="hidden" name="cover_img"/>--}}
+                            <div style="font-size: 0;padding-top: 7px;border: 1px solid #979797;text-align: left;" class="add-work-list">
+                                <div id="work-img-add"><div style="width: 100%;height: 100%;border: 2px solid #FFD48B;border-radius: 2px;"><a style="line-height: 213px;display: block;text-align: center;color: #333;height: 100%;font-size: 16px;" onclick="uploadCover2()">上传作品</a></div></div>
+                            </div>
                         </div>
                     </div>
 
@@ -318,6 +345,14 @@
             product_id:{{$product->id}},
             foodMenuTempData:{},
             uploadImgId:'',
+        }
+
+
+
+        function deleteWork(obj){
+//        console.log($(obj));
+//        console.log($(obj).parent().parent());
+            $(obj).parent().parent().remove();
         }
 
 
@@ -367,8 +402,12 @@
                         $('input[name="date"]').val('');
                         $('input[name="foods"]').val('');
                         $('select[name="type"]').val('');
-                        $('#add_member_panel input[name="cover_img"]').val('');
-                        $('#food_img').attr('src','');
+                        // $('#add_member_panel input[name="cover_img"]').val('');
+                        // $('#food_img').attr('src','');
+
+
+                        $('.work-img-box-container').remove();
+
                         openLayer();
                     },
                     edit(obj)
@@ -378,8 +417,22 @@
                         $('input[name="date"]').val(obj.date);
                         $('input[name="foods"]').val(obj.foods);
                         $('select[name="type"]').val(obj.type);
-                        $('#add_member_panel input[name="cover_img"]').val(obj.cover_img);
-                        $('#food_img').attr('src',obj.cover_img);
+
+
+                        $('.work-img-box-container').remove();
+
+                        if( obj.img_list )
+                        {
+                            var imgArr = obj.img_list.split(",")
+                            for( i =0, j = imgArr.length; i < j; i++)
+                            {
+                                $('#work-img-add').before('<div class="work-img-box-container"><div class="work-img-box"><img src="'+imgArr[i]+'"/></div><div class="work-img-opr"><a onclick="deleteWork(this)" style="display: table-cell;vertical-align: middle;text-align: right;"><i class="fa fa-remove"></i>删除</a></div></div>');
+                            }
+                        }
+
+
+                        // $('#add_member_panel input[name="cover_img"]').val(obj.cover_img);
+                        // $('#food_img').attr('src',obj.cover_img);
 
                         openLayer();
 
@@ -483,7 +536,20 @@
                 }
 
 
-                if( !$('#add_member_panel input[name="cover_img"]').val() )
+                // if( !$('#add_member_panel input[name="cover_img"]').val() )
+                // {
+                //     mAlert('图片不能为空');
+                //     return false;
+                // }
+
+                var imgs = [];
+
+
+                $('.work-img-box').find('img').each(function(){
+                    imgs.push($(this).attr('src'));
+                });
+
+                if( !imgs.length )
                 {
                     mAlert('图片不能为空');
                     return false;
@@ -493,10 +559,19 @@
                 return true;
             },
             data:function(){
+
+                var imgs = [];
+
+
+                $('.work-img-box').find('img').each(function(){
+                    imgs.push($(this).attr('src'));
+                });
+
                 return {
                     product_id:pageConfig.product_id,
                     foods:$('input[name="foods"]').val(),
-                    cover_img:$('#add_member_panel input[name="cover_img"]').val(),
+                    cover_img:imgs[0],
+                    img_list:imgs.join(','),
                     type:$('select[name="type"]').val(),
                     date:$('input[name="date"]').val()
                 }
@@ -544,8 +619,13 @@
                             console.log(pageConfig.uploadImgId );
 
                             if(pageConfig.uploadImgId == 2){
-                                $('#food_img').attr('src',data.data[0]);
-                                $('#add_member_panel input[name="cover_img"]').val(data.data[0]);
+                                // $('#food_img').attr('src',data.data[0]);
+                                // $('#add_member_panel input[name="cover_img"]').val(data.data[0]);
+
+                                $('#work-img-add').before('<div class="work-img-box-container"><div class="work-img-box"><img src="'+data.data[0]+'"/></div><div class="work-img-opr"><a onclick="deleteWork(this)" style="display: table-cell;vertical-align: middle;text-align: right;"><i class="fa fa-remove"></i>删除</a></div></div>');
+                                // $(".work-img-box").imgLiquid();
+
+
                             }else if(pageConfig.uploadImgId == 3) {
                                 $('.essay_img2').find('img').attr('src', data.data[0]);
                             }else {

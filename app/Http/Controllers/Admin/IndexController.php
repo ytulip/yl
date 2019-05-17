@@ -964,6 +964,7 @@ class IndexController extends Controller
 //        $foodMenu->type = Request::input('type');
         $foodMenu->foods = Request::input('foods');
         $foodMenu->cover_img = Request::input('cover_img');
+        $foodMenu->img_list = Request::input('img_list');
         $foodMenu->save();
         return $this->jsonReturn(1);
     }

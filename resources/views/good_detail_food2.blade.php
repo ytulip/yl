@@ -18,7 +18,7 @@
                     width = maxWidth;
                 }
                 //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
-                var rem = width * 100 / designWidth;
+                var rem = width * 64 / designWidth;
                 //兼容UC开始
                 rootStyle="html{font-size:"+rem+'px !important}';
                 rootItem = document.getElementById('rootsize') || document.createElement("style");
@@ -49,10 +49,10 @@
             }, false);
 
             if (doc.readyState === "complete") {
-                doc.body.style.fontSize = "16px";
+                doc.body.style.fontSize = "64px";
             } else {
                 doc.addEventListener("DOMContentLoaded", function(e) {
-                    doc.body.style.fontSize = "16px";
+                    doc.body.style.fontSize = "64px";
                 }, false);
             }
         })(640, 640);
