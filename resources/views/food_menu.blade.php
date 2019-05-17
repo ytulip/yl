@@ -119,7 +119,7 @@
         </div>
 
         <div class="fs-16-fc-484848 m-t-16" style="line-height: 24px;" id="lunch">
-
+            {{$res[$dates[0]]['lunch']->foods}}
         </div>
     </div>
 
@@ -138,7 +138,7 @@
         </div>
 
         <div class="fs-16-fc-484848 m-t-16" style="line-height: 24px;" id="dinner">
-
+            {{$res[$dates[0]]['dinner']->foods}}
         </div>
     </div>
 
