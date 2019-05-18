@@ -1312,7 +1312,7 @@ class UserController extends Controller
         $foodTime = new FoodTime();
         $nextDate = $foodTime->nextDay();
 
-        $subFoodOrders = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->first();
+        $subFoodOrders = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->where('type',1)->first();
 
         if( !($subFoodOrders instanceof  SubFoodOrders))
         {
@@ -1322,6 +1322,15 @@ class UserController extends Controller
         $subFoodOrders->status = 100; //已延后
         $subFoodOrders->save();
 
+
+        //晚餐也延后
+        $subFoodOrders2 = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->where('type',2)->first();
+        if( $subFoodOrders2 instanceof SubFoodOrders)
+        {
+            $subFoodOrders->status2 = 100; //已延后
+            $subFoodOrders->save();
+        }
+
         //
         $count = $order->quantity;
 
@@ -1329,7 +1338,7 @@ class UserController extends Controller
         {
             $coupon = new Coupon();
             $coupon->coupon_type = $order->product_id;
-            $coupon->expire_at = Carbon::now()->addDays(180)->format('Y-m-d');
+            $coupon->expire_at = Carbon::now()->addDays(29)->format('Y-m-d');
             $coupon->type_text = $order->product_name;
             $coupon->user_id = $order->user_id;
             $coupon->status = 1;
