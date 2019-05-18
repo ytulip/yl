@@ -18,7 +18,7 @@
     </div>
 
     <div style="margin-top: 75px">
-        <a class="yl_btn1" href="javascript:goHome()">返回首页</a>
+        <a class="yl_btn1" href="javascript:goHome()">完成</a>
     </div>
 
     <div style="margin-top: 24px">
