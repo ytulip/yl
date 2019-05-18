@@ -247,6 +247,7 @@ class UserController extends Controller
             $order->lunch_service_time = Request::input('lunch_service');
             $order->dinner_service_time = Request::input('dinner_service');
             $order->service_start_time = Request::input('service_start_time');
+            $order->service_end_time = Kit::dateAddDay($order->service_start_time,$order->days - 1);
         }
 
         //判断是不是vip
@@ -935,7 +936,7 @@ class UserController extends Controller
 
     public function anyUserOrder()
     {
-        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->where('service_start_time','>=',date('Y-m-d'))->where('order_status','>',0)->get();
+        $list = Order::where('user_id',Auth::id())->leftJoin('products','products.id','=','orders.product_id')->selectRaw('orders.*,products.type')->orderBy('orders.id','desc')->where('service_end_time','>=',date('Y-m-d'))->where('order_status','>',0)->get();
         if( !$list)
         {
             $list = [];

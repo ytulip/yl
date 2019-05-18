@@ -147,4 +147,11 @@ class Kit
     {
         return $workNo % 100000;
     }
+
+    public static function dateAddDay($timeStr,$days)
+    {
+        $carbon = new Carbon($timeStr);
+        return $carbon->addDays($days)->format('Y-m-d');
+
+    }
 }
