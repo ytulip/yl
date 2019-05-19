@@ -329,7 +329,8 @@
             // LODOP.SET_PRINT_STYLEA(0,"fontsize",16);
             //设定打印页面大小
             LODOP.SET_PRINT_PAGESIZE(3,'54mm',45,"订单页面");
-            LODOP.PREVIEW();
+            // LODOP.PREVIEW();
+            LODOP.PRINT();
         };
 
 
