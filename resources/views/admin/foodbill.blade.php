@@ -27,21 +27,34 @@
 </style>
 @stop
 @section('left_content')
+
+    <div class="t-al-r" style="padding: 12px;">
+        <div style="width: 220px;display: inline-block;vertical-align: middle;">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" style="padding-bottom: 0;">
+                <input class="form-control" size="16" type="text" value="" name="date" >
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>    </div> <a style="display: inline-block;vertical-align: middle;margin-left: 20px;" href="javascript:search()"><i class="fa fa-search"></i>搜索</a>
+    </div>
+
     <div id="app">
-        <div class="block-card mt-32">
+        <div class="block-card">
             <ul class="nav nav-tabs">
-                <li role="presentation" v-bind:class="{active:(tabIndex == 1)}" @click="setTab(1)"><a href="#">待处理</a></li>
-                <li role="presentation" v-bind:class="{active:(tabIndex == 2)}" @click="setTab(2)"><a href="#">已处理</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 1)}" @click="setTab(1)"><a href="#">待处理@{{date?date:''}}</a></li>
+                <li role="presentation" v-bind:class="{active:(tabIndex == 2)}" @click="setTab(2)"><a href="#">已处理@{{date?date:''}}</a></li>
             </ul>
 
-
-
-            <div class="row paginate-list-row mt-32">
+            <div class="row paginate-list-row m-t-10">
                 <div class="col-md-1 col-lg-1">订单编号</div>
                 <div class="col-md-1 col-lg-1">姓名</div>
                 <div class="col-md-1 col-lg-1">手机</div>
                 <div class="col-md-2 col-lg-2">订餐内容</div>
-                <div class="col-md-1 col-lg-1">类型</div>
+                <div class="col-md-1 col-lg-1">
+                    <select v-model="type" style="padding: 0;">
+                        <option value="">类型</option>
+                        <option value="1">午餐</option>
+                        <option value="2">晚餐</option>
+                    </select>
+                </div>
                 <div class="col-md-1 col-lg-1">备注</div>
                 <div class="col-md-1 col-lg-2">配送地址</div>
                 <div class="col-md-1 col-lg-1">详情</div>
@@ -102,6 +115,17 @@
                 date:'{{date('Y-m-d')}}'
             }
 
+        function search()
+        {
+            var date = $('input[name="date"]').val();
+            if( !date )
+            {
+                mAlert('请选择时间');
+                return;
+            }
+
+            listVue.setDate(date);
+        }
 
         var LODOP; //声明为全局变量
         function OpenPreview(obj) {
@@ -309,7 +333,7 @@
         };
 
 
-        new Vue(
+        var listVue = new Vue(
             {
                 el:"#app",
                 data:
@@ -318,7 +342,9 @@
                         list:'',
                         layer_flag:'',
                         layer_remark:'',
-                        id:''
+                        id:'',
+                        type:'',
+                        date:''
                     },
                 created:function()
                 {
@@ -326,6 +352,11 @@
                 },
                 methods:
                     {
+                        setDate(date)
+                        {
+                            this.date = date;
+                            this.pageInit();
+                        },
                         doRemark(id)
                         {
                             this.id = id;
@@ -382,7 +413,7 @@
                         pageInit()
                         {
                             var _self = this;
-                            $.get('/admin/index/food-bill-by-day',{},function(data){
+                            $.get('/admin/index/food-bill-by-day',{date:this.date},function(data){
                                 if ( data.status )
                                 {
                                     _self.list = data.data;
@@ -403,15 +434,16 @@
                                 {
                                     if( this.list[i].status != 2)
                                     {
-                                        tmpList.push(this.list[i]);
+                                        if( !this.type || (this.type == this.list[i].type)  ) {
+                                            tmpList.push(this.list[i]);
+                                        }
                                     }
                                 }
                             } else
                             {
                                 for( var i=0; i < this.list.length ; i++)
                                 {
-                                    if( this.list[i].status == 2 )
-                                    {
+                                    if( !this.type || (this.type == this.list[i].type)  ) {
                                         tmpList.push(this.list[i]);
                                     }
                                 }

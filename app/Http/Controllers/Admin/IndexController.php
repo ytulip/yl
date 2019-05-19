@@ -891,7 +891,12 @@ class IndexController extends Controller
      */
     public function anyFoodBillByDay()
     {
-        $list = SubFoodOrders::where('date',date('Y-m-d'))->leftJoin('orders','orders.id','=','sub_food_orders.order_id')->selectRaw('orders.*,sub_food_orders.id as sub_id,status,type,has_print,sub_food_orders.remark as remark2')->get();
+
+        $date = Request::input('date',date('Y-m-d'));
+
+        $date = $date?$date:date('Y-m-d');
+
+        $list = SubFoodOrders::where('date',$date)->leftJoin('orders','orders.id','=','sub_food_orders.order_id')->selectRaw('orders.*,sub_food_orders.id as sub_id,status,type,has_print,sub_food_orders.remark as remark2')->whereNotIn('status',[100])->get();
         return $this->jsonReturn(1,$list);
     }
 

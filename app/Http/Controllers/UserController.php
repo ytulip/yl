@@ -1406,6 +1406,16 @@ class UserController extends Controller
         }
 
 
+        /**
+         * 判断是否过期
+         */
+        $monthBefore = Carbon::now()->subDays(29)->format('Y-m-d');
+        if( Kit::dateFormatDay($randomGet->created_at) < $monthBefore  )
+        {
+            return $this->jsonReturn(0,'该兑换码已过期');
+        }
+
+
         $product = Product::find($randomGet->product_id);
 
         for($i = 0; $i < $randomGet->quantity; $i++)
@@ -1416,7 +1426,7 @@ class UserController extends Controller
             $coupon->status = 1;
             $coupon->type_text = $product->product_name;
             $coupon->price = $product->price;
-            $coupon->expire_at = Carbon::now()->addDays(14)->format('Y-m-d');
+            $coupon->expire_at = Carbon::now()->addDays(29)->format('Y-m-d');
             $coupon->refer_code = $randomGet->code;
             $coupon->save();
         }

@@ -82,6 +82,7 @@ class VipOrder extends Model
 
 
         $baseDay = in_array($this->buy_type,[1,3])?90:180;
+        $baseDay = $baseDay + 89;
 
 
         for ($i = 0; $i < $foodCount; $i++ )
