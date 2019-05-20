@@ -28,6 +28,7 @@ use App\Model\SubFoodOrders;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
+use App\Model\VipOrder;
 use App\Util\CommKit;
 use App\Util\DownloadExcel;
 use App\Util\Kit;
@@ -1262,6 +1263,76 @@ class IndexController extends Controller
     public function anyFoodOrderDetail()
     {
         return view('food_order_detail');
+    }
+
+
+    /**
+     * 会员订单
+     */
+    public function anyVipOrder()
+    {
+        $query = VipOrder::where('pay_status',1)->orderBy('id','desc');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.vip_order')->with('paginate', $paginate);
+    }
+
+
+    public function anyBuyVip()
+    {
+        $phone = Request::input('phone');
+        $user = User::where('phone',$phone)->first();
+
+        if($user instanceof  User)
+        {
+            if ( $user->isVip() )
+            {
+                return $this->jsonReturn(0,'该用户已是会员');
+            }
+        } else
+        {
+            $user = new User();
+            $user->phone = $phone;
+            $user->save();
+        }
+
+        $vipOrder = new VipOrder();
+        $vipOrder->buy_type = Request::input('buy_type');
+        $vipOrder->user_id = $user->id;
+        $vipOrder->pay_status = 1;
+        $vipOrder->price = 0;
+        $vipOrder->save();
+
+
+        $vipOrder->doCoupon();
+
+        //购买会员的
+        $user = User::find($vipOrder->user_id);
+        $month = (in_array($vipOrder->buy_type,[1,3]))?3:6;
+
+
+        $expireMonth = Carbon::parse(Carbon::now()->format('Y-m'));
+        $expireMonth->addMonths($month);
+        if( $expireMonth->daysInMonth < date('d') )
+        {
+            //到期日子没有今天的日子，那到期日就是他了
+            $expireMonth->addDays($expireMonth->daysInMonth - 1);
+        } else {
+            //到期日要减一天
+            $expireMonth->addDays(date('d'))->subDay()->subDay();
+        }
+        $user->pay_day = (date('d') == 1)?31:(date('d') - 1);
+
+        $user->expire_time= $expireMonth->format('Y-m-d');
+        $user->health_count = 1;
+
+
+        /**
+         * 发放优惠券
+         */
+
+        $user->save();
+        return $this->jsonReturn(1);
+
     }
 
 }
