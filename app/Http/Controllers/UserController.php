@@ -1327,7 +1327,7 @@ class UserController extends Controller
         $subFoodOrders2 = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->where('type',2)->first();
         if( $subFoodOrders2 instanceof SubFoodOrders)
         {
-            $subFoodOrders->status2 = 100; //已延后
+            $subFoodOrders->status = 100; //已延后
             $subFoodOrders->save();
         }
 
