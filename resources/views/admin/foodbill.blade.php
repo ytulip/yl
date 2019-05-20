@@ -444,8 +444,10 @@
                             {
                                 for( var i=0; i < this.list.length ; i++)
                                 {
-                                    if( !this.type || (this.type == this.list[i].type)  ) {
-                                        tmpList.push(this.list[i]);
+                                    if( this.list[i].status == 2) {
+                                        if (!this.type || (this.type == this.list[i].type)) {
+                                            tmpList.push(this.list[i]);
+                                        }
                                     }
                                 }
                             }
