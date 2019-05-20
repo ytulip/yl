@@ -1107,7 +1107,7 @@ class IndexController extends Controller
 
     public function anyInvited()
     {
-        $paginate = DB::table('random_get')->paginate(env('ADMIN_PAGE_LIMIT'));
+        $paginate = DB::table('random_get')->orderBy('id','desc')->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.invited')->with('paginate', $paginate);
     }
 
