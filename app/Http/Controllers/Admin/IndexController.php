@@ -1197,6 +1197,19 @@ class IndexController extends Controller
     }
 
 
+    public function anyDeleteServeMember()
+    {
+        $id = Request::input('id');
+        $serveMember = ServeUser::find($id);
+
+        $serveMember->status = 2;
+
+        $serveMember->save();
+        return $this->jsonReturn(1);
+
+    }
+
+
     /**
      *
      */

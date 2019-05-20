@@ -155,7 +155,14 @@
                         },
                         print(obj)
                         {
-                            OpenPreview(obj);
+                            // OpenPreview(obj);
+                            var _self = this;
+                            $.post('/admin/index/delete-serve-member',{id:obj.id},function(data){
+                                if ( data.status )
+                                {
+                                    _self.pageInit();
+                                }
+                            },'json');
                         },
                         setTab(ind)
                         {
