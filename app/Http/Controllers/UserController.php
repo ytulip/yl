@@ -1317,13 +1317,14 @@ class UserController extends Controller
 
         $subFoodOrders = SubFoodOrders::where('order_id',$order->id)->where('date',$nextDate)->where('type',1)->first();
 
-        if( !($subFoodOrders instanceof  SubFoodOrders))
+        if( $subFoodOrders instanceof  SubFoodOrders )
         {
-            return $this->jsonReturn(0);
+            $subFoodOrders->status = 100; //已延后
+            $subFoodOrders->save();
         }
 
-        $subFoodOrders->status = 100; //已延后
-        $subFoodOrders->save();
+//        $subFoodOrders->status = 100; //已延后
+//        $subFoodOrders->save();
 
 
         //晚餐也延后
