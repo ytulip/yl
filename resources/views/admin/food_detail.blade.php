@@ -593,7 +593,7 @@
                 return true;
             },
             data:function(){
-                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val(),cover_image2:$('.essay_img2').find('img').attr('src'),price:$('input[name="price"]').val()};
+                return {id:pageConfig.product_id,cover_image:$('.essay_img').find('img').attr('src'),food_desc:$("textarea[name='food_desc']").val(),fit_indi:$("textarea[name='fit_indi']").val(),cover_image2:$('.essay_img2').find('img').attr('src'),price:$('input[name="price"]').val(),sub_desc:$("textarea[name='sub_desc']").val()};
             },
             callback:function (el,val)
             {

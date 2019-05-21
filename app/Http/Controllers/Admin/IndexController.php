@@ -241,6 +241,7 @@ class IndexController extends Controller
 //        $product->context_server = Request::input('content_server');
         $product->food_desc = Request::input('food_desc');
         $product->fit_indi = Request::input('fit_indi');
+        $product->sub_desc = Request::input('sub_desc');
         $product->price = Request::input('price');
 
 
