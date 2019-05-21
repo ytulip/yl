@@ -282,16 +282,19 @@ class UserController extends Controller
 
             for($i = 0; $i < $order->days ; $i++ )
             {
-                $subFoodOrders  = new SubFoodOrders();
-                $subFoodOrders->order_id = $order->id;
-                $subFoodOrders->date = $carbon->format('Y-m-d');
-                $subFoodOrders->status = 0;
-                $subFoodOrders->type = 1;
-                $subFoodOrders->product_id  = $product->id;
-                $subFoodOrders->save();
+
+                if(in_array($product->food_type,[1,2])) {
+                    $subFoodOrders = new SubFoodOrders();
+                    $subFoodOrders->order_id = $order->id;
+                    $subFoodOrders->date = $carbon->format('Y-m-d');
+                    $subFoodOrders->status = 0;
+                    $subFoodOrders->type = 1;
+                    $subFoodOrders->product_id = $product->id;
+                    $subFoodOrders->save();
+                }
 
 
-                if( !in_array($product->id,[6])) {
+                if( in_array($product->food_type,[1,3])) {
                     $subFoodOrders = new SubFoodOrders();
                     $subFoodOrders->order_id = $order->id;
                     $subFoodOrders->date = $carbon->format('Y-m-d');
