@@ -1158,7 +1158,7 @@ class IndexController extends Controller
 
     public function postHealthBill()
     {
-        $list = Book::where('product_id',25)->get();
+        $list = Book::where('product_id',25)->leftJoin('users','users.id','=','books.user_id')->selectRaw('users.real_name,users.phone,books.*')->get();
         return $this->jsonReturn(1,$list);
     }
 
@@ -1219,6 +1219,7 @@ class IndexController extends Controller
     {
         $book = Book::find(Request::input('id'));
         $book->address = Request::input('address');
+        $book->pick_time = Request::input('pick_time');
         $book->save();
 
         return $this->jsonReturn(1);

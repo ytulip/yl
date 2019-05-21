@@ -25,6 +25,7 @@
 
         .deliver{cursor: pointer;}
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 @stop
 @section('left_content')
     <div id="app">
@@ -48,19 +49,35 @@
 
             <div class="row paginate-list-row" v-for="(item,index) in currentList">
                 <div class="col-md-1 col-lg-1">@{{item['id']}}</div>
-                <div class="col-md-1 col-lg-1">@{{item['address_name']}}</div>
-                <div class="col-md-2 col-lg-2">@{{item['address_phone']}}</div>
+                <div class="col-md-1 col-lg-1">@{{item['real_name']}}</div>
+                <div class="col-md-2 col-lg-2">@{{item['phone']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['created_at']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['address']}}</div>
                 <div class="col-md-2 col-lg-2"></div>
-                <div class="col-md-2 col-lg-2"><a class="deliver" @click="edit(item)">编辑地址</a>&nbsp;&nbsp;<a class="deliver" @click="doDeliver(item.id)">处理</a></div>
+                <div class="col-md-2 col-lg-2"><a class="deliver" @click="edit(item)">编辑</a>&nbsp;&nbsp;<a class="deliver" @click="doDeliver(item.id)">处理</a></div>
             </div>
 
 
             <div style="position: fixed;top:0;bottom:0;left:0;right: 0;background-color: rgba(0,0,0,.6);z-index: 99;" id="add_member_panel" v-if="layer_flag">
                 <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 640px;">
-                    <h4>接送地址</h4>
+                    <h4>编辑</h4>
                     <form id="data_form">
+
+
+
+                        <div class="m-t-20">接送时间</div>
+
+                        <el-date-picker
+                                v-model="value2"
+                                type="datetime"
+                                placeholder="选择日期时间"
+                                align="right"
+                                :picker-options="pickerOptions1">
+                        </el-date-picker>
+
+
+
+                        <div class="m-t-20">接送地址</div>
 
                         <div class="row mb-12">
                             <div class="col-md-12 col-lg-12">
@@ -82,6 +99,7 @@
                 <div style="padding: 14px;background-color: #ffffff;border-radius: 8px;transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;width: 640px;">
                     <h4>体检服务</h4>
                     <form id="data_form">
+
 
                         <div class="row mb-12">
                             <div class="col-md-12 col-lg-12">
@@ -112,8 +130,9 @@
 
 
 @section('script')
-    <script src="/js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/js/LodopFuncs.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script>
 
 
@@ -135,7 +154,9 @@
                         layer_address:'',
                         id:'',
                         serveUser:'',
-                        serveId:''
+                        serveId:'',
+                        value2:'',
+                        attrs:''
                     },
                 created:function()
                 {
@@ -143,8 +164,15 @@
                     console.log(this.serveUser);
                     this.pageInit();
                 },
+                mounted:function()
+                {
+                },
                 methods:
                     {
+                        pickerOptions1()
+                        {
+
+                        },
                         edit(obj)
                         {
                             this.layer_address = obj.address?obj.address:'';
@@ -209,6 +237,13 @@
                         addPerson()
                         {
 
+                            if( !this.value2 )
+                            {
+                                mAlert('接送时间不能为空');
+                                return;
+                            }
+
+
                             if(!this.layer_address)
                             {
                                 mAlert('地址不能为空');
@@ -216,7 +251,7 @@
                             }
 
                             var _self = this;
-                            $.post('/admin/index/book-address',{id:this.id,address:this.layer_address},function(data){
+                            $.post('/admin/index/book-address',{id:this.id,address:this.layer_address,pick_time:this.value2},function(data){
                                 if ( data.status )
                                 {
                                     _self.layer_flag = false;
