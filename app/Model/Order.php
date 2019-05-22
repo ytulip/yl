@@ -425,5 +425,18 @@ class Order extends Model
         }
     }
 
+    public function couponsArr()
+    {
+        $couponIdsStr = $this->coupons;
+        if( $couponIdsStr )
+        {
+            $couponIds = explode(',',$couponIdsStr);
+        } else {
+            $couponIds = [];
+        }
+
+        return $couponIds;
+    }
+
 
 }

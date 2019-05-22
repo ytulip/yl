@@ -99,9 +99,9 @@
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu" >
-                <li @if(!\App\Util\AdminAuth::hasPower(1)) class="dpn" @endif><a href="/admin/index/total"><i class="fa fa-tachometer menu-fa"></i> <span>首页</span><div class="clearfix"></div></a></li>
+                <li><a href="/admin/index/total"><i class="fa fa-tachometer menu-fa"></i> <span>首页</span><div class="clearfix"></div></a></li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(2)) class="dpn" @endif><a><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
+                <li id="menu-academico"><a><i class="fa fa-envelope nav_icon menu-fa"></i><span>任务管理</span><div class="clearfix"></div></a>
                     <ul id="menu-academico-sub" >
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-bill">购餐服务</a></li>
                     <li id="menu-academico-avaliacoes" ><a href="/admin/index/clean-bill-by-day">保洁服务</a></li>
@@ -116,7 +116,7 @@
                     </div>
 
                 </li>
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(3)) class="dpn" @endif><a href="javascript:void(0);"><i class="fa fa-envelope nav_icon menu-fa"></i><span>订单管理</span><div class="clearfix"></div></a>
+                <li id="menu-academico"><a href="javascript:void(0);"><i class="fa fa-envelope nav_icon menu-fa"></i><span>订单管理</span><div class="clearfix"></div></a>
 
                     <ul id="menu-academico-sub" >
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-order">助餐订单</a></li>
@@ -131,7 +131,7 @@
 
                 </li>
 
-                <li @if(!\App\Util\AdminAuth::hasPower(4)) class="dpn" @endif><a href="javascript:void(0)"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
+                <li><a href="javascript:void(0)"><i class="fa fa-picture-o menu-fa" aria-hidden="true"></i><span>服务管理</span><div class="clearfix"></div></a>
 
                     <ul id="menu-academico-sub" >
                         <li id="menu-academico-avaliacoes" ><a href="/admin/index/food-manager">助餐服务</a></li>
@@ -150,11 +150,11 @@
 
                 </li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(5)) class="dpn" @endif><a href="/admin/index/finance-class"><i class="fa fa-bar-chart menu-fa"></i><span>金融讲堂</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico"><a href="/admin/index/finance-class"><i class="fa fa-bar-chart menu-fa"></i><span>金融讲堂</span><div class="clearfix"></div></a></li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(10)) class="dpn" @endif><a href="/admin/index/data-manager"><i class="fa fa-bar-chart menu-fa"></i><span>内容管理</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico"><a href="/admin/index/data-manager"><i class="fa fa-bar-chart menu-fa"></i><span>内容管理</span><div class="clearfix"></div></a></li>
 
-                <li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(6)) class="dpn" @endif><a href="/admin/index/activity-members"><i class="fa fa-bar-chart menu-fa"></i><span>数据统计</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico"><a href="/admin/index/activity-members"><i class="fa fa-bar-chart menu-fa"></i><span>数据统计</span><div class="clearfix"></div></a></li>
 
                 {{--<li id="menu-academico" @if(!\App\Util\AdminAuth::hasPower(7)) class="dpn" @endif><a href="/admin/index/sign-list"><i class="fa fa-bar-chart menu-fa"></i><span>打卡记录</span><div class="clearfix"></div></a></li>--}}
 
@@ -172,8 +172,8 @@
                         {{--<a href="/admin/index/activity-trunback">活动退款</a>--}}
                     {{--</div>--}}
                 {{--</li>--}}
-                <li @if(!\App\Util\AdminAuth::hasPower(9)) class="dpn" @endif><a href="/admin/index/power"><i class="fa fa-tachometer menu-fa"></i> <span>管理员列表</span><div class="clearfix"></div></a></li>
-                <li @if(!\App\Util\AdminAuth::hasPower(9)) class="dpn" @endif><a href="/admin/index/invited"><i class="fa fa-tachometer menu-fa"></i> <span>邀请码管理</span><div class="clearfix"></div></a></li>
+                <li><a href="/admin/index/power"><i class="fa fa-tachometer menu-fa"></i> <span>管理员列表</span><div class="clearfix"></div></a></li>
+                <li><a href="/admin/index/invited"><i class="fa fa-tachometer menu-fa"></i> <span>邀请码管理</span><div class="clearfix"></div></a></li>
             </ul>
         </div>
     </div>

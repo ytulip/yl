@@ -90,61 +90,6 @@
                     </div>
                 </div>
 
-                <div class="row mb-12">
-                    <div class="col-md-3 col-lg-3 t-al-r">权限选择:</div>
-                    <div class="col-md-9 col-lg-9">
-                        {{--<input class="form-control" name="confirm_password" type="password"/>--}}
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="1"/><label>概况</label>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="2"/><label>商品管理</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="3"/><label>活动商品管理</label>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="4"/><label>内容管理</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="5"/><label>会员管理</label>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="6"/><label>活动会员管理</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="7"/><label>打卡记录</label>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="8"/><label>资产管理</label>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="9"/><label>管理员列表</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <input type="checkbox" class="power_check" value="10"/><label>天使会员管理</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </form>
             <div>
                 <button type="button" class="btn btn-success col-gray-btn mt-32" id="edit_next_step">确认</button>

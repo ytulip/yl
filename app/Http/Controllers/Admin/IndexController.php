@@ -1264,7 +1264,11 @@ class IndexController extends Controller
 
     public function anyFoodOrderDetail()
     {
-        return view('food_order_detail');
+
+        $id = Request::input('id');
+        $list = SubFoodOrders::where('order_id',$id)->get();
+
+        return view('food_order_detail')->with('list',$list)->with('order',Order::find($id));
     }
 
 

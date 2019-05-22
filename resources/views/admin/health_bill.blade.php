@@ -43,7 +43,7 @@
                 <div class="col-md-2 col-lg-2">手机</div>
                 <div class="col-md-2 col-lg-2">预约时间</div>
                 <div class="col-md-2 col-lg-2">接送地址</div>
-                <div class="col-md-2 col-lg-2">详情</div>
+                <div class="col-md-2 col-lg-2">接送时间</div>
                 <div class="col-md-2 col-lg-2">处理</div>
             </div>
 
@@ -53,7 +53,7 @@
                 <div class="col-md-2 col-lg-2">@{{item['phone']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['created_at']}}</div>
                 <div class="col-md-2 col-lg-2">@{{item['address']}}</div>
-                <div class="col-md-2 col-lg-2"></div>
+                <div class="col-md-2 col-lg-2">@{{item['pick_time']}}</div>
                 <div class="col-md-2 col-lg-2"><a class="deliver" @click="edit(item)">编辑</a>&nbsp;&nbsp;<a class="deliver" @click="doDeliver(item.id)">处理</a></div>
             </div>
 
@@ -130,10 +130,28 @@
 
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="/js/vue.js"></script>
+    {{--<script src="https://cdn.jsdelivr.net/npm/vue"></script>--}}
     <script src="/js/LodopFuncs.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script>
+
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
 
 
         var pageConfig =
@@ -178,6 +196,7 @@
                             this.layer_address = obj.address?obj.address:'';
                             this.id = obj.id;
                             this.layer_flag = true;
+                            this.value2 = obj.pick_time?(new Date(obj.pick_time)):'';
                         },
                         print(obj)
                         {
@@ -251,7 +270,7 @@
                             }
 
                             var _self = this;
-                            $.post('/admin/index/book-address',{id:this.id,address:this.layer_address,pick_time:this.value2},function(data){
+                            $.post('/admin/index/book-address',{id:this.id,address:this.layer_address,pick_time:this.value2.Format('yyyy-MM-dd hh:mm:ss')},function(data){
                                 if ( data.status )
                                 {
                                     _self.layer_flag = false;
