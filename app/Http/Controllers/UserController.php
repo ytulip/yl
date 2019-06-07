@@ -274,39 +274,39 @@ class UserController extends Controller
         $order->save();
 
 
-        //如果是订餐订单的话插入小订单
-        if( !$product->isCleanProduct() )
-        {
-
-            $carbon = Carbon::parse(Request::input('service_start_time'));
-
-            for($i = 0; $i < $order->days ; $i++ )
-            {
-
-                if(in_array($product->food_type,[1,2])) {
-                    $subFoodOrders = new SubFoodOrders();
-                    $subFoodOrders->order_id = $order->id;
-                    $subFoodOrders->date = $carbon->format('Y-m-d');
-                    $subFoodOrders->status = 0;
-                    $subFoodOrders->type = 1;
-                    $subFoodOrders->product_id = $product->id;
-                    $subFoodOrders->save();
-                }
-
-
-                if( in_array($product->food_type,[1,3])) {
-                    $subFoodOrders = new SubFoodOrders();
-                    $subFoodOrders->order_id = $order->id;
-                    $subFoodOrders->date = $carbon->format('Y-m-d');
-                    $subFoodOrders->status = 0;
-                    $subFoodOrders->type = 2;
-                    $subFoodOrders->product_id  = $product->id;
-                    $subFoodOrders->save();
-                }
-
-                $carbon->addDay(1);
-            }
-        }
+//        //如果是订餐订单的话插入小订单
+//        if( !$product->isCleanProduct() )
+//        {
+//
+//            $carbon = Carbon::parse(Request::input('service_start_time'));
+//
+//            for($i = 0; $i < $order->days ; $i++ )
+//            {
+//
+//                if(in_array($product->food_type,[1,2])) {
+//                    $subFoodOrders = new SubFoodOrders();
+//                    $subFoodOrders->order_id = $order->id;
+//                    $subFoodOrders->date = $carbon->format('Y-m-d');
+//                    $subFoodOrders->status = 0;
+//                    $subFoodOrders->type = 1;
+//                    $subFoodOrders->product_id = $product->id;
+//                    $subFoodOrders->save();
+//                }
+//
+//
+//                if( in_array($product->food_type,[1,3])) {
+//                    $subFoodOrders = new SubFoodOrders();
+//                    $subFoodOrders->order_id = $order->id;
+//                    $subFoodOrders->date = $carbon->format('Y-m-d');
+//                    $subFoodOrders->status = 0;
+//                    $subFoodOrders->type = 2;
+//                    $subFoodOrders->product_id  = $product->id;
+//                    $subFoodOrders->save();
+//                }
+//
+//                $carbon->addDay(1);
+//            }
+//        }
 
 
 
@@ -340,6 +340,44 @@ class UserController extends Controller
                 $order->pay_time = date('Y-m-d H:i:s');
                 $order->order_status = Order::ORDER_STATUS_WAIT_DELIVER;
                 $order->save();
+
+
+
+                //如果是订餐订单的话插入小订单
+                if( !$product->isCleanProduct() )
+                {
+
+                    $carbon = Carbon::parse(Request::input('service_start_time'));
+
+                    for($i = 0; $i < $order->days ; $i++ )
+                    {
+
+                        if(in_array($product->food_type,[1,2])) {
+                            $subFoodOrders = new SubFoodOrders();
+                            $subFoodOrders->order_id = $order->id;
+                            $subFoodOrders->date = $carbon->format('Y-m-d');
+                            $subFoodOrders->status = 0;
+                            $subFoodOrders->type = 1;
+                            $subFoodOrders->product_id = $product->id;
+                            $subFoodOrders->save();
+                        }
+
+
+                        if( in_array($product->food_type,[1,3])) {
+                            $subFoodOrders = new SubFoodOrders();
+                            $subFoodOrders->order_id = $order->id;
+                            $subFoodOrders->date = $carbon->format('Y-m-d');
+                            $subFoodOrders->status = 0;
+                            $subFoodOrders->type = 2;
+                            $subFoodOrders->product_id  = $product->id;
+                            $subFoodOrders->save();
+                        }
+
+                        $carbon->addDay(1);
+                    }
+                }
+
+
 
                 //标识全部已由优惠券抵扣，无需再支付
                 return $this->jsonReturn(1, 333);
